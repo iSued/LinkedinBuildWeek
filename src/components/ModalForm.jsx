@@ -4,6 +4,16 @@ import {Modal, Button, Form} from "react-bootstrap"
 class ModalForm extends React.Component {
   state = {
     show: false,
+    info: {},
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      info: {
+        ...this.state.info,
+        [e.target.id]: e.target.value,
+      },
+    })
   }
 
   render() {
@@ -29,35 +39,82 @@ class ModalForm extends React.Component {
             <Form>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter your First Name" />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your First Name"
+                  id="name"
+                  value={this.state.info.name}
+                  onChange={(e) => this.handleChange(e)}
+                />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Surname</Form.Label>
-                <Form.Control type="text" placeholder="Enter your Last Time" />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your Last Time"
+                  id="surname"
+                  value={this.state.info.surname}
+                  onChange={(e) => this.handleChange(e)}
+                />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter your email" />
+                <Form.Control
+                  type="email"
+                  placeholder="Enter your email"
+                  id="email"
+                  value={this.state.info.email}
+                  onChange={(e) => this.handleChange(e)}
+                />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Bio</Form.Label>
-                <Form.Control as="textarea" rows={3} />
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  id="bio"
+                  value={this.state.info.bio}
+                  onChange={(e) => this.handleChange(e)}
+                />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Title</Form.Label>
-                <Form.Control type="text" placeholder="Enter your Job Title" />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your Job Title"
+                  id="title"
+                  value={this.state.info.title}
+                  onChange={(e) => this.handleChange(e)}
+                />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Area</Form.Label>
-                <Form.Control type="text" placeholder="City or Country" />
+                <Form.Control
+                  type="text"
+                  placeholder="City or Country"
+                  id="area"
+                  value={this.state.info.area}
+                  onChange={(e) => this.handleChange(e)}
+                />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>ImageUrl</Form.Label>
-                <Form.Control type="text" placeholder="image Url" />
+                <Form.Control
+                  type="text"
+                  placeholder="image Url"
+                  id="image"
+                  value={this.state.info.image}
+                  onChange={(e) => this.handleChange(e)}
+                />
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>username</Form.Label>
-                <Form.Control type="text" placeholder="Your username" />
+                <Form.Control
+                  type="text"
+                  placeholder="username"
+                  value={this.state.info.username}
+                  onChange={(e) => this.handleChange(e)}
+                />
               </Form.Group>
             </Form>
           </Modal.Body>
