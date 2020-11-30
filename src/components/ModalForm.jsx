@@ -127,7 +127,7 @@ class ModalForm extends React.Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput1">
+              {/* <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>ImageUrl</Form.Label>
                 <Form.Control
                   type="text"
@@ -136,7 +136,7 @@ class ModalForm extends React.Component {
                   value={this.state.info.image}
                   onChange={(e) => this.handleChange(e)}
                 />
-              </Form.Group>
+              </Form.Group> */}
               <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>username</Form.Label>
                 <Form.Control
