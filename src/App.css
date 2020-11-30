@@ -9,6 +9,23 @@ i.fa-caret-down:hover {
   cursor: pointer;
 }
 
+.endorsement i.fa-pencil-alt:hover {
+  background-color: #eff7fe;
+}
+
+.endorsement h5 {
+  padding: 5px;
+}
+.endorsement h5:hover {
+  background-color: #efefef;
+  cursor: pointer;
+}
+
+.text-primary.text-center.card-footer:hover {
+  background-color: #eff7fe;
+  cursor: pointer;
+}
+
 .card-header div:nth-child(1):hover {
   text-decoration: underline;
   cursor: pointer;
