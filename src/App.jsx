@@ -1,5 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+
+import NavBar from "./NavBar";
+
+
 import React from "react";
 import Profile from "./components/Profile";
 
@@ -10,10 +14,12 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+         <NavBar />
         <Profile me={this.state.me} />
       </div>
     );
   }
+
 }
 
 export default App;
