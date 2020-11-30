@@ -1,3 +1,6 @@
+.nav_logo{
+  color:  #0A66C2;
+}
 .nav-link{
     display: flex;
     flex-direction: column;

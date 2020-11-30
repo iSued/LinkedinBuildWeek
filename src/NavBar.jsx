@@ -36,7 +36,7 @@ export default class NavBar extends Component {
                 width="34"
                 height="34"
                 viewBox="0 0 34 34"
-                class="global-nav__logo"
+                class="nav_logo"
               >
                 <title>LinkedIn</title>
 
