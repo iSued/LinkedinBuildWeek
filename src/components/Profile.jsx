@@ -3,10 +3,13 @@ import { Row, Col, Container, Alert } from "react-bootstrap";
 import BoxInfo from "./BoxInfo";
 import ProfileStrength from "./ProfileStrength";
 import Dashboard from "./Dashboard";
+import ModalForm from "./ModalForm";
 
 class Profile extends React.Component {
   state = {
     myProfile: {},
+    show: false,
+    submitCounter: 0,
   };
 
   fetchProfile = async () => {
@@ -36,13 +39,36 @@ class Profile extends React.Component {
   componentDidMount = () => {
     this.fetchProfile();
   };
+
+  componentDidUpdate = (previousProps, previousState) => {
+    if (previousState.submitCounter !== this.state.submitCounter) {
+      this.fetchProfile();
+    }
+  };
+
   render() {
     return (
       <>
         <Container>
+          {this.state.show && (
+            <ModalForm
+              show={this.state.show}
+              hide={() => this.setState({ show: false })}
+              myProfile={this.state.myProfile}
+              submitCounter={() =>
+                this.setState({ submitCounter: this.state.submitCounter + 1 })
+              }
+            />
+          )}
           <Row>
             <Col md={9}>
-              <BoxInfo me={this.props.me} myProfile={this.state.myProfile} />
+              <BoxInfo
+                me={this.props.me}
+                myProfile={this.state.myProfile}
+                onClicked={() => {
+                  this.setState({ show: true });
+                }}
+              />
               {this.props.me && (
                 <>
                   <ProfileStrength />

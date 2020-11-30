@@ -7,6 +7,7 @@ function PencilEdit(props) {
         props.me === true ? "fas fa-pencil-alt ml-3 mr-1 p-2" : "d-none"
       }
       style={{ color: "#666666" }}
+      onClick={() => props.onClicked()}
     ></i>
   );
 }
