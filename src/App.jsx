@@ -1,5 +1,6 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css"
+import "./App.css"
+
 
 import NavBar from "./NavBar";
 
@@ -19,7 +20,6 @@ class App extends React.Component {
       </div>
     );
   }
-
 }
 
-export default App;
+export default App
