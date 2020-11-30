@@ -1,11 +1,14 @@
-import React from "react";
-import { Row, Col, Container, Alert } from "react-bootstrap";
-import BoxInfo from "./BoxInfo";
-import ProfileStrength from "./ProfileStrength";
-import Dashboard from "./Dashboard";
-import ModalForm from "./ModalForm";
-import Activity from "./Activity";
-import SkillsAndEndorsement from "./SkillsAndEndorsement";
+
+import React from "react"
+import {Row, Col, Container, Alert} from "react-bootstrap"
+import BoxInfo from "./BoxInfo"
+import ProfileStrength from "./ProfileStrength"
+import Dashboard from "./Dashboard"
+import ModalForm from "./ModalForm"
+import Activity from "./Activity"
+import ELC from "./ELC"
+        import SkillsAndEndorsement from "./SkillsAndEndorsement";
+
 
 class Profile extends React.Component {
   state = {
@@ -78,7 +81,14 @@ class Profile extends React.Component {
                   <Dashboard />
 
                   <Activity myProfile={this.state.myProfile} />
-                  <SkillsAndEndorsement me={this.props.me} />
+
+                 
+
+
+                  <ELC me={this.props.me} />
+                  
+                   <SkillsAndEndorsement me={this.props.me} />
+
                 </>
               )}
             </Col>
