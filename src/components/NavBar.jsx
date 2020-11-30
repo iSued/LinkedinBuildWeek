@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react"
 import {
   Navbar,
   Container,
@@ -7,17 +7,17 @@ import {
   FormControl,
   Button,
   InputGroup,
-} from "react-bootstrap";
+} from "react-bootstrap"
 
-import HomeIcon from "@material-ui/icons/Home";
-import { HiSearch } from "react-icons/hi";
-import WorkIcon from "@material-ui/icons/Work";
-import SmsIcon from "@material-ui/icons/Sms";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import { RiArrowDownSFill } from "react-icons/ri";
-import { CgMenuGridR } from "react-icons/cg";
-import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
-import "./NavBar.css";
+import HomeIcon from "@material-ui/icons/Home"
+import {HiSearch} from "react-icons/hi"
+import WorkIcon from "@material-ui/icons/Work"
+import SmsIcon from "@material-ui/icons/Sms"
+import NotificationsIcon from "@material-ui/icons/Notifications"
+import {RiArrowDownSFill} from "react-icons/ri"
+import {CgMenuGridR} from "react-icons/cg"
+import PeopleAltIcon from "@material-ui/icons/PeopleAlt"
+import "../NavBar.css"
 
 export default class NavBar extends Component {
   render() {
@@ -25,7 +25,7 @@ export default class NavBar extends Component {
       <>
         <Navbar
           variant="light"
-          style={{ backgroundColor: "#fff" }}
+          style={{backgroundColor: "#fff"}}
           className="navbar p-0"
           expand="lg"
         >
@@ -51,16 +51,16 @@ export default class NavBar extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Form inline>
-                <InputGroup style={{ width: "240px" }}>
+                <InputGroup style={{width: "240px"}}>
                   <InputGroup.Prepend>
                     <InputGroup.Text
-                      style={{ backgroundColor: "#EEF3F8", border: "none" }}
+                      style={{backgroundColor: "#EEF3F8", border: "none"}}
                     >
                       <HiSearch />
                     </InputGroup.Text>
                   </InputGroup.Prepend>
                   <Form.Control
-                    style={{ backgroundColor: "#EEF3F8", border: "none" }}
+                    style={{backgroundColor: "#EEF3F8", border: "none"}}
                     type="text"
                     placeholder="Search"
                   />
@@ -98,7 +98,7 @@ export default class NavBar extends Component {
                     Me{" "}
                     <RiArrowDownSFill
                       className="m-0 p-0"
-                      style={{ fontSize: "17px" }}
+                      style={{fontSize: "17px"}}
                     />
                   </p>
                 </Nav.Link>
@@ -110,22 +110,22 @@ export default class NavBar extends Component {
                     Work{" "}
                     <RiArrowDownSFill
                       className="m-0 p-0"
-                      style={{ fontSize: "17px" }}
+                      style={{fontSize: "17px"}}
                     />
                   </p>
                 </Nav.Link>
                 <Nav.Link
                   href="#"
                   className="nav-link"
-                  style={{ maxWidth: "70px", textDecoration: "underline" }}
+                  style={{maxWidth: "70px", textDecoration: "underline"}}
                 >
-                  <p style={{ color: "#5D3B09" }}>Reactivate premium</p>
+                  <p style={{color: "#5D3B09"}}>Reactivate premium</p>
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
       </>
-    );
+    )
   }
 }
