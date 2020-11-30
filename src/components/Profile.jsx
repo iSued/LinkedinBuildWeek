@@ -1,16 +1,17 @@
-import React from "react";
-import { Row, Col, Container, Alert } from "react-bootstrap";
-import BoxInfo from "./BoxInfo";
-import ProfileStrength from "./ProfileStrength";
-import Dashboard from "./Dashboard";
-import ModalForm from "./ModalForm";
+import React from "react"
+import {Row, Col, Container, Alert} from "react-bootstrap"
+import BoxInfo from "./BoxInfo"
+import ProfileStrength from "./ProfileStrength"
+import Dashboard from "./Dashboard"
+import ModalForm from "./ModalForm"
+import Activity from "./Activity"
 
 class Profile extends React.Component {
   state = {
     myProfile: {},
     show: false,
     submitCounter: 0,
-  };
+  }
 
   fetchProfile = async () => {
     try {
@@ -21,30 +22,30 @@ class Profile extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      );
+      )
 
-      let myProfile = await response.json();
-      console.log(myProfile);
+      let myProfile = await response.json()
+      console.log(myProfile)
 
       if (response.ok) {
-        this.setState({ myProfile });
+        this.setState({myProfile})
       } else {
-        <Alert variant="danger">Something went wrong</Alert>;
+        ;<Alert variant="danger">Something went wrong</Alert>
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   componentDidMount = () => {
-    this.fetchProfile();
-  };
+    this.fetchProfile()
+  }
 
   componentDidUpdate = (previousProps, previousState) => {
     if (previousState.submitCounter !== this.state.submitCounter) {
-      this.fetchProfile();
+      this.fetchProfile()
     }
-  };
+  }
 
   render() {
     return (
@@ -53,10 +54,10 @@ class Profile extends React.Component {
           {this.state.show && (
             <ModalForm
               show={this.state.show}
-              hide={() => this.setState({ show: false })}
+              hide={() => this.setState({show: false})}
               myProfile={this.state.myProfile}
               submitCounter={() =>
-                this.setState({ submitCounter: this.state.submitCounter + 1 })
+                this.setState({submitCounter: this.state.submitCounter + 1})
               }
             />
           )}
@@ -66,7 +67,7 @@ class Profile extends React.Component {
                 me={this.props.me}
                 myProfile={this.state.myProfile}
                 onClicked={() => {
-                  this.setState({ show: true });
+                  this.setState({show: true})
                 }}
               />
               {this.props.me && (
@@ -74,13 +75,15 @@ class Profile extends React.Component {
                   <ProfileStrength />
 
                   <Dashboard />
+
+                  <Activity myProfile={this.state.myProfile} />
                 </>
               )}
             </Col>
           </Row>
         </Container>
       </>
-    );
+    )
   }
 }
-export default Profile;
+export default Profile
