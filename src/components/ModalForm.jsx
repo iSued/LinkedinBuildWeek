@@ -1,11 +1,10 @@
-import React from "react"
-import {Modal, Button, Form} from "react-bootstrap"
+import React from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 
 class ModalForm extends React.Component {
   state = {
-    show: false,
-    info: {},
-  }
+    info: this.props.myProfile,
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -13,62 +12,53 @@ class ModalForm extends React.Component {
         ...this.state.info,
         [e.target.id]: e.target.value,
       },
-    })
-  }
+    });
+  };
 
-  handleSubmit = () => {
-    this.changeInfo(this.state.info)
-  }
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   this.changeInfo();
+  // };
 
-  changeInfo = async (body) => {
+  changeInfo = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch(
         "https://striveschool-api.herokuapp.com/api/profile/",
         {
           method: "PUT",
-          body: JSON.stringify(body),
+          body: JSON.stringify(this.state.info),
 
           headers: {
             "Content-Type": "application/json",
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      )
+      );
 
       if (response.ok) {
-        alert("UPDATED SUCCESFULLY")
+        alert("UPDATED SUCCESFULLY");
+        this.props.submitCounter();
       } else {
-        const error = await response.json()
-        console.log(error)
+        const error = await response.json();
+        console.log(error);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   render() {
     return (
       <>
-        <Button
-          variant="primary"
-          onClick={() => {
-            this.setState({show: true})
-          }}
-        >
-          Launch demo modal
-        </Button>
-
-        <Modal
-          show={this.state.show}
-          onHide={() => this.setState({show: false})}
-        >
+        <Modal show={this.props.show} onHide={() => this.props.hide()}>
           <Modal.Header closeButton>
             <Modal.Title>Modal heading</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form>
-              <Form.Group controlId="exampleForm.ControlInput1">
-                <Form.Label>Name</Form.Label>
+            <Form onSubmit={this.changeInfo}>
+              <Form.Group>
+                <Form.Label htmlFor="name">Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter your First Name"
@@ -77,7 +67,7 @@ class ModalForm extends React.Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Group>
                 <Form.Label>Surname</Form.Label>
                 <Form.Control
                   type="text"
@@ -87,7 +77,7 @@ class ModalForm extends React.Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Group>
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
@@ -97,7 +87,7 @@ class ModalForm extends React.Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
-              <Form.Group controlId="exampleForm.ControlTextarea1">
+              <Form.Group>
                 <Form.Label>Bio</Form.Label>
                 <Form.Control
                   as="textarea"
@@ -107,7 +97,7 @@ class ModalForm extends React.Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Group>
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                   type="text"
@@ -117,7 +107,7 @@ class ModalForm extends React.Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
-              <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Group>
                 <Form.Label>Area</Form.Label>
                 <Form.Control
                   type="text"
@@ -127,7 +117,7 @@ class ModalForm extends React.Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
-              {/* <Form.Group controlId="exampleForm.ControlInput1">
+              {/* <Form.Group >
                 <Form.Label>ImageUrl</Form.Label>
                 <Form.Control
                   type="text"
@@ -137,7 +127,7 @@ class ModalForm extends React.Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group> */}
-              <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Group>
                 <Form.Label>username</Form.Label>
                 <Form.Control
                   type="text"
@@ -146,23 +136,18 @@ class ModalForm extends React.Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
+              <Button variant="primary" type="submit">
+                Submit Changes
+              </Button>
+              {/* <Button variant="secondary" onClick={() => this.props.hide()}>
+                Close
+              </Button> */}
             </Form>
           </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={() => this.setState({show: false})}
-            >
-              Close
-            </Button>
-            <Button variant="primary" onClick={() => this.handleSubmit()}>
-              Submit Changes
-            </Button>
-          </Modal.Footer>
         </Modal>
       </>
-    )
+    );
   }
 }
 
-export default ModalForm
+export default ModalForm;

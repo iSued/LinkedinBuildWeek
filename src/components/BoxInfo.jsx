@@ -3,7 +3,6 @@ import { Button, Card } from "react-bootstrap";
 import BoxInfoButton from "./BoxInfoButton";
 import OpenToWork from "./OpenToWork";
 import PencilEdit from "./PencilEdit";
-
 class BoxInfo extends React.Component {
   render() {
     return (
@@ -34,7 +33,7 @@ class BoxInfo extends React.Component {
               >
                 More...
               </Button>
-              <PencilEdit me={this.props.me} />
+              <PencilEdit me={this.props.me} onClicked={this.props.onClicked} />
             </div>
           </div>
           <div className="d-flex justify-content-between mt-4">
