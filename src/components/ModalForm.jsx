@@ -16,6 +16,36 @@ class ModalForm extends React.Component {
     })
   }
 
+  handleSubmit = () => {
+    this.changeInfo(this.state.info)
+  }
+
+  changeInfo = async (body) => {
+    try {
+      const response = await fetch(
+        "https://striveschool-api.herokuapp.com/api/profile/",
+        {
+          method: "PUT",
+          body: JSON.stringify(body),
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      )
+
+      if (response.ok) {
+        alert("UPDATED SUCCESFULLY")
+      } else {
+        const error = await response.json()
+        console.log(error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   render() {
     return (
       <>
@@ -125,7 +155,9 @@ class ModalForm extends React.Component {
             >
               Close
             </Button>
-            <Button variant="primary">Saubmit Changes</Button>
+            <Button variant="primary" onClick={() => this.handleSubmit()}>
+              Submit Changes
+            </Button>
           </Modal.Footer>
         </Modal>
       </>
