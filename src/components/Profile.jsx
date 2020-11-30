@@ -5,6 +5,7 @@ import ProfileStrength from "./ProfileStrength"
 import Dashboard from "./Dashboard"
 import ModalForm from "./ModalForm"
 import Activity from "./Activity"
+import ELC from "./ELC"
 
 class Profile extends React.Component {
   state = {
@@ -77,6 +78,8 @@ class Profile extends React.Component {
                   <Dashboard />
 
                   <Activity myProfile={this.state.myProfile} />
+
+                  <ELC me={this.props.me} />
                 </>
               )}
             </Col>
