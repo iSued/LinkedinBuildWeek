@@ -1,45 +1,55 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
-
-
-
-
 import Footer from "./components/Footer";
-
 import NavBar from "./components/NavBar";
 import React from "react";
 import Profile from "./components/Profile";
 import Sidebar from "./components/Sidebar";
-import { Col, Container, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import PorfileWithId from "./components/ProfileWithId";
 
 class App extends React.Component {
   state = {
     me: true,
   };
 
- 
-        
-
-
   render() {
     return (
       <div className="App">
         <Router>
           <NavBar />
-          <Route path="/">
-            <Container className="mt-5">
-              <Row>
-                <Profile me={this.state.me} />
 
-                <Sidebar />
-              </Row>
-            </Container>
-            <Footer />
-          </Route>
+          <Container className="mt-5">
+            <Row>
+              <Route
+                path="/"
+                exact
+                render={(props) => (
+                  <Profile
+                    changeMe={() => this.setState({ me: true })}
+                    me={this.state.me}
+                    {...props}
+                  />
+                )}
+              />
+              <Route
+                path="/:id"
+                exact
+                render={(props) => (
+                  <PorfileWithId
+                    changeMe={() => this.setState({ me: false })}
+                    me={this.state.me}
+                    {...props}
+                  />
+                )}
+              />
+              <Sidebar />
+            </Row>
+          </Container>
+
+          <Footer />
         </Router>
-
       </div>
     );
   }

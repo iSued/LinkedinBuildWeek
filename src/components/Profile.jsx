@@ -1,3 +1,4 @@
+
 import React from "react"
 import {Row, Col, Container, Alert} from "react-bootstrap"
 import BoxInfo from "./BoxInfo"
@@ -10,6 +11,7 @@ import SkillsAndEndorsement from "./SkillsAndEndorsement"
 import Interests from "./Interests"
 import ModalExperience from "./ModalExperience"
 
+
 class Profile extends React.Component {
   state = {
     myProfile: {},
@@ -20,6 +22,7 @@ class Profile extends React.Component {
   }
 
   fetchProfile = async () => {
+    this.props.changeMe();
     try {
       let response = await fetch(
         "https://striveschool-api.herokuapp.com/api/profile/me",
