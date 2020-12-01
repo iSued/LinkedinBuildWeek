@@ -23,7 +23,10 @@ export default class Interests extends React.Component {
                 </div>
                 <div className="ml-3">
                   <h6>TE Connectivity</h6>
-                  <p className="text-muted"> 319,197 followers</p>
+                  <p className="text-muted" style={{ fontSize: "14px" }}>
+                    {" "}
+                    319,197 followers
+                  </p>
                 </div>
               </Col>
               <Col className="d-flex " md={6}>
@@ -36,7 +39,9 @@ export default class Interests extends React.Component {
                 </div>
                 <div className="ml-3">
                   <h6>UBS</h6>
-                  <p className="text-muted">921,990 followers</p>
+                  <p className="text-muted" style={{ fontSize: "14px" }}>
+                    921,990 followers
+                  </p>
                 </div>
               </Col>
             </Row>
@@ -52,7 +57,10 @@ export default class Interests extends React.Component {
                 </div>
                 <div className="ml-3">
                   <h6>Infor</h6>
-                  <p className="text-muted"> 510,062 followers</p>
+                  <p className="text-muted" style={{ fontSize: "14px" }}>
+                    {" "}
+                    510,062 followers
+                  </p>
                 </div>
               </Col>
               <Col className="d-flex " md={6}>
@@ -65,7 +73,9 @@ export default class Interests extends React.Component {
                 </div>
                 <div className="ml-3">
                   <h6>Business Analyst Professional-BA</h6>
-                  <p className="text-muted">188,890</p>
+                  <p className="text-muted" style={{ fontSize: "14px" }}>
+                    188,890 followers
+                  </p>
                 </div>
               </Col>
             </Row>
