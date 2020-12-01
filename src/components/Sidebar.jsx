@@ -11,7 +11,7 @@ class Sidebar extends React.Component {
   render() {
     return (
       <>
-        <Container>
+        <Col md={3}>
           <Row>
             <Col>
               <TopSettings />
@@ -37,7 +37,7 @@ class Sidebar extends React.Component {
               <Videos />
             </Col>
           </Row>
-        </Container>
+        </Col>
       </>
     );
   }
