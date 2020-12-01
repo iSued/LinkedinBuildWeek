@@ -116,7 +116,7 @@ class Footer extends React.Component {
                   viewBox="0 0 24 24"
                   data-supported-dps="24x24"
                   fill="currentColor"
-                  class="mercado-match"
+                  className="mercado-match"
                   width="24"
                   height="24"
                   focusable="false"
@@ -134,7 +134,7 @@ class Footer extends React.Component {
                   viewBox="0 0 24 24"
                   data-supported-dps="24x24"
                   fill="currentColor"
-                  class="mercado-match"
+                  className="mercado-match"
                   width="24"
                   height="24"
                   focusable="false"
@@ -148,9 +148,7 @@ class Footer extends React.Component {
               </Row>
             </Col>
             <Col xs={3}>
-              <label className="text-muted" my-0 py-0>
-                Select Language
-              </label>
+              <label className="text-muted my-0 py-0">Select Language</label>
               <DropdownButton
                 as={InputGroup.Prepend}
                 variant="light"

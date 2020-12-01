@@ -1,6 +1,5 @@
 body {
-
-  background-color: rgb(187, 187, 187);
+  background-color: #f3f2ef;
   font-family: Arial, Helvetica, sans-serif;
 }
 .top-settings {
@@ -62,5 +61,4 @@ i.fa-caret-down:hover {
 .dashBoardContent > div:hover {
   text-decoration: underline;
   cursor: pointer;
-
 }

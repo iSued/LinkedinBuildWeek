@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Container, Alert } from "react-bootstrap";
+import { Col, Alert } from "react-bootstrap";
 import BoxInfo from "./BoxInfo";
 import ProfileStrength from "./ProfileStrength";
 import Dashboard from "./Dashboard";
@@ -16,6 +16,7 @@ class Profile extends React.Component {
   };
 
   fetchProfile = async () => {
+    this.props.changeMe();
     try {
       let response = await fetch(
         "https://striveschool-api.herokuapp.com/api/profile/me",

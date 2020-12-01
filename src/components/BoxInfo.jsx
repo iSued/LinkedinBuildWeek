@@ -1,8 +1,8 @@
-import React from "react"
-import {Button, Card} from "react-bootstrap"
-import BoxInfoButton from "./BoxInfoButton"
-import OpenToWork from "./OpenToWork"
-import PencilEdit from "./PencilEdit"
+import React from "react";
+import { Button, Card } from "react-bootstrap";
+import BoxInfoButton from "./BoxInfoButton";
+import OpenToWork from "./OpenToWork";
+import PencilEdit from "./PencilEdit";
 class BoxInfo extends React.Component {
   render() {
     return (
@@ -14,7 +14,7 @@ class BoxInfo extends React.Component {
         />
         <Card.Body>
           <div className="d-flex justify-content-between">
-            <div style={{marginTop: "-130px"}}>
+            <div style={{ marginTop: "-130px" }}>
               <img
                 src={this.props.myProfile.image}
                 alt="placeholder"
@@ -42,18 +42,26 @@ class BoxInfo extends React.Component {
           </div>
           <div className="d-flex justify-content-between mt-4">
             <div>
-              <h3 className="text-dark" style={{fontWeight: "normal"}}>
+              <h3 className="text-dark" style={{ fontWeight: "normal" }}>
                 {this.props.myProfile.name} {this.props.myProfile.surname}
               </h3>
-              <h5 className="text-secondary" style={{fontWeight: "normal"}}>
+              <h5 className="text-secondary" style={{ fontWeight: "normal" }}>
                 {this.props.myProfile.title}
               </h5>
               <ul className="d-flex pl-0 ">
-                <li style={{listStyle: "none"}}>{this.props.myProfile.area}</li>
-                <li className="mx-4 text-primary" style={{fontWeight: "bold"}}>
-                  72 connections{" "}
+                <li style={{ listStyle: "none" }}>
+                  {this.props.myProfile.area}
                 </li>
-                <li className="mx-3 text-primary" style={{fontWeight: "bold"}}>
+                <li
+                  className="mx-4 text-primary"
+                  style={{ fontWeight: "bold" }}
+                >
+                  72 connections
+                </li>
+                <li
+                  className="mx-3 text-primary"
+                  style={{ fontWeight: "bold" }}
+                >
                   Contact info
                 </li>
               </ul>
@@ -68,7 +76,7 @@ class BoxInfo extends React.Component {
                 />
                 <a
                   href="https://www.linkedin.com/school/strive-school/"
-                  style={{color: "#666666"}}
+                  style={{ color: "#666666" }}
                 >
                   Strive School
                 </a>
@@ -78,8 +86,8 @@ class BoxInfo extends React.Component {
           {this.props.me && <OpenToWork me={this.props.me} />}
         </Card.Body>
       </Card>
-    )
+    );
   }
 }
 
-export default BoxInfo
+export default BoxInfo;
