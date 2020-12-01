@@ -2,6 +2,7 @@ import React from "react";
 import PencilEdit from "./PencilEdit";
 import PlusEdit from "./PlusEdit";
 import { Card, Row, Col, ListGroup } from "react-bootstrap";
+import Moment from "react-moment";
 
 export default class extends React.Component {
   state = { MyExperience: this.props.MyExperience };
@@ -44,8 +45,16 @@ export default class extends React.Component {
                           <div>
                             <h5>{experience.role}</h5>
                             <h6>{experience.company}</h6>
-                            <p>
-                              {experience.startDate} - {experience.endDate}
+                            <p className="d-flex">
+                              <Moment
+                                date={this.props.experience.startDate}
+                                format="YYYY/MM/DD"
+                              />
+                              {"  "} - {"  "}
+                              <Moment
+                                date={this.props.experience.endDate}
+                                format="YYYY/MM/DD"
+                              />
                             </p>
                           </div>
                         </div>
