@@ -27,35 +27,33 @@ export default class extends React.Component {
             <Row>
               <Col xs={12}>
                 <ListGroup variant="flush">
-                  <ListGroup.Item className="d-flex align-items-center justify-content-between">
-                    <div>
-                      <div>
-                        <img
-                          src="https://placehold.it/300x300"
-                          alt="placeholder"
-                          width="56px"
-                        />
-                      </div>
-                      <div>
-                        <h6>C# Developer</h6>
-                      </div>
-                    </div>
-                    <div>
-                      <PencilEdit me={this.props.me} color="#0b67c2" />
-                    </div>
-                  </ListGroup.Item>
-                  <ListGroup.Item className="d-flex align-items-center">
-                    <div>
-                      <img
-                        src="https://placehold.it/300x300"
-                        alt="placeholder"
-                        width="56px"
-                      />
-                    </div>
-                    <div>
-                      <h6>Journalist</h6>
-                    </div>
-                  </ListGroup.Item>
+                  {this.props.MyExperience &&
+                    this.props.MyExperience.map((experience, index) => (
+                      <ListGroup.Item
+                        className="d-flex align-items-center justify-content-between"
+                        key={index}
+                      >
+                        <div>
+                          <div>
+                            <img
+                              src="https://placehold.it/300x300"
+                              alt="placeholder"
+                              width="56px"
+                            />
+                          </div>
+                          <div>
+                            <h5>{experience.role}</h5>
+                            <h6>{experience.company}</h6>
+                            <p>
+                              {experience.startDate} - {experience.endDate}
+                            </p>
+                          </div>
+                        </div>
+                        <div>
+                          <PencilEdit me={this.props.me} color="#0b67c2" />
+                        </div>
+                      </ListGroup.Item>
+                    ))}
                 </ListGroup>
               </Col>
             </Row>
