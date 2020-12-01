@@ -7,6 +7,7 @@ import ModalForm from "./ModalForm";
 import Activity from "./Activity";
 import ELC from "./ELC";
 import SkillsAndEndorsement from "./SkillsAndEndorsement";
+import Interests from "./Interests";
 
 class Profile extends React.Component {
   state = {
@@ -82,6 +83,7 @@ class Profile extends React.Component {
               <ELC me={this.props.me} />
 
               <SkillsAndEndorsement me={this.props.me} />
+              <Interests />
             </>
           )}
         </Col>
