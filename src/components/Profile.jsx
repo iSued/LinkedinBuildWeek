@@ -17,6 +17,7 @@ class Profile extends React.Component {
     submitCounter: 0,
     showModalExperience: false,
     MyExperience: [],
+    submitExpCounter: 0,
   };
 
   fetchProfile = async () => {
@@ -75,6 +76,9 @@ class Profile extends React.Component {
     if (previousState.submitCounter !== this.state.submitCounter) {
       this.fetchProfile();
     }
+    if (previousState.submitExpCounter !== this.state.submitExpCounter) {
+      this.fetchProfile();
+    }
   };
 
   render() {
@@ -101,7 +105,7 @@ class Profile extends React.Component {
           />
           {this.props.me && (
             <>
-              <ProfileStrength />
+              <ProfileStrength exp={this.state.MyExperience} />
 
               <Dashboard />
 
@@ -112,6 +116,11 @@ class Profile extends React.Component {
                   id={this.state.myProfile._id}
                   showModalExperience={this.state.showModalExperience}
                   hide={() => this.setState({ showModalExperience: false })}
+                  submitExpCounter={() =>
+                    this.setState({
+                      submitExpCounter: this.state.submitExpCounter + 1,
+                    })
+                  }
                 />
               )}
               <ELC
