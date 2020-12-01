@@ -16,10 +16,8 @@ class Profile extends React.Component {
     show: false,
     submitCounter: 0,
     showModalExperience: false,
-  }
     MyExperience: {},
-  };
-
+  }
 
   fetchProfile = async () => {
     try {
@@ -36,18 +34,15 @@ class Profile extends React.Component {
       console.log(myProfile)
 
       if (response.ok) {
-
-   
-        this.fetchExperience(myProfile._id);
-        this.setState({ myProfile });
-
+        this.fetchExperience(myProfile._id)
+        this.setState({myProfile})
       } else {
-        <Alert variant="danger">Something went wrong</Alert>
+        ;<Alert variant="danger">Something went wrong</Alert>
       }
     } catch (error) {
       console.log(error)
     }
-  };
+  }
   fetchExperience = async (id) => {
     try {
       let response = await fetch(
@@ -57,19 +52,19 @@ class Profile extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      );
-      let MyExperience = await response.json();
-      console.log("here experience", MyExperience);
+      )
+      let MyExperience = await response.json()
+      console.log("here experience", MyExperience)
 
       if (response.ok) {
-        this.setState({ MyExperience });
+        this.setState({MyExperience})
       } else {
-        <Alert variant="danger">Something went wrong</Alert>;
+        ;<Alert variant="danger">Something went wrong</Alert>
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   componentDidMount = () => {
     this.fetchProfile()
@@ -125,7 +120,7 @@ class Profile extends React.Component {
                 }}
                 MyExperience={this.state.MyExperience}
               />
-        
+
               <SkillsAndEndorsement me={this.props.me} />
               <Interests />
             </>

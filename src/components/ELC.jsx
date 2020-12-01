@@ -1,10 +1,10 @@
-import React from "react";
-import PencilEdit from "./PencilEdit";
+import React from "react"
+import PencilEdit from "./PencilEdit"
 import PlusEdit from "./PlusEdit"
-import { Card, Row, Col, ListGroup, Alert } from "react-bootstrap";
+import {Card, Row, Col, ListGroup, Alert} from "react-bootstrap"
 
 export default class extends React.Component {
-  state = { MyExperience: this.props.MyExperience };
+  state = {MyExperience: this.props.MyExperience}
 
   render() {
     return (
@@ -17,12 +17,11 @@ export default class extends React.Component {
                 xs={12}
               >
                 <Card.Title>Experience</Card.Title>{" "}
-                
-              <PlusEdit
-                color="#666666"
-                me={props.me}
-                onClicked={props.onClicked}
-              />
+                <PlusEdit
+                  color="#666666"
+                  me={this.props.me}
+                  onClicked={this.props.onClicked}
+                />
               </Col>
             </Row>
             <Row>
@@ -111,6 +110,6 @@ export default class extends React.Component {
           </Card.Body>
         </Card>
       </>
-    );
+    )
   }
 }
