@@ -17,6 +17,9 @@ class Profile extends React.Component {
     submitCounter: 0,
     showModalExperience: false,
   }
+    MyExperience: {},
+  };
+
 
   fetchProfile = async () => {
     try {
@@ -33,14 +36,40 @@ class Profile extends React.Component {
       console.log(myProfile)
 
       if (response.ok) {
-        this.setState({myProfile})
+
+   
+        this.fetchExperience(myProfile._id);
+        this.setState({ myProfile });
+
       } else {
-        ;<Alert variant="danger">Something went wrong</Alert>
+        <Alert variant="danger">Something went wrong</Alert>
       }
     } catch (error) {
       console.log(error)
     }
-  }
+  };
+  fetchExperience = async (id) => {
+    try {
+      let response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`,
+        {
+          headers: {
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      );
+      let MyExperience = await response.json();
+      console.log("here experience", MyExperience);
+
+      if (response.ok) {
+        this.setState({ MyExperience });
+      } else {
+        <Alert variant="danger">Something went wrong</Alert>;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   componentDidMount = () => {
     this.fetchProfile()
@@ -94,8 +123,9 @@ class Profile extends React.Component {
                 onClicked={() => {
                   this.setState({showModalExperience: true})
                 }}
+                MyExperience={this.state.MyExperience}
               />
-
+        
               <SkillsAndEndorsement me={this.props.me} />
               <Interests />
             </>
