@@ -3,9 +3,16 @@ import PencilEdit from "./PencilEdit";
 import PlusEdit from "./PlusEdit";
 import { Card, Row, Col, ListGroup } from "react-bootstrap";
 import Moment from "react-moment";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import { ThreeDRotationSharp } from "@material-ui/icons";
 
 export default class extends React.Component {
-  state = { MyExperience: this.props.MyExperience };
+  state = { MyExperience: this.props.MyExperience, visible: 3 };
+
+  loadmore = () =>
+    this.setState((e) => {
+      return { visible: e.visible + 2 };
+    });
 
   render() {
     return (
@@ -29,44 +36,56 @@ export default class extends React.Component {
               <Col xs={12}>
                 <ListGroup variant="flush">
                   {this.props.MyExperience &&
-                    this.props.MyExperience.map((experience, index) => (
-                      <ListGroup.Item
-                        className="d-flex align-items-center justify-content-between"
-                        key={index}
-                      >
-                        <div>
+                    this.props.MyExperience.slice(0, this.state.visible).map(
+                      (experience, index) => (
+                        <ListGroup.Item
+                          className="d-flex align-items-center justify-content-between"
+                          key={index}
+                        >
                           <div>
-                            <img
-                              src="https://placehold.it/300x300"
-                              alt="placeholder"
-                              width="56px"
-                            />
+                            <div>
+                              <img
+                                src="https://placehold.it/300x300"
+                                alt="placeholder"
+                                width="56px"
+                              />
+                            </div>
+                            <div>
+                              <h5>{experience.role}</h5>
+                              <h6>{experience.company}</h6>
+                              <p className="d-flex">
+                                <Moment
+                                  date={experience.startDate}
+                                  format="YYYY/MM/DD"
+                                />
+                                {"  "} - {"  "}
+                                <Moment
+                                  date={experience.endDate}
+                                  format="YYYY/MM/DD"
+                                />
+                              </p>
+                            </div>
                           </div>
                           <div>
-                            <h5>{experience.role}</h5>
-                            <h6>{experience.company}</h6>
-                            <p className="d-flex">
-                              <Moment
-                                date={this.props.experience.startDate}
-                                format="YYYY/MM/DD"
-                              />
-                              {"  "} - {"  "}
-                              <Moment
-                                date={this.props.experience.endDate}
-                                format="YYYY/MM/DD"
-                              />
-                            </p>
+                            <PencilEdit me={this.props.me} color="#0b67c2" />
                           </div>
-                        </div>
-                        <div>
-                          <PencilEdit me={this.props.me} color="#0b67c2" />
-                        </div>
-                      </ListGroup.Item>
-                    ))}
+                        </ListGroup.Item>
+                      )
+                    )}
                 </ListGroup>
               </Col>
             </Row>
           </Card.Body>
+          {this.state.visible < this.state.MyExperience.length && (
+            <ListGroup.Item
+              action
+              style={{ border: "none" }}
+              onClick={this.loadmore}
+            >
+              Show more
+              <KeyboardArrowDownIcon />
+            </ListGroup.Item>
+          )}
         </Card>
         <Card className="p-4">
           <Card.Body>
