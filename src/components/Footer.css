@@ -13,15 +13,17 @@ li{
    
 }
 a:visited{
-    color:#57687a;
+    color:#57687a !important;
 }
 a:hover {
-    color: #0073b1;
+    color: #0073b1 !important;
   }
 a:active{
     color:#5667A7;
 }  
-
+/* a:link{
+    color:#57687a !important;
+} */
 .dropdownitems{
     font-size: 12px;
     color: black;
