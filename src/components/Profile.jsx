@@ -1,21 +1,25 @@
-import React from "react";
-import { Row, Col, Container, Alert } from "react-bootstrap";
-import BoxInfo from "./BoxInfo";
-import ProfileStrength from "./ProfileStrength";
-import Dashboard from "./Dashboard";
-import ModalForm from "./ModalForm";
-import Activity from "./Activity";
-import ELC from "./ELC";
-import SkillsAndEndorsement from "./SkillsAndEndorsement";
-import Interests from "./Interests";
+import React from "react"
+import {Row, Col, Container, Alert} from "react-bootstrap"
+import BoxInfo from "./BoxInfo"
+import ProfileStrength from "./ProfileStrength"
+import Dashboard from "./Dashboard"
+import ModalForm from "./ModalForm"
+import Activity from "./Activity"
+import ELC from "./ELC"
+import SkillsAndEndorsement from "./SkillsAndEndorsement"
+import Interests from "./Interests"
+import ModalExperience from "./ModalExperience"
 
 class Profile extends React.Component {
   state = {
     myProfile: {},
     show: false,
     submitCounter: 0,
+    showModalExperience: false,
+  }
     MyExperience: {},
   };
+
 
   fetchProfile = async () => {
     try {
@@ -26,19 +30,22 @@ class Profile extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      );
+      )
 
-      let myProfile = await response.json();
-      console.log(myProfile);
+      let myProfile = await response.json()
+      console.log(myProfile)
 
       if (response.ok) {
+
+   
         this.fetchExperience(myProfile._id);
         this.setState({ myProfile });
+
       } else {
-        <Alert variant="danger">Something went wrong</Alert>;
+        <Alert variant="danger">Something went wrong</Alert>
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   };
   fetchExperience = async (id) => {
@@ -65,14 +72,14 @@ class Profile extends React.Component {
   };
 
   componentDidMount = () => {
-    this.fetchProfile();
-  };
+    this.fetchProfile()
+  }
 
   componentDidUpdate = (previousProps, previousState) => {
     if (previousState.submitCounter !== this.state.submitCounter) {
-      this.fetchProfile();
+      this.fetchProfile()
     }
-  };
+  }
 
   render() {
     return (
@@ -80,10 +87,10 @@ class Profile extends React.Component {
         {this.state.show && (
           <ModalForm
             show={this.state.show}
-            hide={() => this.setState({ show: false })}
+            hide={() => this.setState({show: false})}
             myProfile={this.state.myProfile}
             submitCounter={() =>
-              this.setState({ submitCounter: this.state.submitCounter + 1 })
+              this.setState({submitCounter: this.state.submitCounter + 1})
             }
           />
         )}
@@ -93,7 +100,7 @@ class Profile extends React.Component {
             me={this.props.me}
             myProfile={this.state.myProfile}
             onClicked={() => {
-              this.setState({ show: true });
+              this.setState({show: true})
             }}
           />
           {this.props.me && (
@@ -104,15 +111,28 @@ class Profile extends React.Component {
 
               <Activity myProfile={this.state.myProfile} />
 
-              <ELC me={this.props.me} MyExperience={this.state.MyExperience} />
-
+              {this.state.showModalExperience && (
+                <ModalExperience
+                  id={this.state.myProfile._id}
+                  showModalExperience={this.state.showModalExperience}
+                  hide={() => this.setState({showModalExperience: false})}
+                />
+              )}
+              <ELC
+                me={this.props.me}
+                onClicked={() => {
+                  this.setState({showModalExperience: true})
+                }}
+                MyExperience={this.state.MyExperience}
+              />
+        
               <SkillsAndEndorsement me={this.props.me} />
               <Interests />
             </>
           )}
         </Col>
       </>
-    );
+    )
   }
 }
-export default Profile;
+export default Profile

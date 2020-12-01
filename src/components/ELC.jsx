@@ -1,5 +1,6 @@
 import React from "react";
 import PencilEdit from "./PencilEdit";
+import PlusEdit from "./PlusEdit"
 import { Card, Row, Col, ListGroup, Alert } from "react-bootstrap";
 
 export default class extends React.Component {
@@ -16,7 +17,12 @@ export default class extends React.Component {
                 xs={12}
               >
                 <Card.Title>Experience</Card.Title>{" "}
-                <h3 className="text-primary">+</h3>
+                
+              <PlusEdit
+                color="#666666"
+                me={props.me}
+                onClicked={props.onClicked}
+              />
               </Col>
             </Row>
             <Row>
