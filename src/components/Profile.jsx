@@ -4,6 +4,9 @@ import BoxInfo from "./BoxInfo";
 import ProfileStrength from "./ProfileStrength";
 import Dashboard from "./Dashboard";
 import ModalForm from "./ModalForm";
+import Activity from "./Activity";
+import ELC from "./ELC";
+import SkillsAndEndorsement from "./SkillsAndEndorsement";
 
 class Profile extends React.Component {
   state = {
@@ -49,36 +52,39 @@ class Profile extends React.Component {
   render() {
     return (
       <>
-        <Container>
-          {this.state.show && (
-            <ModalForm
-              show={this.state.show}
-              hide={() => this.setState({ show: false })}
-              myProfile={this.state.myProfile}
-              submitCounter={() =>
-                this.setState({ submitCounter: this.state.submitCounter + 1 })
-              }
-            />
-          )}
-          <Row>
-            <Col md={9}>
-              <BoxInfo
-                me={this.props.me}
-                myProfile={this.state.myProfile}
-                onClicked={() => {
-                  this.setState({ show: true });
-                }}
-              />
-              {this.props.me && (
-                <>
-                  <ProfileStrength />
+        {this.state.show && (
+          <ModalForm
+            show={this.state.show}
+            hide={() => this.setState({ show: false })}
+            myProfile={this.state.myProfile}
+            submitCounter={() =>
+              this.setState({ submitCounter: this.state.submitCounter + 1 })
+            }
+          />
+        )}
 
-                  <Dashboard />
-                </>
-              )}
-            </Col>
-          </Row>
-        </Container>
+        <Col md={9}>
+          <BoxInfo
+            me={this.props.me}
+            myProfile={this.state.myProfile}
+            onClicked={() => {
+              this.setState({ show: true });
+            }}
+          />
+          {this.props.me && (
+            <>
+              <ProfileStrength />
+
+              <Dashboard />
+
+              <Activity myProfile={this.state.myProfile} />
+
+              <ELC me={this.props.me} />
+
+              <SkillsAndEndorsement me={this.props.me} />
+            </>
+          )}
+        </Col>
       </>
     );
   }

@@ -1,22 +1,45 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import NavBar from "./components/NavBar";
 
+
+
+
+import Footer from "./components/Footer";
+
+import NavBar from "./components/NavBar";
 import React from "react";
 import Profile from "./components/Profile";
-import Footer from "./components/Footer";
+import Sidebar from "./components/Sidebar";
+import { Col, Container, Row } from "react-bootstrap";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends React.Component {
   state = {
     me: true,
   };
+
+ 
+        
+
+
   render() {
     return (
       <div className="App">
-        <NavBar />
-        <Profile me={this.state.me} />
-        <Footer />
+        <Router>
+          <NavBar />
+          <Route path="/">
+            <Container className="mt-5">
+              <Row>
+                <Profile me={this.state.me} />
+
+                <Sidebar />
+              </Row>
+            </Container>
+            <Footer />
+          </Route>
+        </Router>
+
       </div>
     );
   }
