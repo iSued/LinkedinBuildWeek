@@ -1,5 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+
+
+
+
+
+import Footer from "./components/Footer";
+
 import NavBar from "./components/NavBar";
 import React from "react";
 import Profile from "./components/Profile";
@@ -11,6 +18,10 @@ class App extends React.Component {
   state = {
     me: true,
   };
+
+ 
+        
+
 
   render() {
     return (
@@ -25,8 +36,10 @@ class App extends React.Component {
                 <Sidebar />
               </Row>
             </Container>
+            <Footer />
           </Route>
         </Router>
+
       </div>
     );
   }
