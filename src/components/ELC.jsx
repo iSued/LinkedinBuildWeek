@@ -1,6 +1,6 @@
-import React from "react"
-import PencilEdit from "./PencilEdit"
-import {Card, Row, Col, ListGroup} from "react-bootstrap"
+import React from "react";
+import PencilEdit from "./PencilEdit";
+import { Card, Row, Col, ListGroup } from "react-bootstrap";
 
 export default function ELC(props) {
   return (
@@ -20,7 +20,7 @@ export default function ELC(props) {
             <Col xs={12}>
               <ListGroup variant="flush">
                 <ListGroup.Item className="d-flex align-items-center justify-content-between">
-                  <div>
+                  <div className="d-flex align-items-center">
                     <div>
                       <img
                         src="https://placehold.it/300x300"
@@ -68,7 +68,7 @@ export default function ELC(props) {
             <Col xs={12}>
               <ListGroup className="d-flex" variant="flush">
                 <ListGroup.Item className="d-flex align-items-center justify-content-between">
-                  <div>
+                  <div className="d-flex align-items-center">
                     <div>
                       <img
                         src="https://placehold.it/300x300"
@@ -102,5 +102,5 @@ export default function ELC(props) {
         </Card.Body>
       </Card>
     </>
-  )
+  );
 }
