@@ -14,6 +14,7 @@ class Profile extends React.Component {
     myProfile: {},
     show: false,
     submitCounter: 0,
+    MyExperience: {},
   };
 
   fetchProfile = async () => {
@@ -31,12 +32,35 @@ class Profile extends React.Component {
       console.log(myProfile);
 
       if (response.ok) {
+        this.fetchExperience(myProfile._id);
         this.setState({ myProfile });
       } else {
         <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+  fetchExperience = async (id) => {
+    try {
+      let response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`,
+        {
+          headers: {
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      );
+      let MyExperience = await response.json();
+      console.log("here experience", MyExperience);
+
+      if (response.ok) {
+        this.setState({ MyExperience });
+      } else {
+        <Alert variant="danger">Something went wrong</Alert>;
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -80,7 +104,7 @@ class Profile extends React.Component {
 
               <Activity myProfile={this.state.myProfile} />
 
-              <ELC me={this.props.me} />
+              <ELC me={this.props.me} MyExperience={this.state.MyExperience} />
 
               <SkillsAndEndorsement me={this.props.me} />
               <Interests />
