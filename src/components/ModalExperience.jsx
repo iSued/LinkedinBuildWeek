@@ -3,14 +3,7 @@ import {Modal, Form, Button} from "react-bootstrap"
 
 export default class ModalExperience extends Component {
   state = {
-    experience: {
-      //   role: "",
-      //   company: "",
-      //   startDate: "",
-      //   endDate: "",
-      //   description: "",
-      //   area: "",
-    },
+    experience: {},
   }
 
   handleChange = (e) => {
