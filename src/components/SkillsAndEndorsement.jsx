@@ -17,7 +17,7 @@ function SkillsAndEndorsement(props) {
         </Col>
         <Col md={6} className=" d-flex justify-content-end endorsement">
           <div>
-            <h5 className="text-secondary">Add a new Skill</h5>
+            {props.me && <h5 className="text-secondary">Add a new Skill</h5>}
           </div>
           <div className="endorsement">
             <PencilEdit color="#0b67c2" me={props.me} />
