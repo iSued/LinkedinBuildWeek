@@ -3,7 +3,15 @@ import {Modal, Form, Button} from "react-bootstrap"
 
 export default class ModalExperience extends Component {
   state = {
-    experience: {},
+    experience: {
+      role: "",
+      company: "",
+      startDate: "",
+      endDate: "", //could be null
+      description: "",
+      area: "",
+    },
+    edit: false,
   }
 
   handleChange = (e) => {
@@ -13,6 +21,32 @@ export default class ModalExperience extends Component {
         [e.target.id]: e.target.value,
       },
     })
+  }
+
+  componentDidMount = () => {
+    if (this.props.editExp.experience._id) {
+      this.setState({
+        experience: {
+          role: this.props.editExp.experience.role,
+          company: this.props.editExp.experience.company,
+          startDate: this.props.editExp.experience.startDate,
+          endDate: this.props.editExp.experience.endDate, //could be null
+          description: this.props.editExp.experience.description,
+          area: this.props.editExp.experience.area,
+        },
+      })
+    } else {
+      this.setState({
+        experience: {
+          role: "",
+          company: "",
+          startDate: "",
+          endDate: "", //could be null
+          description: "",
+          area: "",
+        },
+      })
+    }
   }
 
   addExperience = async (e) => {
@@ -44,6 +78,32 @@ export default class ModalExperience extends Component {
     }
   }
 
+  editExperience = async () => {
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/:userId/experiences/${this.props.exp_id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(this.state.experience),
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      )
+
+      if (response.ok) {
+        alert("Experience EDITED SUCCESFULLY")
+      } else {
+        const error = await response.json()
+        console.log(error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   render() {
     return (
       <>
@@ -55,7 +115,11 @@ export default class ModalExperience extends Component {
             <Modal.Title>Edit Experience</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={this.addExperience}>
+            <Form
+              onSubmit={
+                !this.state.edit ? this.addExperience : this.editExperience
+              }
+            >
               <Form.Group>
                 <Form.Label htmlFor="name">Role</Form.Label>
                 <Form.Control
