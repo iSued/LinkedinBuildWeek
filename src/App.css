@@ -65,3 +65,30 @@ i.fas.fa-plus:hover {
   text-decoration: underline;
   cursor: pointer;
 }
+.posts span {
+  padding: 10px;
+  border-radius: 5px;
+}
+.posts span:hover {
+  background-color: #e4e4e4;
+  cursor: pointer;
+}
+
+.postProfile img:hover,
+.postProfile h5:hover {
+  cursor: pointer;
+  color: #0a66c2;
+  text-decoration: underline;
+}
+
+.fas.fa-ellipsis-h:hover {
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.fas.fa-times:hover {
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: rgb(243, 203, 203);
+}

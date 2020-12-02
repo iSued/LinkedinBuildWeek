@@ -1,10 +1,10 @@
-import React from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import React from "react"
+import {Modal, Button, Form} from "react-bootstrap"
 
 class ModalForm extends React.Component {
   state = {
     info: this.props.myProfile,
-  };
+  }
 
   handleChange = (e) => {
     this.setState({
@@ -12,8 +12,8 @@ class ModalForm extends React.Component {
         ...this.state.info,
         [e.target.id]: e.target.value,
       },
-    });
-  };
+    })
+  }
 
   // handleSubmit = (e) => {
   //   e.preventDefault();
@@ -21,7 +21,7 @@ class ModalForm extends React.Component {
   // };
 
   changeInfo = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const response = await fetch(
         "https://striveschool-api.herokuapp.com/api/profile/",
@@ -34,19 +34,20 @@ class ModalForm extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      );
+      )
 
       if (response.ok) {
-        alert("UPDATED SUCCESFULLY");
-        this.props.submitCounter();
+        alert("UPDATED SUCCESFULLY")
+        this.props.submitCounter()
+        this.props.hide()
       } else {
-        const error = await response.json();
-        console.log(error);
+        const error = await response.json()
+        console.log(error)
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   render() {
     return (
@@ -146,8 +147,8 @@ class ModalForm extends React.Component {
           </Modal.Body>
         </Modal>
       </>
-    );
+    )
   }
 }
 
-export default ModalForm;
+export default ModalForm

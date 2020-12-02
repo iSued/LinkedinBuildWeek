@@ -9,6 +9,7 @@ import ELC from "./ELC";
 import SkillsAndEndorsement from "./SkillsAndEndorsement";
 import Interests from "./Interests";
 import ModalExperience from "./ModalExperience";
+import Sidebar from "./Sidebar";
 
 class Profile extends React.Component {
   state = {
@@ -26,16 +27,18 @@ class Profile extends React.Component {
 
   fetchProfile = async () => {
     this.setState({ loading: true });
-    this.props.changeMe();
+
+    const url =
+      this.props.match.params.id === "me"
+        ? "https://striveschool-api.herokuapp.com/api/profile/me"
+        : "https://striveschool-api.herokuapp.com/api/profile/" +
+          this.props.match.params.id;
     try {
-      let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/profile/me",
-        {
-          headers: {
-            Authorization: process.env.REACT_APP_TOKEN,
-          },
-        }
-      );
+      let response = await fetch(url, {
+        headers: {
+          Authorization: process.env.REACT_APP_TOKEN,
+        },
+      });
 
       let myProfile = await response.json();
       console.log(myProfile);
@@ -64,6 +67,7 @@ class Profile extends React.Component {
       );
       let MyExperience = await response.json();
       console.log("here experience", MyExperience);
+      MyExperience = MyExperience.reverse();
 
       if (response.ok) {
         this.setState({ MyExperience, loadingExp: false });
@@ -77,6 +81,11 @@ class Profile extends React.Component {
   };
 
   componentDidMount = () => {
+    if (this.props.match.params.id === "me") {
+      this.props.changeMe();
+    } else {
+      this.props.changeNotMe();
+    }
     this.fetchProfile();
   };
 
@@ -86,7 +95,7 @@ class Profile extends React.Component {
     }
 
     if (previousState.submitExpCounter !== this.state.submitExpCounter) {
-      this.fetchProfile();
+      this.fetchExperience(this.state.myProfile._id);
     }
   };
 
@@ -130,55 +139,64 @@ class Profile extends React.Component {
               <ProfileStrength exp={this.state.MyExperience} />
 
               <Dashboard />
-
-              <Activity myProfile={this.state.myProfile} />
-
-              {this.state.showModalExperience && (
-                <ModalExperience
-                  id={this.state.myProfile._id}
-                  showModalExperience={this.state.showModalExperience}
-                  hide={() =>
-                    this.setState({
-                      showModalExperience: false,
-                      editExperience: { experience: {} },
-                    })
-                  }
-                  submitExpCounter={() =>
-                    this.setState({
-                      submitExpCounter: this.state.submitExpCounter + 1,
-                    })
-                  }
-                  editExp={this.state.editExperience}
-                />
-              )}
-
-              {this.state.loadingExp ? (
-                <Spinner
-                  animation="border"
-                  variant="success"
-                  style={{ marginLeft: "45%" }}
-                />
-              ) : (
-                <ELC
-                  me={this.props.me}
-                  onClicked={() => {
-                    this.setState({ showModalExperience: true });
-                  }}
-                  MyExperience={this.state.MyExperience}
-                  editExp={(experience) =>
-                    this.setState({
-                      editExperience: {
-                        experience: experience,
-                      },
-                    })
-                  }
-                />
-              )}
-
-              <SkillsAndEndorsement me={this.props.me} />
-              <Interests />
             </>
           )}
+          <>
+            <Activity myProfile={this.state.myProfile} />
+
+            {this.state.showModalExperience && (
+              <ModalExperience
+                id={this.state.myProfile._id}
+                showModalExperience={this.state.showModalExperience}
+                hide={() =>
+                  this.setState({
+                    showModalExperience: false,
+                    editExperience: { experience: {} },
+                  })
+                }
+                submitExpCounter={() =>
+                  this.setState({
+                    submitExpCounter: this.state.submitExpCounter + 1,
+                  })
+                }
+                editExp={this.state.editExperience}
+              />
+            )}
+
+            {this.state.loadingExp ? (
+              <Spinner
+                animation="border"
+                variant="success"
+                style={{ marginLeft: "45%" }}
+              />
+            ) : (
+              <ELC
+                me={this.props.me}
+                onClicked={() => {
+                  this.setState({ showModalExperience: true });
+                }}
+                MyExperience={this.state.MyExperience}
+                editExp={(experience) =>
+                  this.setState({
+                    editExperience: {
+                      experience: experience,
+                    },
+                  })
+                }
+                submitExpCounter={() =>
+                  this.setState({
+                    submitExpCounter: this.state.submitExpCounter + 1,
+                  })
+                }
+              />
+            )}
+
+            <SkillsAndEndorsement me={this.props.me} />
+            <Interests />
+          </>
+        </Col>
+        <Col md={3}>
+          <Sidebar />
         </Col>
       </>
     );

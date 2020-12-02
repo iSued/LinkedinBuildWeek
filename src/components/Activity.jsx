@@ -1,7 +1,7 @@
-import React from "react"
-import {Card, Button, Row, Col} from "react-bootstrap"
-
-export default function Activity(props) {
+import React from "react";
+import { Card, Row, Col } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+function Activity(props) {
   return (
     <Card className="mt-4 p-4">
       <Card.Body>
@@ -9,9 +9,9 @@ export default function Activity(props) {
           <Col className="col-6">
             <Card.Title className="d-flex">Activity</Card.Title>
 
-            <ul className="d-flex pl-0 " style={{listStyle: "none"}}>
+            <ul className="d-flex pl-0 " style={{ listStyle: "none" }}>
               <li className="mx-4 text-secondary">13 followers </li>
-              <li className="mx-3 text-primary" style={{fontWeight: "bold"}}>
+              <li className="mx-3 text-primary" style={{ fontWeight: "bold" }}>
                 Manage followers
               </li>
             </ul>
@@ -54,5 +54,6 @@ export default function Activity(props) {
         </Row>
       </Card.Body>
     </Card>
-  )
+  );
 }
+export default withRouter(Activity);
