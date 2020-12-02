@@ -7,18 +7,19 @@ import Moment from "react-moment"
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
 import {ThreeDRotationSharp} from "@material-ui/icons"
 
+
 export default class extends React.Component {
-  state = {MyExperience: this.props.MyExperience, visible: 3}
+  state = { MyExperience: this.props.MyExperience, visible: 3 };
 
   loadmore = () =>
     this.setState((e) => {
-      return {visible: e.visible + 2}
-    })
+      return { visible: e.visible + 2 };
+    });
 
   handleEdit = (exp) => {
-    this.props.onClicked()
-    this.props.editExp(exp)
-  }
+    this.props.onClicked();
+    this.props.editExp(exp);
+  };
 
   handleExperience = (experience) => {
     console.log(experience)
@@ -128,7 +129,7 @@ export default class extends React.Component {
           {this.state.visible < this.state.MyExperience.length && (
             <ListGroup.Item
               action
-              style={{border: "none"}}
+              style={{ border: "none" }}
               onClick={this.loadmore}
             >
               Show more
@@ -198,7 +199,7 @@ export default class extends React.Component {
             <Row>
               <Col xs={12}>
                 <ListGroup className="d-flex" variant="flush">
-                  <ListGroup.Item className="d-flex align-items-center">
+                  <ListGroup.Item className="d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center justify-content-between">
                       <div>
                         <img
@@ -233,6 +234,6 @@ export default class extends React.Component {
           </Card.Body>
         </Card>
       </>
-    )
+    );
   }
 }
