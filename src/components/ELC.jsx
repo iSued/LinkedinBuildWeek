@@ -20,6 +20,34 @@ export default class extends React.Component {
     this.props.editExp(exp)
   }
 
+  handleExperience = (experience) => {
+    console.log(experience)
+    this.deleteExperience(experience)
+  }
+
+  deleteExperience = async (experience) => {
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences/${experience._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      )
+      if (response.ok) {
+        alert("Exeperience DELETED successfully")
+        this.props.submitExpCounter()
+      } else {
+        const error = await response.json()
+        console.log(error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   render() {
     return (
       <>
@@ -81,7 +109,13 @@ export default class extends React.Component {
                               />
                             </div>
                             <div>
-                              <DeleteX me={this.props.me} color="#FF5733" />
+                              <DeleteX
+                                me={this.props.me}
+                                color="#FF5733"
+                                onClicked={() =>
+                                  this.handleExperience(experience)
+                                }
+                              />
                             </div>
                           </div>
                         </ListGroup.Item>

@@ -181,6 +181,11 @@ class Profile extends React.Component {
                     },
                   })
                 }
+                submitExpCounter={() =>
+                  this.setState({
+                    submitExpCounter: this.state.submitExpCounter + 1,
+                  })
+                }
               />
             )}
 
