@@ -115,6 +115,7 @@ export default class ModalExperience extends Component {
           } SUCCESFULLY`
         )
         this.props.submitExpCounter()
+        this.props.hide()
       } else {
         const error = await response.json()
         console.log(error)
