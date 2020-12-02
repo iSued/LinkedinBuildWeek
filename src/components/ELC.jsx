@@ -76,7 +76,7 @@ export default class extends React.Component {
               </Col>
             </Row>
           </Card.Body>
-          {this.state.visible > this.state.MyExperience.length && (
+          {this.state.visible < this.state.MyExperience.length && (
             <ListGroup.Item
               action
               style={{ border: "none" }}
