@@ -33,7 +33,11 @@ export default class ModalExperience extends Component {
 
       if (response.ok) {
         alert("Experience UPDATED SUCCESFULLY");
+
+
+
         this.props.submitExpCounter();
+
         // this.props.submitCounter();
       } else {
         const error = await response.json();
