@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Container, Alert } from "react-bootstrap";
+import { Col, Alert, Spinner } from "react-bootstrap";
 import BoxInfo from "./BoxInfo";
 import ProfileStrength from "./ProfileStrength";
 import Dashboard from "./Dashboard";
@@ -17,9 +17,13 @@ class Profile extends React.Component {
     submitCounter: 0,
     showModalExperience: false,
     MyExperience: [],
+    submitExpCounter: 0,
+    loading: true,
+    loadingExp: true,
   };
 
   fetchProfile = async () => {
+    this.setState({ loading: true });
     this.props.changeMe();
     try {
       let response = await fetch(
@@ -36,8 +40,9 @@ class Profile extends React.Component {
 
       if (response.ok) {
         this.fetchExperience(myProfile._id);
-        this.setState({ myProfile });
+        this.setState({ myProfile, loading: false });
       } else {
+        this.setState({ loading: false });
         <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (error) {
@@ -45,6 +50,7 @@ class Profile extends React.Component {
     }
   };
   fetchExperience = async (id) => {
+    this.setState({ loadingExp: true });
     try {
       let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`,
@@ -58,8 +64,9 @@ class Profile extends React.Component {
       console.log("here experience", MyExperience);
 
       if (response.ok) {
-        this.setState({ MyExperience });
+        this.setState({ MyExperience, loadingExp: false });
       } else {
+        this.setState({ loadingExp: false });
         <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (err) {
@@ -73,6 +80,9 @@ class Profile extends React.Component {
 
   componentDidUpdate = (previousProps, previousState) => {
     if (previousState.submitCounter !== this.state.submitCounter) {
+      this.fetchProfile();
+    }
+    if (previousState.submitExpCounter !== this.state.submitExpCounter) {
       this.fetchProfile();
     }
   };
@@ -92,16 +102,24 @@ class Profile extends React.Component {
         )}
 
         <Col md={9}>
-          <BoxInfo
-            me={this.props.me}
-            myProfile={this.state.myProfile}
-            onClicked={() => {
-              this.setState({ show: true });
-            }}
-          />
+          {this.state.loading ? (
+            <Spinner
+              animation="border"
+              variant="success"
+              style={{ marginLeft: "45%" }}
+            />
+          ) : (
+            <BoxInfo
+              me={this.props.me}
+              myProfile={this.state.myProfile}
+              onClicked={() => {
+                this.setState({ show: true });
+              }}
+            />
+          )}
           {this.props.me && (
             <>
-              <ProfileStrength />
+              <ProfileStrength exp={this.state.MyExperience} />
 
               <Dashboard />
 
@@ -112,15 +130,28 @@ class Profile extends React.Component {
                   id={this.state.myProfile._id}
                   showModalExperience={this.state.showModalExperience}
                   hide={() => this.setState({ showModalExperience: false })}
+                  submitExpCounter={() =>
+                    this.setState({
+                      submitExpCounter: this.state.submitExpCounter + 1,
+                    })
+                  }
                 />
               )}
-              <ELC
-                me={this.props.me}
-                onClicked={() => {
-                  this.setState({ showModalExperience: true });
-                }}
-                MyExperience={this.state.MyExperience}
-              />
+              {this.state.loadingExp ? (
+                <Spinner
+                  animation="border"
+                  variant="success"
+                  style={{ marginLeft: "45%" }}
+                />
+              ) : (
+                <ELC
+                  me={this.props.me}
+                  onClicked={() => {
+                    this.setState({ showModalExperience: true });
+                  }}
+                  MyExperience={this.state.MyExperience}
+                />
+              )}
 
               <SkillsAndEndorsement me={this.props.me} />
               <Interests />

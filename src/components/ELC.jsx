@@ -26,7 +26,7 @@ export default class extends React.Component {
               >
                 <Card.Title>Experience</Card.Title>
                 <PlusEdit
-                  color="#666666"
+                  color="#0b67c2"
                   me={this.props.me}
                   onClicked={this.props.onClicked}
                 />
