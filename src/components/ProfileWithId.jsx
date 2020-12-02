@@ -5,6 +5,7 @@ import Activity from "./Activity";
 import ELC from "./ELC";
 import SkillsAndEndorsement from "./SkillsAndEndorsement";
 import Interests from "./Interests";
+import Sidebar from "./Sidebar";
 
 class PorfileWithId extends React.Component {
   state = {
@@ -74,29 +75,34 @@ class PorfileWithId extends React.Component {
 
   render() {
     return (
-      <Col md={9}>
-        {this.state.loading ? (
-          <Spinner
-            animation="border"
-            variant="success"
-            style={{ marginLeft: "45%" }}
-          />
-        ) : (
-          <BoxInfo me={this.props.me} myProfile={this.state.profile} />
-        )}
-        <Activity myProfile={this.state.profile} />
-        {this.state.loadingExp ? (
-          <Spinner
-            animation="border"
-            variant="success"
-            style={{ marginLeft: "45%" }}
-          />
-        ) : (
-          <ELC me={this.props.me} MyExperience={this.state.MyExperience} />
-        )}
-        <SkillsAndEndorsement me={this.props.me} />
-        <Interests />
-      </Col>
+      <>
+        <Col md={9}>
+          {this.state.loading ? (
+            <Spinner
+              animation="border"
+              variant="success"
+              style={{ marginLeft: "45%" }}
+            />
+          ) : (
+            <BoxInfo me={this.props.me} myProfile={this.state.profile} />
+          )}
+          <Activity myProfile={this.state.profile} />
+          {this.state.loadingExp ? (
+            <Spinner
+              animation="border"
+              variant="success"
+              style={{ marginLeft: "45%" }}
+            />
+          ) : (
+            <ELC me={this.props.me} MyExperience={this.state.MyExperience} />
+          )}
+          <SkillsAndEndorsement me={this.props.me} />
+          <Interests />
+        </Col>
+        <Col md={3}>
+          <Sidebar />
+        </Col>
+      </>
     );
   }
 }

@@ -7,6 +7,7 @@ import {
   FormControl,
   Button,
   InputGroup,
+  Alert,
 } from "react-bootstrap";
 
 import HomeIcon from "@material-ui/icons/Home";
@@ -18,8 +19,9 @@ import { RiArrowDownSFill } from "react-icons/ri";
 import { CgMenuGridR } from "react-icons/cg";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import "../NavBar.css";
+import { Link, withRouter } from "react-router-dom";
 
-export default class NavBar extends Component {
+class NavBar extends Component {
   render() {
     return (
       <>
@@ -68,10 +70,12 @@ export default class NavBar extends Component {
               </Form>
 
               <Nav className="ml-auto">
-                <Nav.Link href="#" className="nav-link">
-                  <HomeIcon />
-                  <p>Home</p>
-                </Nav.Link>
+                <Link to="/feed">
+                  <div className="nav-link">
+                    <HomeIcon />
+                    <p>Home</p>
+                  </div>
+                </Link>
                 <Nav.Link href="#" className="nav-link">
                   <PeopleAltIcon />
 
@@ -129,3 +133,4 @@ export default class NavBar extends Component {
     );
   }
 }
+export default withRouter(NavBar);

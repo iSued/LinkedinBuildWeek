@@ -8,6 +8,7 @@ import Sidebar from "./components/Sidebar";
 import { Container, Row } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import PorfileWithId from "./components/ProfileWithId";
+import FeedPost from "./components/FeedPost";
 
 class App extends React.Component {
   state = {
@@ -22,7 +23,7 @@ class App extends React.Component {
 
           <Container className="mt-5">
             <Row>
-              <Route
+              {/* <Route
                 path="/"
                 exact
                 render={(props) => (
@@ -32,9 +33,9 @@ class App extends React.Component {
                     {...props}
                   />
                 )}
-              />
+              /> */}
               <Route
-                path="/:id"
+                path="/profile/:id"
                 exact
                 render={(props) => (
                   <PorfileWithId
@@ -44,10 +45,13 @@ class App extends React.Component {
                   />
                 )}
               />
-              <Sidebar />
             </Row>
           </Container>
-
+          <Route
+            path="/feed"
+            exact
+            render={(props) => <FeedPost {...props} />}
+          />
           <Footer />
         </Router>
       </div>
