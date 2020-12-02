@@ -4,14 +4,13 @@ import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 import React from "react";
 import Profile from "./components/Profile";
-import Sidebar from "./components/Sidebar";
 import { Container, Row } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import PorfileWithId from "./components/ProfileWithId";
+import Feed from "./components/Feed";
 
 class App extends React.Component {
   state = {
-    me: true,
+    me: null,
   };
 
   render() {
@@ -23,30 +22,20 @@ class App extends React.Component {
           <Container className="mt-5">
             <Row>
               <Route
-                path="/"
+                path="/profile/:id"
                 exact
                 render={(props) => (
                   <Profile
                     changeMe={() => this.setState({ me: true })}
+                    changeNotMe={() => this.setState({ me: false })}
                     me={this.state.me}
                     {...props}
                   />
                 )}
               />
-              <Route
-                path="/:id"
-                exact
-                render={(props) => (
-                  <PorfileWithId
-                    changeMe={() => this.setState({ me: false })}
-                    me={this.state.me}
-                    {...props}
-                  />
-                )}
-              />
-              <Sidebar />
             </Row>
           </Container>
+          <Route path="/feed" exact component={Feed} />
 
           <Footer />
         </Router>

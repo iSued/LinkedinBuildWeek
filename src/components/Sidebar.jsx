@@ -30,33 +30,31 @@ class Sidebar extends React.Component {
   render() {
     return (
       <>
-        <Col md={3}>
-          <Row>
-            <Col>
-              <TopSettings />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Advertise />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Know />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <MayKnow />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Videos />
-            </Col>
-          </Row>
-        </Col>
+        <Row>
+          <Col>
+            <TopSettings />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Advertise />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Know />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <MayKnow />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Videos />
+          </Col>
+        </Row>
       </>
     );
   }
