@@ -36,6 +36,11 @@ class Feed extends React.Component {
     }
   };
 
+  componentDidUpdate = (previousProps) => {
+    if (previousProps.feedCounter !== this.props.feedCounter) {
+      this.fetchPosts();
+    }
+  };
   componentDidMount = () => {
     this.fetchPosts();
   };
