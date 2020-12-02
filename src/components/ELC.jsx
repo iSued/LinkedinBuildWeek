@@ -13,6 +13,12 @@ export default class extends React.Component {
     this.setState((e) => {
       return { visible: e.visible + 2 };
     });
+    
+      handleEdit = (exp) => {
+    this.props.onClicked()
+    this.props.editExp(exp)
+  }
+
 
   render() {
     return (
@@ -69,9 +75,17 @@ export default class extends React.Component {
                           <div>
                             <PencilEdit me={this.props.me} color="#0b67c2" />
                           </div>
-                        </ListGroup.Item>
-                      )
-                    )}
+                        </div>
+                        <div>
+                          <PencilEdit
+                            me={this.props.me}
+                            color="#0b67c2"
+                            onClicked={() => this.handleEdit(experience)}
+                          />
+                        </div>
+                      </ListGroup.Item>
+                    ))}
+
                 </ListGroup>
               </Col>
             </Row>
@@ -184,6 +198,6 @@ export default class extends React.Component {
           </Card.Body>
         </Card>
       </>
-    );
+    )
   }
 }

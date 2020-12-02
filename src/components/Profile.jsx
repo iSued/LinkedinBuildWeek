@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Col, Alert, Spinner } from "react-bootstrap";
 import BoxInfo from "./BoxInfo";
@@ -10,6 +11,7 @@ import SkillsAndEndorsement from "./SkillsAndEndorsement";
 import Interests from "./Interests";
 import ModalExperience from "./ModalExperience";
 
+
 class Profile extends React.Component {
   state = {
     myProfile: {},
@@ -17,10 +19,12 @@ class Profile extends React.Component {
     submitCounter: 0,
     showModalExperience: false,
     MyExperience: [],
+
+    editExperience: {experience: {}},
     submitExpCounter: 0,
     loading: true,
     loadingExp: true,
-  };
+  }
 
   fetchProfile = async () => {
     this.setState({ loading: true });
@@ -33,10 +37,10 @@ class Profile extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      );
+      )
 
-      let myProfile = await response.json();
-      console.log(myProfile);
+      let myProfile = await response.json()
+      console.log(myProfile)
 
       if (response.ok) {
         this.fetchExperience(myProfile._id);
@@ -46,9 +50,9 @@ class Profile extends React.Component {
         <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
   fetchExperience = async (id) => {
     this.setState({ loadingExp: true });
     try {
@@ -59,9 +63,9 @@ class Profile extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      );
-      let MyExperience = await response.json();
-      console.log("here experience", MyExperience);
+      )
+      let MyExperience = await response.json()
+      console.log("here experience", MyExperience)
 
       if (response.ok) {
         this.setState({ MyExperience, loadingExp: false });
@@ -70,22 +74,24 @@ class Profile extends React.Component {
         <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
 
   componentDidMount = () => {
-    this.fetchProfile();
-  };
+    this.fetchProfile()
+  }
 
   componentDidUpdate = (previousProps, previousState) => {
     if (previousState.submitCounter !== this.state.submitCounter) {
-      this.fetchProfile();
+      this.fetchProfile()
     }
+
     if (previousState.submitExpCounter !== this.state.submitExpCounter) {
       this.fetchProfile();
     }
   };
+
 
   render() {
     return (
@@ -93,10 +99,14 @@ class Profile extends React.Component {
         {this.state.show && (
           <ModalForm
             show={this.state.show}
-            hide={() => this.setState({ show: false })}
+            hide={() =>
+              this.setState({
+                show: false,
+              })
+            }
             myProfile={this.state.myProfile}
             submitCounter={() =>
-              this.setState({ submitCounter: this.state.submitCounter + 1 })
+              this.setState({submitCounter: this.state.submitCounter + 1})
             }
           />
         )}
@@ -129,29 +139,43 @@ class Profile extends React.Component {
                 <ModalExperience
                   id={this.state.myProfile._id}
                   showModalExperience={this.state.showModalExperience}
-                  hide={() => this.setState({ showModalExperience: false })}
-                  submitExpCounter={() =>
+                  hide={() =>
+                    this.setState({
+                      showModalExperience: false,
+                      editExperience: {experience: {}},
+                    })
+                  }
+                 submitExpCounter={() =>
                     this.setState({
                       submitExpCounter: this.state.submitExpCounter + 1,
                     })
                   }
+                  editExp={this.state.editExperience}
                 />
               )}
-              {this.state.loadingExp ? (
+       
+       {this.state.loadingExp ? (
                 <Spinner
                   animation="border"
                   variant="success"
                   style={{ marginLeft: "45%" }}
                 />
-              ) : (
-                <ELC
-                  me={this.props.me}
-                  onClicked={() => {
-                    this.setState({ showModalExperience: true });
-                  }}
-                  MyExperience={this.state.MyExperience}
-                />
-              )}
+              ) : 
+              
+             (<ELC
+                me={this.props.me}
+                onClicked={() => {
+                  this.setState({showModalExperience: true})
+                }}
+                MyExperience={this.state.MyExperience}
+                editExp={(experience) =>
+                  this.setState({
+                    editExperience: {
+                      experience: experience,
+                    },
+                  })
+                }
+              />)}
 
               <SkillsAndEndorsement me={this.props.me} />
               <Interests />
@@ -159,7 +183,7 @@ class Profile extends React.Component {
           )}
         </Col>
       </>
-    );
+    )
   }
 }
-export default Profile;
+export default Profile
