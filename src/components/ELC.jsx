@@ -1,6 +1,7 @@
 import React from "react"
 import PencilEdit from "./PencilEdit"
 import PlusEdit from "./PlusEdit"
+import DeleteX from "./DeleteX"
 import {Card, Row, Col, ListGroup} from "react-bootstrap"
 import Moment from "react-moment"
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
@@ -72,11 +73,16 @@ export default class extends React.Component {
                             </div>
                           </div>
                           <div>
-                            <PencilEdit
-                              me={this.props.me}
-                              color="#0b67c2"
-                              onClicked={() => this.handleEdit(experience)}
-                            />
+                            <div>
+                              <PencilEdit
+                                me={this.props.me}
+                                color="#0b67c2"
+                                onClicked={() => this.handleEdit(experience)}
+                              />
+                            </div>
+                            <div>
+                              <DeleteX me={this.props.me} color="#FF5733" />
+                            </div>
                           </div>
                         </ListGroup.Item>
                       )
