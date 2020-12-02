@@ -9,7 +9,8 @@ class BoxInfo extends React.Component {
       <Card>
         <Card.Img
           variant="top"
-          src="https://placehold.it/800x200"
+          src="https://coverfiles.alphacoders.com/372/37275.jpg"
+          style={{ objectFit: "cover" }}
           alt="placeholderr"
         />
         <Card.Body>

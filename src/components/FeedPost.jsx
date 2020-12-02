@@ -100,7 +100,7 @@ export default class FeedPost extends Component {
             </Col>
           </Row>
         </Card>
-        <Feed />
+        <Feed history={this.props.history} />
       </Container>
     );
   }
