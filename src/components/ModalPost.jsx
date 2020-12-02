@@ -13,7 +13,7 @@ import { GrNotes } from "react-icons/gr";
 export default class ModalPost extends React.Component {
   state = {
     show: false,
-    text: " ",
+    POSTModel: { text: " " },
     showpost: false,
     errMessage: "",
   };
@@ -22,20 +22,23 @@ export default class ModalPost extends React.Component {
   Addhashtag = (e) => {
     let text = document.getElementById("texttopost").value;
 
-    this.setState({ text: "#" + text, showpost: true });
+    this.setState({ POSTModel: { text: "#" + text }, showpost: true });
   };
   updateField = (e) => {
-    let text = document.getElementById("texttopost").value;
-    this.setState({ text: text, showpost: true });
+    // let POSTModel = { ...this.state.POSTModel };
+    // let currentId = e.currentTarget.id;
+    // POSTModel[currentId] = e.currentTarget.value;
+    this.setState({ POSTModel: { text: e.target.value } });
   };
-  submitPost = async () => {
+
+  submitPost = async (e) => {
     e.preventDefault();
     try {
       let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/posts/`,
         {
           method: "POST",
-          body: JSON.stringify(this.state.text),
+          body: JSON.stringify(this.state.POSTModel),
           headers: {
             "Content-Type": "application/json",
             Authorization: process.env.REACT_APP_TOKEN,
@@ -43,12 +46,12 @@ export default class ModalPost extends React.Component {
         }
       );
       if (response.ok) {
-        this.props.fetchPosts();
+        // this.props.fetchPosts();
         this.setState({
-          text: text,
+          POSTModel: { text: "" },
         });
       } else {
-        console.log(this.state.text);
+        console.log(this.state.POSTModel.text);
         let error = await response.json();
         this.setState({
           errMessage: error.message,
@@ -126,7 +129,7 @@ export default class ModalPost extends React.Component {
                       as="textarea"
                       rows={3}
                       style={{ border: "none" }}
-                      value={this.state.text}
+                      value={this.state.POSTModel.text}
                       id="texttopost"
                       onChange={(e) => this.updateField(e)}
                     />
@@ -162,12 +165,12 @@ export default class ModalPost extends React.Component {
                 </Link>
               </div>
               <div>
-                {this.state.showpost && this.state.text !== " " && (
+                {this.state.POSTModel.text !== " " && (
                   <button
                     type="submit"
                     id="post"
-                    onSubmit={this.submitPost}
-                    style={{ display: this.state.showpost ? "block" : "none" }}
+                    onClick={this.submitPost}
+                    // style={{ display: this.state.showpost ? "block" : "none" }}
                   >
                     {" "}
                     Post
