@@ -81,7 +81,7 @@ export default class ModalExperience extends Component {
   editExperience = async () => {
     try {
       const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/profile/:userId/experiences/${this.props.exp_id}`,
+        `https://striveschool-api.herokuapp.com/api/profile/:userId/experiences/${this.props.editExp.experience._id}`,
         {
           method: "PUT",
           body: JSON.stringify(this.state.experience),

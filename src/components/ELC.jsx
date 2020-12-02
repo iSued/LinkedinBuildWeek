@@ -8,7 +8,6 @@ export default class extends React.Component {
 
   handleEdit = (exp) => {
     this.props.onClicked()
-    // this.props.id(id)
     this.props.editExp(exp)
   }
 

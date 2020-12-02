@@ -17,8 +17,7 @@ class Profile extends React.Component {
     submitCounter: 0,
     showModalExperience: false,
     MyExperience: [],
-    experience_id: "",
-    editExperience: {experience: {}, editCounter: 0},
+    editExperience: {experience: {}},
   }
 
   fetchProfile = async () => {
@@ -120,16 +119,10 @@ class Profile extends React.Component {
                   hide={() =>
                     this.setState({
                       showModalExperience: false,
-                      editExperience: {experience: {}, editCounter: 0},
+                      editExperience: {experience: {}},
                     })
                   }
-                  exp_id={this.state.experience_id}
                   editExp={this.state.editExperience}
-                  clearEdit={() =>
-                    this.setState({
-                      editExperience: {experience: {}, editCounter: 0},
-                    })
-                  }
                 />
               )}
               <ELC
@@ -138,12 +131,10 @@ class Profile extends React.Component {
                   this.setState({showModalExperience: true})
                 }}
                 MyExperience={this.state.MyExperience}
-                id={(exp_id) => this.setState({experience_id: exp_id})}
                 editExp={(experience) =>
                   this.setState({
                     editExperience: {
                       experience: experience,
-                      editCounter: this.state.editExperience.editCounter + 1,
                     },
                   })
                 }
