@@ -2,11 +2,25 @@ import React from "react";
 import { Card } from "react-bootstrap";
 
 function ProfileStrength(props) {
+  const profileStrng = () => {
+    let title = "";
+    if (props.exp.length < 3) {
+      title = "Beginner";
+    } else if (props.exp.length > 2 && props.exp.length < 5) {
+      title = "Intermediate";
+    } else if (props.exp.length > 3 && props.exp.length < 6) {
+      title = "Expert";
+    } else if (props.exp.length > 6) {
+      title = "All-Star";
+    }
+    return title;
+  };
   return (
     <Card className="mt-4 p-4">
       <div className="d-flex justify-content-between">
         <h4 className="text-secondary" style={{ fontWeight: "normal" }}>
-          Profile Strength: <strong className="text-dark">Intermediate</strong>
+          Profile Strength:{" "}
+          <strong className="text-dark">{profileStrng()}</strong>
         </h4>
 
         <div>
