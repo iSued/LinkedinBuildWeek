@@ -158,7 +158,7 @@ export default class extends React.Component {
             <Row>
               <Col xs={12}>
                 <ListGroup className="d-flex" variant="flush">
-                  <ListGroup.Item className="d-flex align-items-center">
+                  <ListGroup.Item className="d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center justify-content-between">
                       <div>
                         <img
