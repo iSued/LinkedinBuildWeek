@@ -32,7 +32,7 @@ class NavBar extends Component {
           expand="lg"
         >
           <Container>
-            <Link to="/feed">
+            <Link to="/">
               <Navbar.Brand>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ class NavBar extends Component {
               </Form>
 
               <Nav className="ml-auto">
-                <Link to="/feed">
+                <Link to="/">
                   <div className="nav-link">
                     <HomeIcon />
                     <p>Home</p>

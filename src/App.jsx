@@ -37,11 +37,7 @@ class App extends React.Component {
               />
             </Row>
           </Container>
-          <Route
-            path="/feed"
-            exact
-            render={(props) => <FeedPost {...props} />}
-          />
+          <Route path="/" exact render={(props) => <FeedPost {...props} />} />
 
           <Footer />
         </Router>
