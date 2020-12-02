@@ -7,6 +7,7 @@ import {
   FormControl,
   Button,
   InputGroup,
+  Alert,
 } from "react-bootstrap";
 
 import HomeIcon from "@material-ui/icons/Home";
@@ -71,9 +72,11 @@ class NavBar extends Component {
               </Form>
 
               <Nav className="ml-auto">
-                <Link to="/feed" className="nav-link">
-                  <HomeIcon />
-                  <p>Home</p>
+                <Link to="/feed">
+                  <div className="nav-link">
+                    <HomeIcon />
+                    <p>Home</p>
+                  </div>
                 </Link>
                 <Nav.Link href="#" className="nav-link">
                   <PeopleAltIcon />
@@ -132,5 +135,4 @@ class NavBar extends Component {
     );
   }
 }
-
 export default withRouter(NavBar);

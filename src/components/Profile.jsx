@@ -100,6 +100,7 @@ class Profile extends React.Component {
   };
 
   render() {
+    console.log("profile props:", this.props.location.pathname);
     return (
       <>
         {this.state.show && (
@@ -133,7 +134,7 @@ class Profile extends React.Component {
               }}
             />
           )}
-          {this.props.me && (
+          {this.props.me && this.props.location.pathname === "/" && (
             <>
               <ProfileStrength exp={this.state.MyExperience} />
 

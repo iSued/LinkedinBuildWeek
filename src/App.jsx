@@ -6,6 +6,8 @@ import React from "react";
 import Profile from "./components/Profile";
 import { Container, Row } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import PorfileWithId from "./components/ProfileWithId";
+import FeedPost from "./components/FeedPost";
 import Feed from "./components/Feed";
 
 class App extends React.Component {
@@ -21,8 +23,8 @@ class App extends React.Component {
 
           <Container className="mt-5">
             <Row>
-              <Route
-                path="/profile/:id"
+              {/* <Route
+                path="/"
                 exact
                 render={(props) => (
                   <Profile
@@ -32,10 +34,25 @@ class App extends React.Component {
                     {...props}
                   />
                 )}
+              /> */}
+              <Route
+                path="/profile/:id"
+                exact
+                render={(props) => (
+                  <PorfileWithId
+                    changeMe={() => this.setState({ me: false })}
+                    me={this.state.me}
+                    {...props}
+                  />
+                )}
               />
             </Row>
           </Container>
-          <Route path="/feed" exact component={Feed} />
+          <Route
+            path="/feed"
+            exact
+            render={(props) => <FeedPost {...props} />}
+          />
 
           <Footer />
         </Router>
