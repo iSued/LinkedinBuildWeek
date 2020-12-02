@@ -1,24 +1,23 @@
-import React from "react";
-import PencilEdit from "./PencilEdit";
-import PlusEdit from "./PlusEdit";
-import { Card, Row, Col, ListGroup } from "react-bootstrap";
-import Moment from "react-moment";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import { ThreeDRotationSharp } from "@material-ui/icons";
+import React from "react"
+import PencilEdit from "./PencilEdit"
+import PlusEdit from "./PlusEdit"
+import {Card, Row, Col, ListGroup} from "react-bootstrap"
+import Moment from "react-moment"
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
+import {ThreeDRotationSharp} from "@material-ui/icons"
 
 export default class extends React.Component {
-  state = { MyExperience: this.props.MyExperience, visible: 3 };
+  state = {MyExperience: this.props.MyExperience, visible: 3}
 
   loadmore = () =>
     this.setState((e) => {
-      return { visible: e.visible + 2 };
-    });
-    
-      handleEdit = (exp) => {
+      return {visible: e.visible + 2}
+    })
+
+  handleEdit = (exp) => {
     this.props.onClicked()
     this.props.editExp(exp)
   }
-
 
   render() {
     return (
@@ -73,19 +72,15 @@ export default class extends React.Component {
                             </div>
                           </div>
                           <div>
-                            <PencilEdit me={this.props.me} color="#0b67c2" />
+                            <PencilEdit
+                              me={this.props.me}
+                              color="#0b67c2"
+                              onClicked={() => this.handleEdit(experience)}
+                            />
                           </div>
-                        </div>
-                        <div>
-                          <PencilEdit
-                            me={this.props.me}
-                            color="#0b67c2"
-                            onClicked={() => this.handleEdit(experience)}
-                          />
-                        </div>
-                      </ListGroup.Item>
-                    ))}
-
+                        </ListGroup.Item>
+                      )
+                    )}
                 </ListGroup>
               </Col>
             </Row>
@@ -93,7 +88,7 @@ export default class extends React.Component {
           {this.state.visible < this.state.MyExperience.length && (
             <ListGroup.Item
               action
-              style={{ border: "none" }}
+              style={{border: "none"}}
               onClick={this.loadmore}
             >
               Show more
