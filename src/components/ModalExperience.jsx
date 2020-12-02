@@ -11,7 +11,6 @@ export default class ModalExperience extends Component {
       description: "",
       area: "",
     },
-    edit: this.props.edit,
   }
 
   handleChange = (e) => {
@@ -49,52 +48,72 @@ export default class ModalExperience extends Component {
     }
   }
 
-  addExperience = async (e) => {
+  // addExperience = async (e) => {
+  //   e.preventDefault()
+  //   try {
+  //     const response = await fetch(
+  //       `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences`,
+  //       {
+  //         method: "POST",
+  //         body: JSON.stringify(this.state.experience),
+
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: process.env.REACT_APP_TOKEN,
+  //         },
+  //       }
+  //     )
+
+  //     if (response.ok) {
+  //       alert("Experience UPDATED SUCCESFULLY")
+  //       this.props.submitExpCounter()
+  //     } else {
+  //       const error = await response.json()
+  //       console.log(error)
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
+  submitExperience = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences`,
-        {
-          method: "POST",
-          body: JSON.stringify(this.state.experience),
+      let response
+      if (this.props.editExp.experience._id) {
+        response = await fetch(
+          `https://striveschool-api.herokuapp.com/api/profile/:userId/experiences/${this.props.editExp.experience._id}`,
+          {
+            method: "PUT",
+            body: JSON.stringify(this.state.experience),
 
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: process.env.REACT_APP_TOKEN,
-          },
-        }
-      )
-
-      if (response.ok) {
-        alert("Experience UPDATED SUCCESFULLY")
-        this.props.submitExpCounter()
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: process.env.REACT_APP_TOKEN,
+            },
+          }
+        )
       } else {
-        const error = await response.json()
-        console.log(error)
+        response = await fetch(
+          `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences`,
+          {
+            method: "POST",
+            body: JSON.stringify(this.state.experience),
+
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: process.env.REACT_APP_TOKEN,
+            },
+          }
+        )
       }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  editExperience = async (e) => {
-    e.preventDefault()
-    try {
-      const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/profile/:userId/experiences/${this.props.editExp.experience._id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(this.state.experience),
-
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: process.env.REACT_APP_TOKEN,
-          },
-        }
-      )
 
       if (response.ok) {
-        alert("Experience EDITED SUCCESFULLY")
+        alert(
+          `Experience ${
+            this.props.editExp.experience._id ? "EDITED" : "ADDED"
+          } SUCCESFULLY`
+        )
         this.props.submitExpCounter()
       } else {
         const error = await response.json()
@@ -116,11 +135,7 @@ export default class ModalExperience extends Component {
             <Modal.Title>Edit Experience</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form
-              onSubmit={
-                !this.state.edit ? this.addExperience : this.editExperience
-              }
-            >
+            <Form onSubmit={this.submitExperience}>
               <Form.Group>
                 <Form.Label htmlFor="name">Role</Form.Label>
                 <Form.Control
@@ -183,7 +198,9 @@ export default class ModalExperience extends Component {
               </Form.Group>
 
               <Button variant="primary" type="submit">
-                Submit Changes
+                {this.props.editExp.experience._id
+                  ? "Edit Experience"
+                  : "Add New Experience"}
               </Button>
             </Form>
           </Modal.Body>
