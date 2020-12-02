@@ -11,10 +11,12 @@ import Interests from "./Interests";
 import ModalExperience from "./ModalExperience";
 import Sidebar from "./Sidebar";
 
+
 class Profile extends React.Component {
   state = {
     myProfile: {},
     show: false,
+    edit: false,
     submitCounter: 0,
     showModalExperience: false,
     MyExperience: [],
@@ -26,6 +28,7 @@ class Profile extends React.Component {
   };
 
   fetchProfile = async () => {
+
     this.setState({ loading: true });
 
     const url =
@@ -44,18 +47,18 @@ class Profile extends React.Component {
       console.log(myProfile);
 
       if (response.ok) {
-        this.fetchExperience(myProfile._id);
-        this.setState({ myProfile, loading: false });
+        this.fetchExperience(myProfile._id)
+        this.setState({myProfile, loading: false})
       } else {
-        this.setState({ loading: false });
-        <Alert variant="danger">Something went wrong</Alert>;
+        this.setState({loading: false})
+        ;<Alert variant="danger">Something went wrong</Alert>
       }
     } catch (error) {
       console.log(error);
     }
   };
   fetchExperience = async (id) => {
-    this.setState({ loadingExp: true });
+    this.setState({loadingExp: true})
     try {
       let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`,
@@ -69,10 +72,10 @@ class Profile extends React.Component {
       console.log("here experience", MyExperience);
 
       if (response.ok) {
-        this.setState({ MyExperience, loadingExp: false });
+        this.setState({MyExperience, loadingExp: false})
       } else {
-        this.setState({ loadingExp: false });
-        <Alert variant="danger">Something went wrong</Alert>;
+        this.setState({loadingExp: false})
+        ;<Alert variant="danger">Something went wrong</Alert>
       }
     } catch (err) {
       console.log(err);
@@ -94,9 +97,11 @@ class Profile extends React.Component {
     }
 
     if (previousState.submitExpCounter !== this.state.submitExpCounter) {
-      this.fetchProfile();
+      this.fetchProfile()
     }
+
   };
+
 
   render() {
     return (
@@ -121,14 +126,14 @@ class Profile extends React.Component {
             <Spinner
               animation="border"
               variant="success"
-              style={{ marginLeft: "45%" }}
+              style={{marginLeft: "45%"}}
             />
           ) : (
             <BoxInfo
               me={this.props.me}
               myProfile={this.state.myProfile}
               onClicked={() => {
-                this.setState({ show: true });
+                this.setState({show: true})
               }}
             />
           )}
@@ -137,6 +142,7 @@ class Profile extends React.Component {
               <ProfileStrength exp={this.state.MyExperience} />
 
               <Dashboard />
+
             </>
           )}
           <>
@@ -150,6 +156,7 @@ class Profile extends React.Component {
                   this.setState({
                     showModalExperience: false,
                     editExperience: { experience: {} },
+                    edit: false,
                   })
                 }
                 submitExpCounter={() =>
@@ -179,6 +186,7 @@ class Profile extends React.Component {
                     editExperience: {
                       experience: experience,
                     },
+                      edit: true
                   })
                 }
               />
