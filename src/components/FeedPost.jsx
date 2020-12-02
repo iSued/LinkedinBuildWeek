@@ -4,14 +4,21 @@ import "./FeedPost.css";
 import ModalPost from "./ModalPost";
 import Feed from "./Feed";
 export default class FeedPost extends Component {
+  state = {
+    feedCounter: 0,
+  };
+
   render() {
-    console.log("feed", this.props);
     return (
       <Container className="d-flex justify-content-center wrapper">
         <Card className="cardPost">
           <Card.Body>
             <Button className="startpostbtn">
-              <ModalPost />
+              <ModalPost
+                feedCounter={() =>
+                  this.setState({ feedCounter: this.state.feedCounter + 1 })
+                }
+              />
             </Button>
           </Card.Body>
           <Row
@@ -100,7 +107,10 @@ export default class FeedPost extends Component {
             </Col>
           </Row>
         </Card>
-        <Feed history={this.props.history} />
+        <Feed
+          history={this.props.history}
+          feedCounter={this.state.feedCounter}
+        />
       </Container>
     );
   }

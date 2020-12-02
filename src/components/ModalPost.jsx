@@ -46,7 +46,7 @@ export default class ModalPost extends React.Component {
         }
       );
       if (response.ok) {
-        // this.props.fetchPosts();
+        this.props.feedCounter();
         this.setState({
           POSTModel: { text: "" },
         });
