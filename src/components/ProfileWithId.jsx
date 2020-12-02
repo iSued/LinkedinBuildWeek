@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Alert } from "react-bootstrap";
+import { Col, Alert, Spinner } from "react-bootstrap";
 import BoxInfo from "./BoxInfo";
 import Activity from "./Activity";
 import ELC from "./ELC";
@@ -10,9 +10,12 @@ class PorfileWithId extends React.Component {
   state = {
     profile: {},
     MyExperience: [],
+    loading: true,
+    loadingExp: true,
   };
 
   fetchProfile = async () => {
+    this.setState({ loading: true });
     this.props.changeMe();
     try {
       let response = await fetch(
@@ -30,8 +33,9 @@ class PorfileWithId extends React.Component {
 
       if (response.ok) {
         this.fetchExperience(profile._id);
-        this.setState({ profile });
+        this.setState({ profile, loading: false });
       } else {
+        this.setState({ loading: false });
         <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (error) {
@@ -40,6 +44,7 @@ class PorfileWithId extends React.Component {
   };
 
   fetchExperience = async (id) => {
+    this.setState({ loadingExp: true });
     try {
       let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`,
@@ -53,8 +58,9 @@ class PorfileWithId extends React.Component {
       console.log("here experience", MyExperience);
 
       if (response.ok) {
-        this.setState({ MyExperience });
+        this.setState({ MyExperience, loadingExp: false });
       } else {
+        this.setState({ loadingExp: false });
         <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (err) {
@@ -69,9 +75,25 @@ class PorfileWithId extends React.Component {
   render() {
     return (
       <Col md={9}>
-        <BoxInfo me={this.props.me} myProfile={this.state.profile} />
+        {this.state.loading ? (
+          <Spinner
+            animation="border"
+            variant="success"
+            style={{ marginLeft: "45%" }}
+          />
+        ) : (
+          <BoxInfo me={this.props.me} myProfile={this.state.profile} />
+        )}
         <Activity myProfile={this.state.profile} />
-        <ELC me={this.props.me} MyExperience={this.state.MyExperience} />
+        {this.state.loadingExp ? (
+          <Spinner
+            animation="border"
+            variant="success"
+            style={{ marginLeft: "45%" }}
+          />
+        ) : (
+          <ELC me={this.props.me} MyExperience={this.state.MyExperience} />
+        )}
         <SkillsAndEndorsement me={this.props.me} />
         <Interests />
       </Col>
