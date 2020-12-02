@@ -1,8 +1,9 @@
-import React, {Component} from "react"
-import {Modal, Form, Button} from "react-bootstrap"
+import React, { Component } from "react";
+import { Modal, Form, Button } from "react-bootstrap";
 
 export default class ModalExperience extends Component {
   state = {
+
     experience: {
       role: "",
       company: "",
@@ -14,14 +15,15 @@ export default class ModalExperience extends Component {
     edit: false,
   }
 
+
   handleChange = (e) => {
     this.setState({
       experience: {
         ...this.state.experience,
         [e.target.id]: e.target.value,
       },
-    })
-  }
+    });
+  };
 
   componentDidMount = () => {
     if (this.props.editExp.experience._id) {
@@ -50,7 +52,7 @@ export default class ModalExperience extends Component {
   }
 
   addExperience = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const response = await fetch(
         `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences`,
@@ -63,20 +65,20 @@ export default class ModalExperience extends Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      )
+      );
 
       if (response.ok) {
-        alert("Experience UPDATED SUCCESFULLY")
+        alert("Experience UPDATED SUCCESFULLY");
+        this.props.submitExpCounter();
 
-        // this.props.submitCounter();
       } else {
-        const error = await response.json()
-        console.log(error)
+        const error = await response.json();
+        console.log(error);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   editExperience = async () => {
     try {
@@ -188,6 +190,6 @@ export default class ModalExperience extends Component {
           </Modal.Body>
         </Modal>
       </>
-    )
+    );
   }
 }

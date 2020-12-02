@@ -27,7 +27,10 @@ i.fa-caret-down:hover {
   cursor: pointer;
 }
 
-.endorsement i.fa-pencil-alt:hover {
+.endorsement i.fa-pencil-alt:hover,
+i.fas.fa-plus:hover {
+  border-radius: 50%;
+  cursor: pointer;
   background-color: #eff7fe;
 }
 
