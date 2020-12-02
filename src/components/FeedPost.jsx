@@ -1,8 +1,8 @@
-import { DriveEtaOutlined } from "@material-ui/icons";
 import React, { Component } from "react";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import "./FeedPost.css";
 import ModalPost from "./ModalPost";
+import Feed from "./Feed";
 export default class FeedPost extends Component {
   render() {
     console.log("feed", this.props);
@@ -100,6 +100,7 @@ export default class FeedPost extends Component {
             </Col>
           </Row>
         </Card>
+        <Feed />
       </Container>
     );
   }

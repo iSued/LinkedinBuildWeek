@@ -52,7 +52,7 @@ class Feed extends React.Component {
         ) : (
           <Row>
             {this.state.posts.map((post, index) => (
-              <Col md={{ span: 6, offset: 4 }} className="my-1" key={index}>
+              <Col md={12} className="my-1" key={index}>
                 <Card className="p-4 postProfile">
                   <Row>
                     <Col xs={11}>

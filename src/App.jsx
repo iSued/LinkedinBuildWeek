@@ -6,7 +6,7 @@ import React from "react";
 import Profile from "./components/Profile";
 import { Container, Row } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import PorfileWithId from "./components/ProfileWithId";
+
 import FeedPost from "./components/FeedPost";
 import Feed from "./components/Feed";
 
@@ -23,24 +23,13 @@ class App extends React.Component {
 
           <Container className="mt-5">
             <Row>
-              {/* <Route
-                path="/"
+              <Route
+                path="/profile/:id"
                 exact
                 render={(props) => (
                   <Profile
                     changeMe={() => this.setState({ me: true })}
                     changeNotMe={() => this.setState({ me: false })}
-                    me={this.state.me}
-                    {...props}
-                  />
-                )}
-              /> */}
-              <Route
-                path="/profile/:id"
-                exact
-                render={(props) => (
-                  <PorfileWithId
-                    changeMe={() => this.setState({ me: false })}
                     me={this.state.me}
                     {...props}
                   />
