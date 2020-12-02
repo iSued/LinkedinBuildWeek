@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Col, Alert, Spinner } from "react-bootstrap";
 import BoxInfo from "./BoxInfo";
@@ -10,7 +9,7 @@ import ELC from "./ELC";
 import SkillsAndEndorsement from "./SkillsAndEndorsement";
 import Interests from "./Interests";
 import ModalExperience from "./ModalExperience";
-
+import Sidebar from "./Sidebar";
 
 class Profile extends React.Component {
   state = {
@@ -20,27 +19,29 @@ class Profile extends React.Component {
     showModalExperience: false,
     MyExperience: [],
 
-    editExperience: {experience: {}},
+    editExperience: { experience: {} },
     submitExpCounter: 0,
     loading: true,
     loadingExp: true,
-  }
+  };
 
   fetchProfile = async () => {
     this.setState({ loading: true });
-    this.props.changeMe();
-    try {
-      let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/profile/me",
-        {
-          headers: {
-            Authorization: process.env.REACT_APP_TOKEN,
-          },
-        }
-      )
 
-      let myProfile = await response.json()
-      console.log(myProfile)
+    const url =
+      this.props.match.params.id === "me"
+        ? "https://striveschool-api.herokuapp.com/api/profile/me"
+        : "https://striveschool-api.herokuapp.com/api/profile/" +
+          this.props.match.params.id;
+    try {
+      let response = await fetch(url, {
+        headers: {
+          Authorization: process.env.REACT_APP_TOKEN,
+        },
+      });
+
+      let myProfile = await response.json();
+      console.log(myProfile);
 
       if (response.ok) {
         this.fetchExperience(myProfile._id);
@@ -50,9 +51,9 @@ class Profile extends React.Component {
         <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   fetchExperience = async (id) => {
     this.setState({ loadingExp: true });
     try {
@@ -63,9 +64,9 @@ class Profile extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      )
-      let MyExperience = await response.json()
-      console.log("here experience", MyExperience)
+      );
+      let MyExperience = await response.json();
+      console.log("here experience", MyExperience);
 
       if (response.ok) {
         this.setState({ MyExperience, loadingExp: false });
@@ -74,24 +75,28 @@ class Profile extends React.Component {
         <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   componentDidMount = () => {
-    this.fetchProfile()
-  }
+    if (this.props.match.params.id === "me") {
+      this.props.changeMe();
+    } else {
+      this.props.changeNotMe();
+    }
+    this.fetchProfile();
+  };
 
   componentDidUpdate = (previousProps, previousState) => {
     if (previousState.submitCounter !== this.state.submitCounter) {
-      this.fetchProfile()
+      this.fetchProfile();
     }
 
     if (previousState.submitExpCounter !== this.state.submitExpCounter) {
       this.fetchProfile();
     }
   };
-
 
   render() {
     return (
@@ -106,7 +111,7 @@ class Profile extends React.Component {
             }
             myProfile={this.state.myProfile}
             submitCounter={() =>
-              this.setState({submitCounter: this.state.submitCounter + 1})
+              this.setState({ submitCounter: this.state.submitCounter + 1 })
             }
           />
         )}
@@ -132,40 +137,41 @@ class Profile extends React.Component {
               <ProfileStrength exp={this.state.MyExperience} />
 
               <Dashboard />
+            </>
+          )}
+          <>
+            <Activity myProfile={this.state.myProfile} />
 
-              <Activity myProfile={this.state.myProfile} />
+            {this.state.showModalExperience && (
+              <ModalExperience
+                id={this.state.myProfile._id}
+                showModalExperience={this.state.showModalExperience}
+                hide={() =>
+                  this.setState({
+                    showModalExperience: false,
+                    editExperience: { experience: {} },
+                  })
+                }
+                submitExpCounter={() =>
+                  this.setState({
+                    submitExpCounter: this.state.submitExpCounter + 1,
+                  })
+                }
+                editExp={this.state.editExperience}
+              />
+            )}
 
-              {this.state.showModalExperience && (
-                <ModalExperience
-                  id={this.state.myProfile._id}
-                  showModalExperience={this.state.showModalExperience}
-                  hide={() =>
-                    this.setState({
-                      showModalExperience: false,
-                      editExperience: {experience: {}},
-                    })
-                  }
-                 submitExpCounter={() =>
-                    this.setState({
-                      submitExpCounter: this.state.submitExpCounter + 1,
-                    })
-                  }
-                  editExp={this.state.editExperience}
-                />
-              )}
-       
-       {this.state.loadingExp ? (
-                <Spinner
-                  animation="border"
-                  variant="success"
-                  style={{ marginLeft: "45%" }}
-                />
-              ) : 
-              
-             (<ELC
+            {this.state.loadingExp ? (
+              <Spinner
+                animation="border"
+                variant="success"
+                style={{ marginLeft: "45%" }}
+              />
+            ) : (
+              <ELC
                 me={this.props.me}
                 onClicked={() => {
-                  this.setState({showModalExperience: true})
+                  this.setState({ showModalExperience: true });
                 }}
                 MyExperience={this.state.MyExperience}
                 editExp={(experience) =>
@@ -175,15 +181,18 @@ class Profile extends React.Component {
                     },
                   })
                 }
-              />)}
+              />
+            )}
 
-              <SkillsAndEndorsement me={this.props.me} />
-              <Interests />
-            </>
-          )}
+            <SkillsAndEndorsement me={this.props.me} />
+            <Interests />
+          </>
+        </Col>
+        <Col md={3}>
+          <Sidebar />
         </Col>
       </>
-    )
+    );
   }
 }
-export default Profile
+export default Profile;
