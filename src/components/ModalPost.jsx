@@ -87,7 +87,7 @@ export default class ModalPost extends React.Component {
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal title</Modal.Title>
+            <Modal.Title>Make a post</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Row>
