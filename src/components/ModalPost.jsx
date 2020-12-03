@@ -84,7 +84,7 @@ export default class ModalPost extends React.Component {
         }
       );
       if (response.ok) {
-        const data = response.json();
+        const data = await response.json();
 
         this.props.feedCounter();
 
@@ -218,7 +218,7 @@ export default class ModalPost extends React.Component {
                 </Link>
               </div>
               <div>
-                {this.state.POSTModel.text !== " " && (
+                {(this.state.POSTModel.text !== " " || this.state.post) && (
                   <button
                     type="submit"
                     id="post"
