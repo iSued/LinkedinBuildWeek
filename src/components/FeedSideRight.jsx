@@ -3,6 +3,8 @@ import AddFeeds from "./AddFeeds";
 import FileUnderProfile from "./FileUnderProfile";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import DownFeed from "./DownFeed";
+import ViewedCourses from "./ViewedCourses";
+import AdSense from "./AdSense";
 
 class FeedSideRight extends React.Component {
   render() {
@@ -16,6 +18,16 @@ class FeedSideRight extends React.Component {
         <Row>
           <Col>
             <DownFeed />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <ViewedCourses />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <AdSense />
           </Col>
         </Row>
       </Container>
