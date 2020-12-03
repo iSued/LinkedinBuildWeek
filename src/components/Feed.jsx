@@ -12,9 +12,6 @@ class Feed extends React.Component {
     post: {},
   };
 
-  // editPost =(post)=>{
-
-  // }
   fetchPosts = async () => {
     this.setState({ loading: true });
     try {
@@ -118,11 +115,23 @@ class Feed extends React.Component {
                       ></i>
                     </Col>
                   </Row>
-                  <p
-                    className="border-bottom pt-3 pb-4 px-1"
-                    style={{ borderColor: "#e7e6e5" }}
-                  >
-                    {post.text}
+                  <div className="border-bottom pb-4">
+                    <p className="pt-3 pb-4 px-1">
+                      {post.text}
+                      <br />
+                    </p>
+                    {post.image && (
+                      <img
+                        src={post.image}
+                        className="img-fluid "
+                        style={{
+                          objectFit: "cover",
+                          maxHeight: "300px",
+                          width: "100%",
+                          borderColor: "#e7e6e5",
+                        }}
+                      />
+                    )}
                     <br />
                     <i
                       className="far fa-thumbs-up mt-2 p-2"
@@ -130,12 +139,15 @@ class Feed extends React.Component {
                         color: "#0a66c2",
                         background: "#aacdf0",
                         borderRadius: "50%",
-                        display: this.state.like ? "inline" : "none",
+                        display: this.state.like ? "inline-block" : "none",
                       }}
                     ></i>
-                  </p>
+                  </div>
 
-                  <div className="d-flex  posts " style={{ color: "#6c6c6c" }}>
+                  <div
+                    className="d-flex  mt-3 posts "
+                    style={{ color: "#6c6c6c" }}
+                  >
                     <span
                       className="px-3"
                       onClick={() => this.setState({ like: !this.state.like })}
