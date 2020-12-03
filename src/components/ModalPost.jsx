@@ -167,6 +167,7 @@ export default class ModalPost extends React.Component {
               <div>
                 {this.state.POSTModel.text !== " " && (
                   <button
+                    className="mr-3"
                     type="submit"
                     id="post"
                     onClick={this.submitPost}

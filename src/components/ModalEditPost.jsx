@@ -1,26 +1,82 @@
 import React from "react";
-import { Modal, Form, Row, Col } from "react-bootstrap";
+import { Modal, Form, Row, Col, Button } from "react-bootstrap";
 
 class ModalEditPost extends React.Component {
+  state = {
+    postEdit: {
+      text: "",
+    },
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      postEdit: {
+        text: e.target.value,
+      },
+    });
+  };
+
+  componentDidUpdate = (previousProps) => {
+    if (previousProps.post.text !== this.props.post.text) {
+      this.setState({ postEdit: { text: this.props.post.text } });
+    }
+  };
+
+  editFetch = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(this.state.postEdit);
+      let response = await fetch(
+        "https://striveschool-api.herokuapp.com/api/posts/" +
+          this.props.post._id,
+        {
+          method: "PUT",
+          body: JSON.stringify(this.state.postEdit),
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      );
+      if (response.ok) {
+        // const data = await response.json();
+        this.props.feedCounter();
+        alert(`post edited SUCCESFULLY`);
+        // if (this.state.post !== null) {
+        //   this.fetchPostImage(data._id);
+        // }
+        // this.props.submitExpCounter();
+        this.props.onHide();
+      } else {
+        const error = await response.json();
+        console.log(error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
     return (
-      <Modal show={this.state.show} onHide={this.handleClose}>
+      <Modal show={this.props.show} onHide={() => this.props.onHide()}>
         <Modal.Header closeButton>
           <Modal.Title>Edit post</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Col xs={12}>
-            <Form>
-              <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form onSubmit={this.editFetch}>
+              <Form.Group>
                 <Form.Control
                   as="textarea"
                   rows={3}
                   style={{ border: "none" }}
-                  value={this.state.POSTModel.text}
-                  id="texttopost"
-                  onChange={(e) => this.updateField(e)}
+                  value={this.state.postEdit.text}
+                  onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
+              <Button type="submit" variant="primary">
+                Edit post
+              </Button>
             </Form>
           </Col>
         </Modal.Body>

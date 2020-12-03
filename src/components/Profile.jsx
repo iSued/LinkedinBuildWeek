@@ -1,15 +1,15 @@
-import React from "react"
-import {Col, Alert, Spinner} from "react-bootstrap"
-import BoxInfo from "./BoxInfo"
-import ProfileStrength from "./ProfileStrength"
-import Dashboard from "./Dashboard"
-import ModalForm from "./ModalForm"
-import Activity from "./Activity"
-import ELC from "./ELC"
-import SkillsAndEndorsement from "./SkillsAndEndorsement"
-import Interests from "./Interests"
-import ModalExperience from "./ModalExperience"
-import Sidebar from "./Sidebar"
+import React from "react";
+import { Col, Alert, Spinner } from "react-bootstrap";
+import BoxInfo from "./BoxInfo";
+import ProfileStrength from "./ProfileStrength";
+import Dashboard from "./Dashboard";
+import ModalForm from "./ModalForm";
+import Activity from "./Activity";
+import ELC from "./ELC";
+import SkillsAndEndorsement from "./SkillsAndEndorsement";
+import Interests from "./Interests";
+import ModalExperience from "./ModalExperience";
+import Sidebar from "./Sidebar";
 
 class Profile extends React.Component {
   state = {
@@ -18,44 +18,43 @@ class Profile extends React.Component {
     submitCounter: 0,
     showModalExperience: false,
     MyExperience: [],
-
-    editExperience: {experience: {}},
+    editExperience: { experience: {} },
     submitExpCounter: 0,
     loading: true,
     loadingExp: true,
-  }
+  };
 
   fetchProfile = async () => {
-    this.setState({loading: true})
+    this.setState({ loading: true });
 
     const url =
       this.props.match.params.id === "me"
         ? "https://striveschool-api.herokuapp.com/api/profile/me"
         : "https://striveschool-api.herokuapp.com/api/profile/" +
-          this.props.match.params.id
+          this.props.match.params.id;
     try {
       let response = await fetch(url, {
         headers: {
           Authorization: process.env.REACT_APP_TOKEN,
         },
-      })
+      });
 
-      let myProfile = await response.json()
-      console.log(myProfile)
+      let myProfile = await response.json();
+      console.log(myProfile);
 
       if (response.ok) {
-        this.fetchExperience(myProfile._id)
-        this.setState({myProfile, loading: false})
+        this.fetchExperience(myProfile._id);
+        this.setState({ myProfile, loading: false });
       } else {
-        this.setState({loading: false})
-        ;<Alert variant="danger">Something went wrong</Alert>
+        this.setState({ loading: false });
+        <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
   fetchExperience = async (id) => {
-    this.setState({loadingExp: true})
+    this.setState({ loadingExp: true });
     try {
       let response = await fetch(
         `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`,
@@ -64,51 +63,51 @@ class Profile extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      )
-      let MyExperience = await response.json()
-      console.log("here experience", MyExperience)
-      MyExperience = MyExperience.reverse()
+      );
+      let MyExperience = await response.json();
+      console.log("here experience", MyExperience);
+      MyExperience = MyExperience.reverse();
 
       if (response.ok) {
-        this.setState({MyExperience, loadingExp: false})
+        this.setState({ MyExperience, loadingExp: false });
       } else {
-        this.setState({loadingExp: false})
-        ;<Alert variant="danger">Something went wrong</Alert>
+        this.setState({ loadingExp: false });
+        <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   componentDidMount = () => {
     if (this.props.match.params.id === "me") {
-      this.props.changeMe()
+      this.props.changeMe();
     } else {
-      this.props.changeNotMe()
+      this.props.changeNotMe();
     }
-    this.fetchProfile()
-  }
+    this.fetchProfile();
+  };
 
   componentDidUpdate = (previousProps, previousState) => {
     if (previousState.submitCounter !== this.state.submitCounter) {
-      this.fetchProfile()
+      this.fetchProfile();
     }
 
     if (previousState.submitExpCounter !== this.state.submitExpCounter) {
-      this.fetchExperience(this.state.myProfile._id)
+      this.fetchExperience(this.state.myProfile._id);
     }
     if (previousProps.match.params.id !== this.props.match.params.id) {
       if (this.props.match.params.id === "me") {
-        this.props.changeMe()
+        this.props.changeMe();
       } else {
-        this.props.changeNotMe()
+        this.props.changeNotMe();
       }
-      this.fetchProfile()
+      this.fetchProfile();
     }
-  }
+  };
 
   render() {
-    console.log("profile props:", this.props.location.pathname)
+    console.log("profile props:", this.props.location.pathname);
     return (
       <>
         {this.state.show && (
@@ -121,7 +120,7 @@ class Profile extends React.Component {
             }
             myProfile={this.state.myProfile}
             submitCounter={() =>
-              this.setState({submitCounter: this.state.submitCounter + 1})
+              this.setState({ submitCounter: this.state.submitCounter + 1 })
             }
           />
         )}
@@ -131,7 +130,7 @@ class Profile extends React.Component {
             <Spinner
               animation="border"
               variant="success"
-              style={{marginLeft: "45%"}}
+              style={{ marginLeft: "45%" }}
             />
           ) : (
             <BoxInfo
@@ -139,7 +138,7 @@ class Profile extends React.Component {
               me={this.props.me}
               myProfile={this.state.myProfile}
               onClicked={() => {
-                this.setState({show: true})
+                this.setState({ show: true });
               }}
             />
           )}
@@ -160,7 +159,7 @@ class Profile extends React.Component {
                 hide={() =>
                   this.setState({
                     showModalExperience: false,
-                    editExperience: {experience: {}},
+                    editExperience: { experience: {} },
                   })
                 }
                 submitExpCounter={() =>
@@ -176,13 +175,13 @@ class Profile extends React.Component {
               <Spinner
                 animation="border"
                 variant="success"
-                style={{marginLeft: "45%"}}
+                style={{ marginLeft: "45%" }}
               />
             ) : (
               <ELC
                 me={this.props.me}
                 onClicked={() => {
-                  this.setState({showModalExperience: true})
+                  this.setState({ showModalExperience: true });
                 }}
                 MyExperience={this.state.MyExperience}
                 editExp={(experience) =>
@@ -208,7 +207,7 @@ class Profile extends React.Component {
           <Sidebar />
         </Col>
       </>
-    )
+    );
   }
 }
-export default Profile
+export default Profile;
