@@ -6,7 +6,7 @@ import { Container, Card, Button, Row, Col } from "react-bootstrap";
 class FeedSideLeft extends React.Component {
   render() {
     return (
-      <Container>
+      <div>
         <Row>
           <Col>
             <ProfileCard />
@@ -17,7 +17,7 @@ class FeedSideLeft extends React.Component {
             <FileUnderProfile />
           </Col>
         </Row>
-      </Container>
+      </div>
     );
   }
 }
