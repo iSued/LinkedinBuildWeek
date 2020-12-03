@@ -1,34 +1,40 @@
-import React from "react";
-import { Alert, Media, Row, Col, Card, Spinner } from "react-bootstrap";
-import ModalEditPost from "./ModalEditPost";
+import React from "react"
+import {Alert, Media, Row, Col, Card, Spinner} from "react-bootstrap"
+import ModalEditPost from "./ModalEditPost"
 
 class Feed extends React.Component {
   state = {
     posts: [],
-    like: localStorage.getItem("likes").split(","),
+    // like: localStorage.getItem("likes").split(","),
+    like:
+      localStorage.getItem("likes") && localStorage.getItem("likes").length > 0
+        ? localStorage.getItem("likes").split(",")
+        : // localStorage.getItem("likes")
+          " ",
+
     loading: true,
     userName: process.env.REACT_APP_USER,
     show: false,
     post: {},
-  };
+  }
 
   handleLikes = (id) => {
-    let likes = [];
+    let likes = []
     if (this.state.like.includes(id)) {
-      likes = this.state.like.filter((el) => el !== id);
+      likes = this.state.like.filter((el) => el !== id)
       this.setState({
         like: likes,
-      });
+      })
     } else {
-      likes = [...this.state.like, id];
-      this.setState({ like: likes });
+      likes = [...this.state.like, id]
+      this.setState({like: likes})
     }
 
-    localStorage.setItem("likes", likes);
-  };
+    localStorage.setItem("likes", likes)
+  }
 
   fetchPosts = async () => {
-    this.setState({ loading: true });
+    this.setState({loading: true})
     try {
       let response = await fetch(
         "https://striveschool-api.herokuapp.com/api/posts/",
@@ -37,31 +43,31 @@ class Feed extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      );
-      let posts = await response.json();
+      )
+      let posts = await response.json()
       // console.log(posts);
-      posts = posts.reverse();
-      posts = posts.filter((post) => post.username !== "StefanoMilosh");
-      console.log("posts", posts);
+      posts = posts.reverse()
+      posts = posts.filter((post) => post.username !== "StefanoMilosh")
+      console.log("posts", posts)
       if (response.ok) {
-        this.setState({ posts, loading: false });
+        this.setState({posts, loading: false})
       } else {
-        <Alert variant="danger">Something went wrong!</Alert>;
-        this.setState({ loading: false });
+        ;<Alert variant="danger">Something went wrong!</Alert>
+        this.setState({loading: false})
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   componentDidUpdate = (previousProps) => {
     if (previousProps.feedCounter !== this.props.feedCounter) {
-      this.fetchPosts();
+      this.fetchPosts()
     }
-  };
+  }
   componentDidMount = () => {
-    this.fetchPosts();
-  };
+    this.fetchPosts()
+  }
 
   render() {
     return (
@@ -70,7 +76,7 @@ class Feed extends React.Component {
           <Spinner
             animation="border"
             variant="primary"
-            style={{ marginLeft: "45%" }}
+            style={{marginLeft: "45%"}}
           />
         ) : (
           <Row>
@@ -86,7 +92,7 @@ class Feed extends React.Component {
                           className="mr-3"
                           src={post.user.image}
                           alt="user"
-                          style={{ borderRadius: "50%", objectFit: "cover" }}
+                          style={{borderRadius: "50%", objectFit: "cover"}}
                           onClick={() =>
                             this.props.history.push("/profile/" + post.user._id)
                           }
@@ -101,14 +107,14 @@ class Feed extends React.Component {
                           >
                             {post.user.name} {post.user.surname}
                           </h5>
-                          <h6 style={{ color: "#b0b0b0", fontSize: "15px" }}>
+                          <h6 style={{color: "#b0b0b0", fontSize: "15px"}}>
                             {post.user.title}
                           </h6>
-                          <h6 style={{ color: "#b0b0b0", fontSize: "15px" }}>
+                          <h6 style={{color: "#b0b0b0", fontSize: "15px"}}>
                             {post.createdAt}
                             <i
                               className="fas fa-globe-americas ml-1"
-                              style={{ color: "#6c6c6c" }}
+                              style={{color: "#6c6c6c"}}
                             ></i>
                           </h6>
                         </Media.Body>
@@ -124,9 +130,7 @@ class Feed extends React.Component {
                               ? "inline"
                               : "none",
                         }}
-                        onClick={() =>
-                          this.setState({ post: post, show: true })
-                        }
+                        onClick={() => this.setState({post: post, show: true})}
                       ></i>
                     </Col>
                   </Row>
@@ -163,7 +167,7 @@ class Feed extends React.Component {
 
                   <div
                     className="d-flex  mt-3 posts "
-                    style={{ color: "#6c6c6c" }}
+                    style={{color: "#6c6c6c"}}
                   >
                     <span
                       className="px-3"
@@ -190,12 +194,12 @@ class Feed extends React.Component {
         <ModalEditPost
           post={this.state.post}
           show={this.state.show}
-          onHide={() => this.setState({ show: false })}
+          onHide={() => this.setState({show: false})}
           feedCounter={this.props.changeCounter}
         />
       </>
-    );
+    )
   }
 }
 
-export default Feed;
+export default Feed
