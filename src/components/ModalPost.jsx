@@ -1,5 +1,13 @@
 import React from "react";
-import { Modal, Button, Col, Row, Dropdown, Form } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Col,
+  Row,
+  Dropdown,
+  Form,
+  Alert,
+} from "react-bootstrap";
 import "./FeedPost.css";
 import PublicIcon from "@material-ui/icons/Public";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
@@ -16,6 +24,7 @@ export default class ModalPost extends React.Component {
     POSTModel: { text: " " },
     showpost: false,
     errMessage: "",
+    post: null,
   };
   handleClose = () => this.setState({ show: false });
   handleShow = () => this.setState({ show: true });
@@ -25,10 +34,39 @@ export default class ModalPost extends React.Component {
     this.setState({ POSTModel: { text: "#" + text }, showpost: true });
   };
   updateField = (e) => {
-    // let POSTModel = { ...this.state.POSTModel };
-    // let currentId = e.currentTarget.id;
-    // POSTModel[currentId] = e.currentTarget.value;
     this.setState({ POSTModel: { text: e.target.value } });
+  };
+  fileUploadHandler = (e) => {
+    const formData = new FormData();
+    formData.append("post", e.target.files[0]);
+
+    this.setState({ post: formData });
+  };
+  fetchPostImage = async (id) => {
+    if (this.state.post) {
+      try {
+        let response = await fetch(
+          `https://striveschool-api.herokuapp.com/api/posts/${id}`,
+          {
+            method: "POST",
+            body: this.state.post,
+
+            headers: {
+              Authorization: process.env.REACT_APP_TOKEN,
+            },
+          }
+        );
+        if (response.ok) {
+          console.log("OK");
+        } else {
+          const error = await response.json();
+          console.log(error);
+          <Alert variant="danger">Something went wrong</Alert>;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   submitPost = async (e) => {
@@ -46,10 +84,14 @@ export default class ModalPost extends React.Component {
         }
       );
       if (response.ok) {
+        const data = response.json();
+
         this.props.feedCounter();
+
         this.setState({
           POSTModel: { text: "" },
         });
+        this.fetchPostImage(data._id);
       } else {
         console.log(this.state.POSTModel.text);
         let error = await response.json();
@@ -124,7 +166,7 @@ export default class ModalPost extends React.Component {
               </p>
               <Col xs={12}>
                 <Form>
-                  <Form.Group controlId="exampleForm.ControlTextarea1">
+                  <Form.Group>
                     <Form.Control
                       as="textarea"
                       rows={3}
@@ -156,10 +198,21 @@ export default class ModalPost extends React.Component {
                 <Link>
                   <YouTubeIcon />
                 </Link>
-
-                <Link>
-                  <ImageIcon className="ml-3" />
-                </Link>
+                <label for="file">
+                  <Link>
+                    <input
+                      type="file"
+                      id="file"
+                      style={{ display: "none" }}
+                      onChange={this.fileUploadHandler}
+                    />
+                    <ImageIcon
+                      className="ml-3"
+                      style={{ cursor: "pointer" }}
+                      // onClick={() => this.fileInput.click()}
+                    />
+                  </Link>
+                </label>
                 <Link>
                   <GrNotes className="mx-3" />
                 </Link>
