@@ -29,7 +29,7 @@ function Activity(props) {
                 width="56px"
               />
             </div>
-            <div>
+            <div className="ml-2">
               <h6>Just finished the course: "JavaScript...#Async!</h6>
               <p className="text-secondary">
                 {props.myProfile.name} shared this
@@ -44,7 +44,7 @@ function Activity(props) {
                 width="56px"
               />
             </div>
-            <div>
+            <div className="ml-2">
               <h6>Just finished the course: "JavaScript...#Async!</h6>
               <p className="text-secondary">
                 {props.myProfile.name} shared this

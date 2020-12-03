@@ -6,6 +6,7 @@ import MayKnow from "./MayKnow";
 import _ from "lodash";
 import TopSettings from "./TopSettings";
 import Videos from "./Videos";
+// import { EuroSymbolSharp } from "@material-ui/icons";
 
 class Sidebar extends React.Component {
   state = {
@@ -21,11 +22,14 @@ class Sidebar extends React.Component {
         "https://striveschool-api.herokuapp.com/api/profile",
         {
           headers: {
-            Authorization: `${process.env.REACT_APP_TOKEN}`,
+            Authorization: process.env.REACT_APP_TOKEN,
           },
         }
       );
       let users = await response.json();
+      users = users.filter(
+        (user) => user.username !== process.env.REACT_APP_USER && user.name
+      );
       if (response.ok) {
         console.log("all users", users);
         const shuffledUsers = _.slice(_.shuffle(users), 0, 16);
@@ -62,11 +66,13 @@ class Sidebar extends React.Component {
   render() {
     return (
       <>
-        <Row>
-          <Col>
-            <TopSettings />
-          </Col>
-        </Row>
+        {this.props.me && (
+          <Row>
+            <Col>
+              <TopSettings />
+            </Col>
+          </Row>
+        )}
         <Row>
           <Col>
             <Advertise />

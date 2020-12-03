@@ -1,12 +1,10 @@
-import React from "react"
-import PencilEdit from "./PencilEdit"
-import PlusEdit from "./PlusEdit"
-import DeleteX from "./DeleteX"
-import {Card, Row, Col, ListGroup} from "react-bootstrap"
-import Moment from "react-moment"
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
-import {ThreeDRotationSharp} from "@material-ui/icons"
-
+import React from "react";
+import PencilEdit from "./PencilEdit";
+import PlusEdit from "./PlusEdit";
+import DeleteX from "./DeleteX";
+import { Card, Row, Col, ListGroup } from "react-bootstrap";
+import Moment from "react-moment";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 export default class extends React.Component {
   state = { MyExperience: this.props.MyExperience, visible: 3 };
@@ -22,9 +20,9 @@ export default class extends React.Component {
   };
 
   handleExperience = (experience) => {
-    console.log(experience)
-    this.deleteExperience(experience)
-  }
+    console.log(experience);
+    this.deleteExperience(experience);
+  };
 
   deleteExperience = async (experience) => {
     try {
@@ -36,18 +34,18 @@ export default class extends React.Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      )
+      );
       if (response.ok) {
-        alert("Exeperience DELETED successfully")
-        this.props.submitExpCounter()
+        alert("Exeperience DELETED successfully");
+        this.props.submitExpCounter();
       } else {
-        const error = await response.json()
-        console.log(error)
+        const error = await response.json();
+        console.log(error);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   render() {
     return (
@@ -77,15 +75,21 @@ export default class extends React.Component {
                           className="d-flex align-items-center justify-content-between"
                           key={index}
                         >
-                          <div>
+                          <div className="d-flex">
                             <div>
                               <img
-                                src="https://placehold.it/300x300"
+                                src={
+                                  experience.image
+                                    ? experience.image
+                                    : "https://placehold.it/300x300"
+                                }
                                 alt="placeholder"
                                 width="56px"
+                                height="56px"
+                                style={{ objectFit: "cover" }}
                               />
                             </div>
-                            <div>
+                            <div className="ml-2">
                               <h5>{experience.role}</h5>
                               <h6>{experience.company}</h6>
                               <p className="d-flex">
@@ -152,15 +156,16 @@ export default class extends React.Component {
               <Col xs={12}>
                 <ListGroup className="d-flex" variant="flush">
                   <ListGroup.Item className="d-flex align-items-center justify-content-between">
-                    <div>
+                    <div className="d-flex align-items-center ">
                       <div>
                         <img
                           src="https://placehold.it/300x300"
                           alt="placeholder"
                           width="56px"
+                          height="56px"
                         />
                       </div>
-                      <div>
+                      <div className="ml-2">
                         <h6>CSS: Selectors</h6>
                       </div>
                     </div>
@@ -176,7 +181,7 @@ export default class extends React.Component {
                         width="56px"
                       />
                     </div>
-                    <div>
+                    <div className="ml-2">
                       <h6>Journalist</h6>
                     </div>
                   </ListGroup.Item>
@@ -208,7 +213,7 @@ export default class extends React.Component {
                           width="56px"
                         />
                       </div>
-                      <div>
+                      <div className="ml-2">
                         <h6>Learning ECMA scripts</h6>
                       </div>
                     </div>
@@ -224,7 +229,7 @@ export default class extends React.Component {
                         width="56px"
                       />
                     </div>
-                    <div>
+                    <div className="ml-2">
                       <h6>Learning ECMA scripts</h6>
                     </div>
                   </ListGroup.Item>

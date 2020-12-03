@@ -1,5 +1,5 @@
-import React, {Component} from "react"
-import {Modal, Form, Button} from "react-bootstrap"
+import React, { Component } from "react";
+import { Modal, Form, Button, Alert } from "react-bootstrap";
 
 export default class ModalExperience extends Component {
   state = {
@@ -11,7 +11,8 @@ export default class ModalExperience extends Component {
       description: "",
       area: "",
     },
-  }
+    post: null,
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -19,8 +20,40 @@ export default class ModalExperience extends Component {
         ...this.state.experience,
         [e.target.id]: e.target.value,
       },
-    })
-  }
+    });
+  };
+
+  fileUploadHandler = (e) => {
+    const formData = new FormData();
+    formData.append("experience", e.target.files[0]);
+    this.setState({ post: formData });
+  };
+
+  fetchPostImage = async (id) => {
+    try {
+      let response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences/${id}/picture`,
+        {
+          method: "POST",
+          body: this.state.post,
+
+          headers: {
+            //"Content-Type": "application/json",
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("OK");
+      } else {
+        const error = await response.json();
+        console.log(error);
+        <Alert variant="danger">Something went wrong</Alert>;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   componentDidMount = () => {
     if (this.props.editExp.experience._id) {
@@ -33,7 +66,7 @@ export default class ModalExperience extends Component {
           description: this.props.editExp.experience.description,
           area: this.props.editExp.experience.area,
         },
-      })
+      });
     } else {
       this.setState({
         experience: {
@@ -44,42 +77,14 @@ export default class ModalExperience extends Component {
           description: "",
           area: "",
         },
-      })
+      });
     }
-  }
-
-  // addExperience = async (e) => {
-  //   e.preventDefault()
-  //   try {
-  //     const response = await fetch(
-  //       `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences`,
-  //       {
-  //         method: "POST",
-  //         body: JSON.stringify(this.state.experience),
-
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: process.env.REACT_APP_TOKEN,
-  //         },
-  //       }
-  //     )
-
-  //     if (response.ok) {
-  //       alert("Experience UPDATED SUCCESFULLY")
-  //       this.props.submitExpCounter()
-  //     } else {
-  //       const error = await response.json()
-  //       console.log(error)
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  };
 
   submitExperience = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      let response
+      let response;
       if (this.props.editExp.experience._id) {
         response = await fetch(
           `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences/${this.props.editExp.experience._id}`,
@@ -92,7 +97,7 @@ export default class ModalExperience extends Component {
               Authorization: process.env.REACT_APP_TOKEN,
             },
           }
-        )
+        );
       } else {
         response = await fetch(
           `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences`,
@@ -105,25 +110,34 @@ export default class ModalExperience extends Component {
               Authorization: process.env.REACT_APP_TOKEN,
             },
           }
-        )
+        );
       }
 
       if (response.ok) {
+        const data = await response.json();
+
         alert(
           `Experience ${
             this.props.editExp.experience._id ? "EDITED" : "ADDED"
           } SUCCESFULLY`
-        )
-        this.props.submitExpCounter()
-        this.props.hide()
+        );
+        if (this.state.post !== null) {
+          this.fetchPostImage(data._id);
+        }
+        this.props.submitExpCounter();
+        this.props.hide();
       } else {
-        const error = await response.json()
-        console.log(error)
+        const error = await response.json();
+        console.log(error);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+  // submitExperienceWithImage = (e) => {
+  //   this.fetchPostImage();
+  //   this.submitExperience();
+  // };
 
   render() {
     return (
@@ -197,6 +211,22 @@ export default class ModalExperience extends Component {
                   onChange={(e) => this.handleChange(e)}
                 />
               </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type="file"
+                  id="fileUpload"
+                  onChange={this.fileUploadHandler}
+                  style={{ display: "none" }}
+                  ref={(fileInput) => (this.fileInput = fileInput)}
+                />
+                <Button
+                  className="rounded-pill mr-3 my-3 p-1 px-4 w-100"
+                  variant="primary"
+                  onClick={() => this.fileInput.click()}
+                >
+                  Upload file
+                </Button>
+              </Form.Group>
 
               <Button variant="primary" type="submit">
                 {this.props.editExp.experience._id
@@ -207,6 +237,6 @@ export default class ModalExperience extends Component {
           </Modal.Body>
         </Modal>
       </>
-    )
+    );
   }
 }

@@ -3,7 +3,13 @@ import { Button, Card } from "react-bootstrap";
 import BoxInfoButton from "./BoxInfoButton";
 import OpenToWork from "./OpenToWork";
 import PencilEdit from "./PencilEdit";
+import ModalProfilePicture from "./ModalProfilePicture";
+
 class BoxInfo extends React.Component {
+  state = {
+    showPictureModal: false,
+  };
+
   render() {
     return (
       <Card>
@@ -20,11 +26,25 @@ class BoxInfo extends React.Component {
                 src={this.props.myProfile.image}
                 alt="placeholder"
                 height="160px"
+                width="160px"
                 style={{
                   borderRadius: "50%",
                   border: "4px solid white",
+                  objectFit: "cover",
+                }}
+                onClick={() => {
+                  this.setState({ showPictureModal: true });
                 }}
               />
+              {this.state.showPictureModal && this.props.me && (
+                <ModalProfilePicture
+                  showPictureModal={this.state.showPictureModal}
+                  hidePictureModal={() =>
+                    this.setState({ showPictureModal: false })
+                  }
+                  id={this.props.id}
+                />
+              )}
             </div>
             <div>
               <BoxInfoButton me={this.props.me} />

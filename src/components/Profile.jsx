@@ -18,7 +18,6 @@ class Profile extends React.Component {
     submitCounter: 0,
     showModalExperience: false,
     MyExperience: [],
-
     editExperience: { experience: {} },
     submitExpCounter: 0,
     loading: true,
@@ -126,7 +125,7 @@ class Profile extends React.Component {
           />
         )}
 
-        <Col md={9}>
+        <Col md={8}>
           {this.state.loading ? (
             <Spinner
               animation="border"
@@ -135,6 +134,7 @@ class Profile extends React.Component {
             />
           ) : (
             <BoxInfo
+              id={this.state.myProfile._id}
               me={this.props.me}
               myProfile={this.state.myProfile}
               onClicked={() => {
@@ -203,8 +203,8 @@ class Profile extends React.Component {
             <Interests />
           </>
         </Col>
-        <Col md={3}>
-          <Sidebar />
+        <Col md={4} className="px-5">
+          <Sidebar me={this.props.me} />
         </Col>
       </>
     );

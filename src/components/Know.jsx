@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col, Container, Accordion, Card, Button } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
-import { Avatar } from "@material-ui/core";
 import MessageSharpIcon from "@material-ui/icons/MessageSharp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
@@ -16,30 +15,32 @@ class Know extends React.Component {
         <Accordion>
           <Card className="youknow mb-2">
             <Card.Body>
-              <Container>
-                <h3>you know</h3>
-              </Container>
-              {this.props.oneProps.map((user) => (
-                <Row>
-                  <Col className=" d-flex px-2 py-2 justify-content-center align-items-center">
-                    <Avatar
+              <h5 style={{ color: "#707070" }}>People also viewed</h5>
+
+              {this.props.oneProps.map((user, index) => (
+                <Row key={index}>
+                  <Col className=" d-flex px-0 py-2 justify-content-center align-items-start">
+                    <img
+                      width="56px"
+                      height="56px"
                       alt="Remy Sharp"
+                      style={{ objectFit: "cover", borderRadius: "50%" }}
                       src={user.image}
-                      className="avatar"
+                      // className="avatar"
                     />
                   </Col>
                   <Col
                     xs={7}
-                    className="bordered d-flex px-2 py-2 justify-content-start align-items-center"
+                    className="bordered d-flex pl-2 py-2 justify-content-start align-items-center"
                   >
-                    <Link to={"/profile/" + user._id}>
-                      <h4>
+                    <Link to={"/profile/" + user._id} className="text-dark">
+                      <h6 style={{ fontWeight: "bold" }}>
                         {user.name} {user.surname}
-                      </h4>
-                      <p>{user.title}</p>
+                      </h6>
+                      <p style={{ color: "#707070" }}>{user.title}</p>
                     </Link>
                   </Col>
-                  <Col className="bordered d-flex px-2 py-2 justify-content-center align-items-center">
+                  <Col className="bordered d-flex pl-0 py-2 justify-content-center align-items-center">
                     <MessageSharpIcon />
                   </Col>
                 </Row>
@@ -47,27 +48,30 @@ class Know extends React.Component {
             </Card.Body>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
-                {this.props.twoProps.map((user) => (
-                  <Row>
-                    <Col className=" d-flex px-2 py-2 justify-content-center align-items-center">
-                      <Avatar
+                {this.props.twoProps.map((user, index) => (
+                  <Row key={index}>
+                    <Col className=" d-flex px-0 py-2 justify-content-center align-items-start">
+                      <img
+                        width="56px"
+                        height="56px"
                         alt="Remy Sharp"
+                        style={{ objectFit: "cover", borderRadius: "50%" }}
                         src={user.image}
-                        className="avatar"
+                        // className="avatar"
                       />
                     </Col>
                     <Col
                       xs={7}
-                      className="bordered d-flex px-2 py-2 justify-content-start align-items-center"
+                      className="bordered d-flex pl-2 py-2 justify-content-start align-items-center"
                     >
-                      <Link to={"/profile/" + user._id}>
-                        <h4>
+                      <Link to={"/profile/" + user._id} className="text-dark">
+                        <h6 style={{ fontWeight: "bold" }}>
                           {user.name} {user.surname}
-                        </h4>
-                        <p>{user.title}</p>
+                        </h6>
+                        <p style={{ color: "#707070" }}>{user.title}</p>
                       </Link>
                     </Col>
-                    <Col className="bordered d-flex px-2 py-2 justify-content-center align-items-center">
+                    <Col className="bordered d-flex pl-0 py-2 justify-content-center align-items-center">
                       <MessageSharpIcon />
                     </Col>
                   </Row>
