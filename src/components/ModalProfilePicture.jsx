@@ -1,24 +1,43 @@
 import React, {Component} from "react"
-import {Modal, Button} from "react-bootstrap"
+import {Modal, Button, Alert} from "react-bootstrap"
 
 export default class ModalProfilePicture extends Component {
-  state = {}
+  state = {
+    post: null,
+  }
 
-  // postImage = async () => {
-  //     const url = "https://striveschool-api.herokuapp.com/api/profile/{userId}/picture"
+  fileSelectedHandler = (e) => {
+    const formData = new FormData()
+    formData.append("profile", e.target.files[0])
+    this.setState({post: formData})
+  }
 
-  //     try {
-  //         const response = fetch("https://striveschool-api.herokuapp.com/api/profile/me/picture", {
-  //             method: "POST",
-  //             body: new FormData(formElem)
-  //           )
-  //         }
+  postImage = async () => {
+    //   const url = "https://striveschool-api.herokuapp.com/api/profile/{userId}/picture"
 
-  //     }
-  //     catch (error) {
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/picture`,
+        {
+          method: "POST",
+          body: this.state.post,
 
-  //     }
-  // }
+          headers: {
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      )
+      if (response.ok) {
+        console.log("profile image posted succesfully")
+      } else {
+        const error = await response.json()
+        console.log(error)
+        ;<Alert variant="danger">Something went wrong</Alert>
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   render() {
     return (
@@ -32,17 +51,18 @@ export default class ModalProfilePicture extends Component {
           <Modal.Title>Modal title</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          I will not close if you click outside me. Don't even try to press
-          escape key.
+          <input type="file" onChange={this.fileSelectedHandler} />
         </Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
             onClick={() => this.props.hidePictureModal()}
           >
-            Close
+            Cancel
           </Button>
-          <Button variant="primary">Understood</Button>
+          <Button variant="primary" onClick={this.postImage}>
+            Upload
+          </Button>
         </Modal.Footer>
       </Modal>
     )

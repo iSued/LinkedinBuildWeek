@@ -40,6 +40,7 @@ class BoxInfo extends React.Component {
                   hidePictureModal={() =>
                     this.setState({showPictureModal: false})
                   }
+                  id={this.props.id}
                 />
               )}
             </div>
