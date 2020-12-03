@@ -5,11 +5,26 @@ import ModalEditPost from "./ModalEditPost";
 class Feed extends React.Component {
   state = {
     posts: [],
-    like: false,
+    like: localStorage.getItem("likes").split(","),
     loading: true,
     userName: process.env.REACT_APP_USER,
     show: false,
     post: {},
+  };
+
+  handleLikes = (id) => {
+    let likes = [];
+    if (this.state.like.includes(id)) {
+      likes = this.state.like.filter((el) => el !== id);
+      this.setState({
+        like: likes,
+      });
+    } else {
+      likes = [...this.state.like, id];
+      this.setState({ like: likes });
+    }
+
+    localStorage.setItem("likes", likes);
   };
 
   fetchPosts = async () => {
@@ -139,7 +154,9 @@ class Feed extends React.Component {
                         color: "#0a66c2",
                         background: "#aacdf0",
                         borderRadius: "50%",
-                        display: this.state.like ? "inline-block" : "none",
+                        display: this.state.like.includes(post._id)
+                          ? "inline-block"
+                          : "none",
                       }}
                     ></i>
                   </div>
@@ -150,9 +167,10 @@ class Feed extends React.Component {
                   >
                     <span
                       className="px-3"
-                      onClick={() => this.setState({ like: !this.state.like })}
+                      onClick={() => this.handleLikes(post._id)}
                     >
-                      <i className="far fa-thumbs-up"></i> Like
+                      <i className="far fa-thumbs-up"></i>{" "}
+                      {this.state.like.includes(post._id) ? "Unlike" : "Like"}
                     </span>
                     <span className="px-3">
                       <i className="far fa-comment-dots"></i> Comment
