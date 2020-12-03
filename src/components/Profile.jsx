@@ -125,7 +125,7 @@ class Profile extends React.Component {
           />
         )}
 
-        <Col md={9}>
+        <Col md={8}>
           {this.state.loading ? (
             <Spinner
               animation="border"
@@ -203,7 +203,7 @@ class Profile extends React.Component {
             <Interests />
           </>
         </Col>
-        <Col md={3}>
+        <Col md={4} className="px-5">
           <Sidebar />
         </Col>
       </>

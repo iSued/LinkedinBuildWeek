@@ -17,7 +17,7 @@ body {
 .bordered {
   border-bottom: 1px solid grey;
 
-  background-color: #f3f2ef;
+  background-color: white;
 }
 
 i.fa-pencil-alt:hover,
