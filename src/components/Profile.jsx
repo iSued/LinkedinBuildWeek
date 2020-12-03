@@ -204,7 +204,7 @@ class Profile extends React.Component {
           </>
         </Col>
         <Col md={4} className="px-5">
-          <Sidebar />
+          <Sidebar me={this.props.me} />
         </Col>
       </>
     );
