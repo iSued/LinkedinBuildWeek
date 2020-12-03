@@ -110,6 +110,9 @@ export default class FeedPost extends Component {
         <Feed
           history={this.props.history}
           feedCounter={this.state.feedCounter}
+          changeCounter={() =>
+            this.setState({ feedCounter: this.state.feedCounter + 1 })
+          }
         />
       </Container>
     );

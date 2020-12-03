@@ -1,5 +1,6 @@
 import React from "react";
 import { Alert, Media, Row, Col, Card, Spinner } from "react-bootstrap";
+import ModalEditPost from "./ModalEditPost";
 
 class Feed extends React.Component {
   state = {
@@ -7,8 +8,13 @@ class Feed extends React.Component {
     like: false,
     loading: true,
     userName: process.env.REACT_APP_USER,
+    show: false,
+    post: {},
   };
 
+  // editPost =(post)=>{
+
+  // }
   fetchPosts = async () => {
     this.setState({ loading: true });
     try {
@@ -106,6 +112,9 @@ class Feed extends React.Component {
                               ? "inline"
                               : "none",
                         }}
+                        onClick={() =>
+                          this.setState({ post: post, show: true })
+                        }
                       ></i>
                     </Col>
                   </Row>
@@ -148,6 +157,12 @@ class Feed extends React.Component {
             ))}
           </Row>
         )}
+        <ModalEditPost
+          post={this.state.post}
+          show={this.state.show}
+          onHide={() => this.setState({ show: false })}
+          feedCounter={this.props.changeCounter}
+        />
       </>
     );
   }
