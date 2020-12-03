@@ -97,6 +97,14 @@ class Profile extends React.Component {
     if (previousState.submitExpCounter !== this.state.submitExpCounter) {
       this.fetchExperience(this.state.myProfile._id);
     }
+    if (previousProps.match.params.id !== this.props.match.params.id) {
+      if (this.props.match.params.id === "me") {
+        this.props.changeMe();
+      } else {
+        this.props.changeNotMe();
+      }
+      this.fetchProfile();
+    }
   };
 
   render() {
@@ -134,7 +142,7 @@ class Profile extends React.Component {
               }}
             />
           )}
-          {this.props.me && this.props.location.pathname === "/" && (
+          {this.props.me && (
             <>
               <ProfileStrength exp={this.state.MyExperience} />
 
