@@ -21,7 +21,6 @@ export default class ModalProfilePicture extends Component {
         {
           method: "POST",
           body: this.state.post,
-
           headers: {
             Authorization: process.env.REACT_APP_TOKEN,
           },
@@ -29,6 +28,7 @@ export default class ModalProfilePicture extends Component {
       )
       if (response.ok) {
         console.log("profile image posted succesfully")
+        this.props.hidePictureModal()
       } else {
         const error = await response.json()
         console.log(error)
@@ -47,8 +47,8 @@ export default class ModalProfilePicture extends Component {
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
+        <Modal.Header>
+          <Modal.Title>Post Profile Picture Here</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <input type="file" onChange={this.fileSelectedHandler} />
