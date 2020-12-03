@@ -1,24 +1,25 @@
 import React from "react";
-import ProfileCard from "./ProfileCard";
+import AddFeeds from "./AddFeeds";
 import FileUnderProfile from "./FileUnderProfile";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import DownFeed from "./DownFeed";
 
-class FeedSideLeft extends React.Component {
+class FeedSideRight extends React.Component {
   render() {
     return (
       <Container>
         <Row>
           <Col>
-            <ProfileCard />
+            <AddFeeds />
           </Col>
         </Row>
         <Row>
           <Col>
-            <FileUnderProfile />
+            <DownFeed />
           </Col>
         </Row>
       </Container>
     );
   }
 }
-export default FeedSideLeft;
+export default FeedSideRight;

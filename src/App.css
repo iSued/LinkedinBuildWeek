@@ -92,3 +92,36 @@ i.fas.fa-plus:hover {
   border-radius: 50%;
   background-color: rgb(243, 203, 203);
 }
+.ProfileCardImg {
+  height: 20%;
+}
+.ProfileCard {
+  border-top: 0.7rem solid gold;
+}
+.avatarProfile {
+  background-color: white;
+  padding: 2px;
+  width: 10rem;
+  height: auto;
+  margin-top: -20%;
+  object-fit: cover;
+}
+.gold-box {
+  color: gold;
+}
+.BorderCardProfile {
+  border-top: 1px solid grey;
+}
+.card-header {
+  background-color: white;
+  border-top: 1px solid grey;
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+}
+.linkedin-icon {
+  color: rgb(6, 95, 146);
+}
+.follow-links {
+  border: 3px solid rgb(6, 95, 146);
+  border-radius: 1rem;
+}

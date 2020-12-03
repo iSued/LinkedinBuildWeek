@@ -4,6 +4,7 @@ import "./FeedPost.css";
 import ModalPost from "./ModalPost";
 import Feed from "./Feed";
 import FeedSideLeft from "./FeedSideLeft";
+import FeedSideRight from "./FeedSideRight";
 export default class FeedPost extends Component {
   state = {
     feedCounter: 0,
@@ -12,7 +13,7 @@ export default class FeedPost extends Component {
   render() {
     return (
       <Row>
-        <Col Col xs={3}>
+        <Col className="">
           <FeedSideLeft />
         </Col>
         <Col>
@@ -119,7 +120,9 @@ export default class FeedPost extends Component {
             />
           </Container>
         </Col>
-        <Col></Col>
+        <Col className="d-flex justify-content-center">
+          <FeedSideRight />
+        </Col>
       </Row>
     );
   }

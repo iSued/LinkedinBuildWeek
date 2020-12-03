@@ -1,9 +1,82 @@
 import React from "react";
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Container,
+  Accordion,
+  ListGroup,
+  Image,
+  Card,
+  Button,
+} from "react-bootstrap";
+import { Link, withRouter } from "react-router-dom";
+import StopIcon from "@material-ui/icons/Stop";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
 
 class ProfileCard extends React.Component {
   render() {
-    return <h1>placeholder</h1>;
+    return (
+      <div>
+        <Card className="ProfileCard mb-3" style={{ width: "18rem" }}>
+          <Card.Img
+            variant="top"
+            src="http://lorempixel.com/output/sports-q-c-1920-480-7.jpg"
+            className="ProfileCardImg"
+          />
+          <Row className="d-flex justify-content-center">
+            <Image
+              className="avatarProfile"
+              src="https://via.placeholder.com/300.png/09f/fff"
+              roundedCircle
+            />
+          </Row>
+          <Card.Body>
+            <Card.Title className="text-center">Sued Sinani</Card.Title>
+            <Card.Text className="text-center">Burger Seller</Card.Text>
+
+            <Row className="BorderCardProfile mt-3 pt-3">
+              <Col className="d-flex justify-content-between">
+                <span>Connections</span>
+                <span>2</span>
+              </Col>
+            </Row>
+            <Row className="mb-3 ">
+              <Col className="d-flex justify-content-between">
+                <span>Grow your Network</span>
+              </Col>
+            </Row>
+            <Row className="mt-3 pt-3 BorderCardProfile">
+              <Col className="d-flex justify-content-between">
+                <span>Who viewed your profile</span>
+                <span>28</span>
+              </Col>
+            </Row>
+            <Row className="mt-3 pt-3 BorderCardProfile">
+              <Col
+                className="d-flex justify-content-start align-items-center"
+                md="2"
+              >
+                <StopIcon className="gold-box" />
+              </Col>
+              <Col className="d-flex justify-content-start align-items-center">
+                See all premium features
+              </Col>
+            </Row>
+            <Row className="mt-3 pt-3 BorderCardProfile">
+              <Col
+                className="d-flex justify-content-start align-items-center"
+                md="2"
+              >
+                <BookmarkIcon className="" />
+              </Col>
+              <Col className="d-flex justify-content-start align-items-center">
+                Saved Items
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      </div>
+    );
   }
 }
 export default ProfileCard;
