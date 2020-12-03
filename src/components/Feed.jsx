@@ -24,10 +24,10 @@ class Feed extends React.Component {
         }
       );
       let posts = await response.json();
-      console.log(posts);
+      // console.log(posts);
       posts = posts.reverse();
       posts = posts.filter((post) => post.username !== "StefanoMilosh");
-      console.log(posts);
+      console.log("posts", posts);
       if (response.ok) {
         this.setState({ posts, loading: false });
       } else {
