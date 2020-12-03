@@ -169,7 +169,8 @@ class Feed extends React.Component {
                       className="px-3"
                       onClick={() => this.handleLikes(post._id)}
                     >
-                      <i className="far fa-thumbs-up"></i> Like
+                      <i className="far fa-thumbs-up"></i>{" "}
+                      {this.state.like.includes(post._id) ? "Unlike" : "Like"}
                     </span>
                     <span className="px-3">
                       <i className="far fa-comment-dots"></i> Comment

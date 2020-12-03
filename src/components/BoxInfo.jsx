@@ -36,7 +36,7 @@ class BoxInfo extends React.Component {
                   this.setState({ showPictureModal: true });
                 }}
               />
-              {this.state.showPictureModal && (
+              {this.state.showPictureModal && this.props.me && (
                 <ModalProfilePicture
                   showPictureModal={this.state.showPictureModal}
                   hidePictureModal={() =>
