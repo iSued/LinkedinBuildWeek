@@ -66,11 +66,13 @@ class Sidebar extends React.Component {
   render() {
     return (
       <>
-        <Row>
-          <Col>
-            <TopSettings />
-          </Col>
-        </Row>
+        {this.props.me && (
+          <Row>
+            <Col>
+              <TopSettings />
+            </Col>
+          </Row>
+        )}
         <Row>
           <Col>
             <Advertise />
