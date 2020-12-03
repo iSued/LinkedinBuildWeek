@@ -92,6 +92,7 @@ export default class ModalPost extends React.Component {
           POSTModel: { text: "" },
         });
         this.fetchPostImage(data._id);
+        this.handleClose();
       } else {
         console.log(this.state.POSTModel.text);
         let error = await response.json();
