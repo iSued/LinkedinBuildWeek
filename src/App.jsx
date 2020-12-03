@@ -6,7 +6,6 @@ import React from "react";
 import Profile from "./components/Profile";
 import { Container, Row } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
 import FeedPost from "./components/FeedPost";
 import Feed from "./components/Feed";
 
