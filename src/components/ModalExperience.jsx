@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Modal, Form, Button, Alert } from "react-bootstrap";
+import React, {Component} from "react"
+import {Modal, Form, Button, Alert} from "react-bootstrap"
 
 export default class ModalExperience extends Component {
   state = {
@@ -12,7 +12,7 @@ export default class ModalExperience extends Component {
       area: "",
     },
     post: null,
-  };
+  }
 
   handleChange = (e) => {
     this.setState({
@@ -20,14 +20,14 @@ export default class ModalExperience extends Component {
         ...this.state.experience,
         [e.target.id]: e.target.value,
       },
-    });
-  };
+    })
+  }
 
   fileUploadHandler = (e) => {
-    const formData = new FormData();
-    formData.append("experience", e.target.files[0]);
-    this.setState({ post: formData });
-  };
+    const formData = new FormData()
+    formData.append("experience", e.target.files[0])
+    this.setState({post: formData})
+  }
 
   fetchPostImage = async (id) => {
     try {
@@ -42,18 +42,18 @@ export default class ModalExperience extends Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      );
+      )
       if (response.ok) {
-        console.log("OK");
+        console.log("OK")
       } else {
-        const error = await response.json();
-        console.log(error);
-        <Alert variant="danger">Something went wrong</Alert>;
+        const error = await response.json()
+        console.log(error)
+        ;<Alert variant="danger">Something went wrong</Alert>
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   componentDidMount = () => {
     if (this.props.editExp.experience._id) {
@@ -66,7 +66,7 @@ export default class ModalExperience extends Component {
           description: this.props.editExp.experience.description,
           area: this.props.editExp.experience.area,
         },
-      });
+      })
     } else {
       this.setState({
         experience: {
@@ -77,14 +77,14 @@ export default class ModalExperience extends Component {
           description: "",
           area: "",
         },
-      });
+      })
     }
-  };
+  }
 
   submitExperience = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      let response;
+      let response
       if (this.props.editExp.experience._id) {
         response = await fetch(
           `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences/${this.props.editExp.experience._id}`,
@@ -97,7 +97,7 @@ export default class ModalExperience extends Component {
               Authorization: process.env.REACT_APP_TOKEN,
             },
           }
-        );
+        )
       } else {
         response = await fetch(
           `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences`,
@@ -110,34 +110,54 @@ export default class ModalExperience extends Component {
               Authorization: process.env.REACT_APP_TOKEN,
             },
           }
-        );
+        )
       }
 
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.json()
 
         alert(
           `Experience ${
             this.props.editExp.experience._id ? "EDITED" : "ADDED"
           } SUCCESFULLY`
-        );
+        )
         if (this.state.post !== null) {
-          this.fetchPostImage(data._id);
+          this.fetchPostImage(data._id)
         }
-        this.props.submitExpCounter();
-        this.props.hide();
+        this.props.submitExpCounter()
+        this.props.hide()
       } else {
-        const error = await response.json();
-        console.log(error);
+        const error = await response.json()
+        console.log(error)
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
-  // submitExperienceWithImage = (e) => {
-  //   this.fetchPostImage();
-  //   this.submitExperience();
-  // };
+  }
+
+  deleteExperience = async () => {
+    try {
+      const response = await fetch(
+        `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences/${this.props.editExp.experience._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      )
+      if (response.ok) {
+        alert("Exeperience DELETED successfully")
+        this.props.submitExpCounter()
+        this.props.hide()
+      } else {
+        const error = await response.json()
+        console.log(error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   render() {
     return (
@@ -147,7 +167,11 @@ export default class ModalExperience extends Component {
           onHide={() => this.props.hide()}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Edit Experience</Modal.Title>
+            <Modal.Title>
+              {this.props.editExp.experience._id
+                ? "Edit Experience"
+                : "Add Experience"}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={this.submitExperience}>
@@ -216,7 +240,7 @@ export default class ModalExperience extends Component {
                   type="file"
                   id="fileUpload"
                   onChange={this.fileUploadHandler}
-                  style={{ display: "none" }}
+                  style={{display: "none"}}
                   ref={(fileInput) => (this.fileInput = fileInput)}
                 />
                 <Button
@@ -227,16 +251,28 @@ export default class ModalExperience extends Component {
                   Upload file
                 </Button>
               </Form.Group>
-
-              <Button variant="primary" type="submit">
-                {this.props.editExp.experience._id
-                  ? "Edit Experience"
-                  : "Add New Experience"}
-              </Button>
+              <div className="d-flex justify-content-between ">
+                {this.props.editExp.experience._id && (
+                  <Button
+                    variant="outline-secondary"
+                    className="rounded-pill p-1 px-4"
+                    onClick={() => this.deleteExperience()}
+                  >
+                    Delete
+                  </Button>
+                )}
+                <Button
+                  className="rounded-pill p-1 px-4"
+                  variant="primary"
+                  type="submit"
+                >
+                  {this.props.editExp.experience._id ? "Edit" : "Save"}
+                </Button>
+              </div>
             </Form>
           </Modal.Body>
         </Modal>
       </>
-    );
+    )
   }
 }
