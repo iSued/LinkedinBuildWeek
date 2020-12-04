@@ -45,6 +45,7 @@ export default class ModalExperience extends Component {
       );
       if (response.ok) {
         console.log("OK");
+        this.props.submitExpCounter();
       } else {
         const error = await response.json();
         console.log(error);
@@ -121,10 +122,11 @@ export default class ModalExperience extends Component {
             this.props.editExp.experience._id ? "EDITED" : "ADDED"
           } SUCCESFULLY`
         );
+        this.props.submitExpCounter();
         if (this.state.post !== null) {
           this.fetchPostImage(data._id);
         }
-        this.props.submitExpCounter();
+
         this.props.hide();
       } else {
         const error = await response.json();

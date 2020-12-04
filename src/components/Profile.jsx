@@ -140,6 +140,9 @@ class Profile extends React.Component {
               onClicked={() => {
                 this.setState({ show: true });
               }}
+              submitCounter={() =>
+                this.setState({ submitCounter: this.state.submitCounter + 1 })
+              }
             />
           )}
           {this.props.me && (
