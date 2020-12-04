@@ -24,6 +24,7 @@ import { CgMenuGridR } from "react-icons/cg";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import "../NavBar.css";
 import { Link, withRouter } from "react-router-dom";
+import "./search.css";
 
 class NavBar extends React.Component {
   state = { myProfile: {}, users: [], rawUsers: [], searchText: "" };
@@ -144,9 +145,16 @@ class NavBar extends React.Component {
 
                       return (
                         <>
-                          {" "}
-                          <p>{option.username}</p>
-                          <p>{option.name}</p>;
+                          <div className="search-item d-flex align-items-center justify-content-start py-3 px-3 mb-2">
+                            <div></div>
+                            <div className="ml-3">
+                              {/* <link to={`/profile/${option._id}`}> */}{" "}
+                              <p className="mb-0">{option.name}</p>{" "}
+                              {/* </link> */}
+                              <p className="mb-0"> {option.surname}</p>
+                              <p className="mb-0">{option.title}</p>
+                            </div>
+                          </div>
                         </>
                       );
                     }}
