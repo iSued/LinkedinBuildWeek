@@ -1,5 +1,8 @@
+import { AddComment } from "@material-ui/icons";
 import React from "react";
 import { Alert, Media, Row, Col, Card, Spinner } from "react-bootstrap";
+import CommentList from "./CommentList";
+import AddComments from "./AddComment";
 import ModalEditPost from "./ModalEditPost";
 
 class Feed extends React.Component {
@@ -11,11 +14,14 @@ class Feed extends React.Component {
         ? localStorage.getItem("likes").split(",")
         : // localStorage.getItem("likes")
           " ",
-
+    comments: [],
     loading: true,
     userName: process.env.REACT_APP_USER,
     show: false,
     post: {},
+    submitCounter: 0,
+
+    editComment: { comment: {}, editCounter: 0 },
   };
 
   handleLikes = (id) => {
@@ -31,6 +37,16 @@ class Feed extends React.Component {
     }
 
     localStorage.setItem("likes", likes);
+  };
+
+  handleComments = (id) => {
+    if (this.state.comments.includes(id)) {
+      this.setState({
+        comments: this.state.comments.filter((el) => el !== id),
+      });
+    } else {
+      this.setState({ comments: [...this.state.comments, id] });
+    }
   };
 
   fetchPosts = async () => {
@@ -182,7 +198,10 @@ class Feed extends React.Component {
                       <i className="far fa-thumbs-up"></i>{" "}
                       {this.state.like.includes(post._id) ? "Unlike" : "Like"}
                     </span>
-                    <span className="px-3">
+                    <span
+                      className="px-3"
+                      onClick={() => this.handleComments(post._id)}
+                    >
                       <i className="far fa-comment-dots"></i> Comment
                     </span>
                     <span className="px-3">
@@ -191,6 +210,51 @@ class Feed extends React.Component {
                     <span className="px-3">
                       <i className="fas fa-paper-plane"></i> Send
                     </span>
+                  </div>
+                  <div
+                    style={{
+                      display: this.state.comments.includes(post._id)
+                        ? "block"
+                        : "none",
+                    }}
+                  >
+                    <AddComments
+                      id={post._id}
+                      editedCm={this.state.editComment}
+                      meProfile={this.props.meProfile}
+                      clearEditCommentState={() =>
+                        this.setState({
+                          editComment: {
+                            comment: {},
+                            editCounter: 0,
+                          },
+                        })
+                      }
+                      onClick={() =>
+                        this.setState({
+                          submitCounter: this.state.submitCounter + 1,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <CommentList
+                      id={post._id}
+                      onClick={() =>
+                        this.setState({
+                          submitCounter: this.state.submitCounter + 1,
+                        })
+                      }
+                      submitCounter={this.state.submitCounter}
+                      editCm={(comment) =>
+                        this.setState({
+                          editComment: {
+                            comment: comment,
+                            editCounter: this.state.editComment.editCounter + 1,
+                          },
+                        })
+                      }
+                    />
                   </div>
                 </Card>
               </Col>
