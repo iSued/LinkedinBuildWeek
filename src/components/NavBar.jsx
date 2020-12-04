@@ -11,6 +11,8 @@ import {
   Dropdown,
   Row,
 } from "react-bootstrap";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 
 import HomeIcon from "@material-ui/icons/Home";
 import { HiSearch } from "react-icons/hi";
@@ -22,9 +24,36 @@ import { CgMenuGridR } from "react-icons/cg";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import "../NavBar.css";
 import { Link, withRouter } from "react-router-dom";
+import SearchItem from "./SearchItem";
 
 class NavBar extends React.Component {
-  state = { myProfile: {} };
+  state = { myProfile: {}, users: [], rawUsers: [], searchText: "" };
+
+  fetchusers = async () => {
+    this.setState({ loading: true });
+
+    const url = "https://striveschool-api.herokuapp.com/api/profile";
+
+    try {
+      let response = await fetch(url, {
+        headers: {
+          Authorization: process.env.REACT_APP_TOKEN,
+        },
+      });
+
+      let users = await response.json();
+      console.log("navusers", users);
+
+      if (response.ok) {
+        this.setState({ rawUsers: users, loading: false });
+      } else {
+        this.setState({ loading: false });
+        <Alert variant="danger">Something went wrong</Alert>;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   fetchProfile = async () => {
     this.setState({ loading: true });
 
@@ -50,7 +79,10 @@ class NavBar extends React.Component {
       console.log(error);
     }
   };
-  componentDidMount = () => this.fetchProfile();
+  componentDidMount = () => {
+    this.fetchProfile();
+    this.fetchusers();
+  };
 
   render() {
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -102,17 +134,37 @@ class NavBar extends React.Component {
             <Navbar.Collapse id="basic-navbar-nav">
               <Form inline>
                 <InputGroup style={{ width: "240px" }}>
-                  <InputGroup.Prepend>
-                    <InputGroup.Text
-                      style={{ backgroundColor: "#EEF3F8", border: "none" }}
-                    >
-                      <HiSearch />
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <Form.Control
-                    style={{ backgroundColor: "#EEF3F8", border: "none" }}
-                    type="text"
-                    placeholder="Search"
+                  <Typeahead
+                    labelKey={(option) => `${option.username}`}
+                    onChange={(selected) => {
+                      // here you can handle on item click
+                      alert(selected);
+                    }}
+                    renderMenuItemChildren={(option, props, index) => {
+                      // here design your user display
+                      return (
+                        <SearchItem
+                          name={option.name}
+                          username={option.username}
+                          image={option.image}
+                          title={option.title}
+                        />
+                      );
+                    }}
+                    open={this.state.users.length > 0}
+                    onInputChange={(text) => {
+                      if (text.length > 3) {
+                        const filtered = this.state.rawUsers.filter((user) =>
+                          user.username
+                            .toLowerCase()
+                            .includes(text.toLowerCase())
+                        );
+                        this.setState({ users: filtered });
+                      } else {
+                        this.setState({ users: [] });
+                      }
+                    }}
+                    options={this.state.users}
                   />
                 </InputGroup>
               </Form>
