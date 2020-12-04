@@ -17,7 +17,7 @@ class ProfileCard extends React.Component {
   render() {
     return (
       <div>
-        <Card className="ProfileCard mb-3" style={{ width: "18rem" }}>
+        <Card className="ProfileCard mb-3">
           <Card.Img
             variant="top"
             src="http://lorempixel.com/output/sports-q-c-1920-480-7.jpg"

@@ -128,3 +128,8 @@ i.fas.fa-plus:hover {
   border: 3px solid rgb(6, 95, 146);
   border-radius: 1rem;
 }
+.sideFooter {
+  font-size: 0.7rem;
+  background-color: inherit;
+  border: none;
+}

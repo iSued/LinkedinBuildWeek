@@ -13,16 +13,18 @@ export default class FeedPost extends Component {
 
   render() {
     return (
-      <>
+      <Container>
         <Row>
-          <Col md={2} className="px-5">
-            <FeedSideLeft meProfile={this.state.meProfile} />
+
+          <Col md={{ span: 2 }} style={{ paddingLeft: "0 " }}>
+            <FeedSideLeft width="15%" meProfile={this.state.meProfile} />
+
           </Col>
-          <Col md={6}>
-            <Container className="d-flex justify-content-center wrapper pl-5">
-              <Card className="cardPost">
-                <Card.Body>
-                  <Button className="startpostbtn">
+          <Col md={{ span: 6 }}>
+            <Container className="d-flex justify-content-center wrapper ">
+              <Card className="cardPost w-100">
+                <Card.Body className="w-100">
+                  <Button className="startpostbtn ">
                     <ModalPost
                       feedCounter={() =>
                         this.setState({
@@ -56,7 +58,7 @@ export default class FeedPost extends Component {
                       </span>
                     </Card.Link>
                   </Col>
-                  <Col xs={3}>
+                  <Col xs={2}>
                     <Card.Link href="#">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -130,11 +132,11 @@ export default class FeedPost extends Component {
               />
             </Container>
           </Col>
-          <Col md={4} className="d-flex justify-content-center px-5">
+          <Col md={{ span: 4 }} style={{ padding: "0 " }}>
             <FeedSideRight />
           </Col>
         </Row>
-      </>
+      </Container>
     );
   }
 }
