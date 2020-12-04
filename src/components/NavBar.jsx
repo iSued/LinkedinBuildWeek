@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   Navbar,
   Container,
@@ -8,6 +8,8 @@ import {
   Button,
   InputGroup,
   Alert,
+  Dropdown,
+  Row,
 } from "react-bootstrap";
 
 import HomeIcon from "@material-ui/icons/Home";
@@ -21,8 +23,46 @@ import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import "../NavBar.css";
 import { Link, withRouter } from "react-router-dom";
 
-class NavBar extends Component {
+class NavBar extends React.Component {
+  state = { user: [] };
+  fetchProfile = async () => {
+    this.setState({ loading: true });
+
+    const url =
+      this.props.match.params.id === "me"
+        ? "https://striveschool-api.herokuapp.com/api/profile/me"
+        : "https://striveschool-api.herokuapp.com/api/profile/" +
+          this.props.match.params.id;
+    try {
+      let response = await fetch(url, {
+        headers: {
+          Authorization: process.env.REACT_APP_TOKEN,
+        },
+      });
+
+      let myProfile = await response.json();
+      console.log(myProfile);
+
+      if (response.ok) {
+        this.fetchExperience(myProfile._id);
+        this.setState({ myProfile, loading: false });
+      } else {
+        this.setState({ loading: false });
+        <Alert variant="danger">Something went wrong</Alert>;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
+    // const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    //   <>
+    //     {children}
+
+    //   </>
+    // ));
+
     return (
       <>
         <Navbar
@@ -100,13 +140,36 @@ class NavBar extends Component {
                     src="https://pbs.twimg.com/media/Ea3jz_1WoAANHhD.png"
                     className="profile-img"
                   />
-                  <p>
-                    Me
-                    <RiArrowDownSFill
-                      className="m-0 p-0"
-                      style={{ fontSize: "17px" }}
-                    />
-                  </p>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      as={CustomToggle}
+                      id="dropdown-custom-components"
+                    >
+                      <RiArrowDownSFill
+                        className="m-0 p-0"
+                        style={{ fontSize: "17px" }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onClick(e);
+                        }}
+                      />
+                      <p>Me</p>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item className="dropdownitems" href="#">
+                        Privacy policy
+                      </Dropdown.Item>
+                      <Dropdown.Item className="dropdownitems" href="#">
+                        User Agreement
+                      </Dropdown.Item>
+                      <Dropdown.Item className="dropdownitems" href="#">
+                        Cookie Policy
+                      </Dropdown.Item>
+                      <Dropdown.Item className="dropdownitems" href="#">
+                        Copyright Policy
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </Link>
               </Nav>
               <Nav className="second-nav">
