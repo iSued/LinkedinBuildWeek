@@ -1,51 +1,22 @@
-import React from "react";
-import PencilEdit from "./PencilEdit";
-import PlusEdit from "./PlusEdit";
-import DeleteX from "./DeleteX";
-import { Card, Row, Col, ListGroup } from "react-bootstrap";
-import Moment from "react-moment";
-import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import React from "react"
+import PencilEdit from "./PencilEdit"
+import PlusEdit from "./PlusEdit"
+import {Card, Row, Col, ListGroup} from "react-bootstrap"
+import Moment from "react-moment"
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown"
 
 export default class extends React.Component {
-  state = { MyExperience: this.props.MyExperience, visible: 3 };
+  state = {MyExperience: this.props.MyExperience, visible: 3}
 
   loadmore = () =>
     this.setState((e) => {
-      return { visible: e.visible + 2 };
-    });
+      return {visible: e.visible + 2}
+    })
 
   handleEdit = (exp) => {
-    this.props.onClicked();
-    this.props.editExp(exp);
-  };
-
-  handleExperience = (experience) => {
-    console.log(experience);
-    this.deleteExperience(experience);
-  };
-
-  deleteExperience = async (experience) => {
-    try {
-      const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/profile/${this.props.id}/experiences/${experience._id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: process.env.REACT_APP_TOKEN,
-          },
-        }
-      );
-      if (response.ok) {
-        alert("Exeperience DELETED successfully");
-        this.props.submitExpCounter();
-      } else {
-        const error = await response.json();
-        console.log(error);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    this.props.onClicked()
+    this.props.editExp(exp)
+  }
 
   render() {
     return (
@@ -86,7 +57,7 @@ export default class extends React.Component {
                                 alt="placeholder"
                                 width="56px"
                                 height="56px"
-                                style={{ objectFit: "cover" }}
+                                style={{objectFit: "cover"}}
                               />
                             </div>
                             <div className="ml-2">
@@ -106,22 +77,11 @@ export default class extends React.Component {
                             </div>
                           </div>
                           <div>
-                            <div>
-                              <PencilEdit
-                                me={this.props.me}
-                                color="#0b67c2"
-                                onClicked={() => this.handleEdit(experience)}
-                              />
-                            </div>
-                            <div>
-                              <DeleteX
-                                me={this.props.me}
-                                color="#FF5733"
-                                onClicked={() =>
-                                  this.handleExperience(experience)
-                                }
-                              />
-                            </div>
+                            <PencilEdit
+                              me={this.props.me}
+                              color="#0b67c2"
+                              onClicked={() => this.handleEdit(experience)}
+                            />
                           </div>
                         </ListGroup.Item>
                       )
@@ -133,7 +93,7 @@ export default class extends React.Component {
           {this.state.visible < this.state.MyExperience.length && (
             <ListGroup.Item
               action
-              style={{ border: "none" }}
+              style={{border: "none"}}
               onClick={this.loadmore}
             >
               Show more
@@ -239,6 +199,6 @@ export default class extends React.Component {
           </Card.Body>
         </Card>
       </>
-    );
+    )
   }
 }
