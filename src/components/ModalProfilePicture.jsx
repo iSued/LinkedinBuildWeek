@@ -1,16 +1,16 @@
-import React, {Component} from "react"
-import {Modal, Button, Alert} from "react-bootstrap"
+import React, { Component } from "react";
+import { Modal, Button, Alert } from "react-bootstrap";
 
 export default class ModalProfilePicture extends Component {
   state = {
     post: null,
-  }
+  };
 
   fileSelectedHandler = (e) => {
-    const formData = new FormData()
-    formData.append("profile", e.target.files[0])
-    this.setState({post: formData})
-  }
+    const formData = new FormData();
+    formData.append("profile", e.target.files[0]);
+    this.setState({ post: formData });
+  };
 
   postImage = async () => {
     //   const url = "https://striveschool-api.herokuapp.com/api/profile/{userId}/picture"
@@ -25,19 +25,20 @@ export default class ModalProfilePicture extends Component {
             Authorization: process.env.REACT_APP_TOKEN,
           },
         }
-      )
+      );
       if (response.ok) {
-        console.log("profile image posted succesfully")
-        this.props.hidePictureModal()
+        console.log("profile image posted succesfully");
+        this.props.submitCounter();
+        this.props.hidePictureModal();
       } else {
-        const error = await response.json()
-        console.log(error)
-        ;<Alert variant="danger">Something went wrong</Alert>
+        const error = await response.json();
+        console.log(error);
+        <Alert variant="danger">Something went wrong</Alert>;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   render() {
     return (
@@ -65,6 +66,6 @@ export default class ModalProfilePicture extends Component {
           </Button>
         </Modal.Footer>
       </Modal>
-    )
+    );
   }
 }

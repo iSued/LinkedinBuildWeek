@@ -5,6 +5,7 @@ import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import DownFeed from "./DownFeed";
 import ViewedCourses from "./ViewedCourses";
 import AdSense from "./AdSense";
+import SideFooter from "./SideFooter";
 
 class FeedSideRight extends React.Component {
   render() {
@@ -28,6 +29,11 @@ class FeedSideRight extends React.Component {
         <Row>
           <Col>
             <AdSense />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <SideFooter />
           </Col>
         </Row>
       </Container>
