@@ -18,12 +18,15 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { CgMenuGridR } from "react-icons/cg";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import { Typeahead } from "react-bootstrap-typeahead";
 import "../NavBar.css";
 import { Link, withRouter } from "react-router-dom";
 
 class NavBar extends Component {
   state = {
     users: [],
+    rawUsers: [],
     searchText: "",
   };
   componentDidMount = async () => {
@@ -37,6 +40,7 @@ class NavBar extends Component {
         }
       );
       let users = await response.json();
+      this.setState({ rawUsers: users });
     } catch (e) {
       this.setState({ loadingExp: false, error: e });
     }
@@ -86,17 +90,32 @@ class NavBar extends Component {
             <Navbar.Collapse id="basic-navbar-nav">
               <Form inline>
                 <InputGroup style={{ width: "240px" }}>
-                  <InputGroup.Prepend>
-                    <InputGroup.Text
-                      style={{ backgroundColor: "#EEF3F8", border: "none" }}
-                    >
-                      <HiSearch />
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <Form.Control
-                    style={{ backgroundColor: "#EEF3F8", border: "none" }}
-                    type="text"
-                    placeholder="Search"
+                  <Typeahead
+                    labelKey={(option) => `${option.username}`}
+                    onChange={(selected) => {
+                      alert(selected);
+                    }}
+                    renderMenuItemChildren={(option, props, index) => {
+                      return (
+                        <Link to="{/profile/" style={{ color: "Black" }}>
+                          {option.username}
+                        </Link>
+                      );
+                    }}
+                    open={this.state.users.length > 0}
+                    onInputChange={(text) => {
+                      if (text.length > 3) {
+                        const filtered = this.state.rawUsers.filter((user) =>
+                          user.username
+                            .toLowerCase()
+                            .includes(text.toLowerCase())
+                        );
+                        this.setState({ users: filtered });
+                      } else {
+                        this.setState({ users: [] });
+                      }
+                    }}
+                    options={this.state.rawUsers}
                   />
                 </InputGroup>
               </Form>
