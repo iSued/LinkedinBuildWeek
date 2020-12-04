@@ -149,7 +149,16 @@ class NavBar extends React.Component {
                             <div></div>
                             <div className="ml-3">
                               {/* <link to={`/profile/${option._id}`}> */}{" "}
-                              <p className="mb-0">{option.name}</p>{" "}
+                              <p
+                                className="mb-0"
+                                onClick={() =>
+                                  this.props.history.push(
+                                    "/profile/" + option._id
+                                  )
+                                }
+                              >
+                                {option.name}
+                              </p>{" "}
                               {/* </link> */}
                               <p className="mb-0"> {option.surname}</p>
                               <p className="mb-0">{option.title}</p>
