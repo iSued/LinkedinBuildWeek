@@ -24,15 +24,12 @@ import "../NavBar.css";
 import { Link, withRouter } from "react-router-dom";
 
 class NavBar extends React.Component {
-  state = { user: [] };
+  state = { myProfile: {} };
   fetchProfile = async () => {
     this.setState({ loading: true });
 
-    const url =
-      this.props.match.params.id === "me"
-        ? "https://striveschool-api.herokuapp.com/api/profile/me"
-        : "https://striveschool-api.herokuapp.com/api/profile/" +
-          this.props.match.params.id;
+    const url = "https://striveschool-api.herokuapp.com/api/profile/me";
+
     try {
       let response = await fetch(url, {
         headers: {
@@ -41,10 +38,9 @@ class NavBar extends React.Component {
       });
 
       let myProfile = await response.json();
-      console.log(myProfile);
+      console.log("navProfile", myProfile);
 
       if (response.ok) {
-        this.fetchExperience(myProfile._id);
         this.setState({ myProfile, loading: false });
       } else {
         this.setState({ loading: false });
@@ -54,14 +50,24 @@ class NavBar extends React.Component {
       console.log(error);
     }
   };
+  componentDidMount = () => this.fetchProfile();
 
   render() {
-    // const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    //   <>
-    //     {children}
-
-    //   </>
-    // ));
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+      <p>
+        {children}
+        <RiArrowDownSFill
+          className="m-0 p-0"
+          style={{ fontSize: "17px" }}
+          onClick={(e) => {
+            e.preventDefault();
+            onClick(e);
+          }}
+        />
+        Me
+      </p>
+    ));
+    console.log("heelooooo");
 
     return (
       <>
@@ -136,38 +142,81 @@ class NavBar extends React.Component {
                   <p>Notifications</p>
                 </Nav.Link>
                 <Link to="/profile/me" className="nav-link">
-                  <img
-                    src="https://pbs.twimg.com/media/Ea3jz_1WoAANHhD.png"
-                    className="profile-img"
-                  />
+                  {this.state.myProfile.length !== 0 && (
+                    <img
+                      src={this.state.myProfile.image}
+                      className="profile-img"
+                    />
+                  )}
+
                   <Dropdown>
                     <Dropdown.Toggle
                       as={CustomToggle}
                       id="dropdown-custom-components"
-                    >
-                      <RiArrowDownSFill
-                        className="m-0 p-0"
-                        style={{ fontSize: "17px" }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onClick(e);
-                        }}
-                      />
-                      <p>Me</p>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item className="dropdownitems" href="#">
-                        Privacy policy
+                    ></Dropdown.Toggle>
+                    <Dropdown.Menu id="meMenu" style={{ minWidth: "300px" }}>
+                      {this.state.myProfile ? (
+                        <>
+                          <Dropdown.Item
+                            eventKey="1"
+                            style={{ padding: "4px 12px" }}
+                          >
+                            <div className="d-flex">
+                              <img
+                                src={this.state.myProfile.image}
+                                alt=""
+                                width="56px"
+                              />
+
+                              <div className="pl-1 d-flex flex-column justify-content-center">
+                                <h6>
+                                  {this.state.myProfile.name +
+                                    " " +
+                                    this.state.myProfile.surname}
+                                </h6>
+                                <h6>{this.state.myProfile.title}</h6>
+                              </div>
+                            </div>
+                          </Dropdown.Item>
+                        </>
+                      ) : (
+                        <>
+                          <Dropdown.Item eventKey="1">Image</Dropdown.Item>
+                          <Dropdown.Item eventKey="2">Full Name</Dropdown.Item>
+                          <Dropdown.Item eventKey="3">Job Title</Dropdown.Item>
+                        </>
+                      )}
+                      <Dropdown.Item
+                        eventKey="4"
+                        style={{ backgroundColor: "transparent" }}
+                      >
+                        <Button
+                          id="profileButton"
+                          onClick={() => this.props.history.push("/profile/me")}
+                        >
+                          View Profile
+                        </Button>
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdownitems" href="#">
-                        User Agreement
+                      <Dropdown.Divider />
+                      <Dropdown.Header>Account</Dropdown.Header>
+                      <Dropdown.Item eventKey="5">
+                        Access My Premium
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdownitems" href="#">
-                        Cookie Policy
+                      <Dropdown.Item eventKey="6">
+                        Settings & Privacy
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdownitems" href="#">
-                        Copyright Policy
+                      <Dropdown.Item eventKey="7">Help</Dropdown.Item>
+                      <Dropdown.Item eventKey="8">Language</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Header>Manage</Dropdown.Header>
+                      <Dropdown.Item eventKey="9">
+                        Posts & Activity
                       </Dropdown.Item>
+                      <Dropdown.Item eventKey="10">
+                        Job Posting Account
+                      </Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item eventKey="11">Sign Out</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </Link>
