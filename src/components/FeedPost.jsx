@@ -12,16 +12,16 @@ export default class FeedPost extends Component {
 
   render() {
     return (
-      <Container className="feedContainer">
+      <Container>
         <Row>
-          <Col>
+          <Col md={{ span: 2 }} style={{ paddingLeft: "0 " }}>
             <FeedSideLeft width="15%" />
           </Col>
-          <Col width="80%">
+          <Col md={{ span: 6 }}>
             <Container className="d-flex justify-content-center wrapper ">
-              <Card className="cardPost">
-                <Card.Body>
-                  <Button className="startpostbtn">
+              <Card className="cardPost w-100">
+                <Card.Body className="w-100">
+                  <Button className="startpostbtn ">
                     <ModalPost
                       feedCounter={() =>
                         this.setState({
@@ -126,7 +126,7 @@ export default class FeedPost extends Component {
               />
             </Container>
           </Col>
-          <Col>
+          <Col md={{ span: 4 }} style={{ padding: "0 " }}>
             <FeedSideRight />
           </Col>
         </Row>
