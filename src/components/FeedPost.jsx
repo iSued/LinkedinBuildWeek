@@ -12,13 +12,13 @@ export default class FeedPost extends Component {
 
   render() {
     return (
-      <>
-        <Row>
-          <Col md={2} className="px-5">
+      <Container fluid>
+        <Row noGutters>
+          <Col>
             <FeedSideLeft />
           </Col>
-          <Col md={6}>
-            <Container className="d-flex justify-content-center wrapper pl-5">
+          <Col>
+            <Container className="d-flex justify-content-center wrapper ">
               <Card className="cardPost">
                 <Card.Body>
                   <Button className="startpostbtn">
@@ -55,7 +55,7 @@ export default class FeedPost extends Component {
                       </span>
                     </Card.Link>
                   </Col>
-                  <Col xs={3}>
+                  <Col xs={2}>
                     <Card.Link href="#">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -126,11 +126,11 @@ export default class FeedPost extends Component {
               />
             </Container>
           </Col>
-          <Col md={4} className="d-flex justify-content-center px-5">
+          <Col>
             <FeedSideRight />
           </Col>
         </Row>
-      </>
+      </Container>
     );
   }
 }

@@ -11,7 +11,8 @@ class AdSense extends React.Component {
       <Card className=" mt-2 p-2">
         <Link>
           <Image
-            src="https://static-exp3.licdn.com/scds/common/u/images/promo/ads/li_evergreen_jobs_ad_300x250_v1.jpg"
+            style={{ width: "1100%" }}
+            src="https://i.ibb.co/SKPFPHW/li-evergreen-jobs-ad-300x250-v1.jpg"
             thumbnail
             className="img"
           />

@@ -15,7 +15,7 @@ class ProfileCard extends React.Component {
   render() {
     return (
       <div>
-        <Card style={{ width: "18rem" }}>
+        <Card>
           <Container>
             <Row className="mt-3 mb-3">
               <Col>
