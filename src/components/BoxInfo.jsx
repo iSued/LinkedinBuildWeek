@@ -42,6 +42,7 @@ class BoxInfo extends React.Component {
                   hidePictureModal={() =>
                     this.setState({ showPictureModal: false })
                   }
+                  submitCounter={this.props.submitCounter}
                   id={this.props.id}
                 />
               )}

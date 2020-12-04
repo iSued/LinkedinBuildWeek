@@ -9,7 +9,7 @@ class FeedSideLeft extends React.Component {
       <div>
         <Row>
           <Col>
-            <ProfileCard />
+            <ProfileCard meProfile={this.props.meProfile} />
           </Col>
         </Row>
         <Row>

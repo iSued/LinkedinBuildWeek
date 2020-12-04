@@ -68,6 +68,7 @@ class ModalEditPost extends React.Component {
       );
       if (response.ok) {
         console.log("OK");
+        this.props.feedCounter();
       } else {
         const error = await response.json();
         console.log(error);
