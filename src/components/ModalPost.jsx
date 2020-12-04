@@ -58,6 +58,7 @@ export default class ModalPost extends React.Component {
         );
         if (response.ok) {
           console.log("OK");
+          this.props.feedCounter();
         } else {
           const error = await response.json();
           console.log(error);
@@ -87,11 +88,11 @@ export default class ModalPost extends React.Component {
         const data = await response.json();
 
         this.props.feedCounter();
-
         this.setState({
           POSTModel: { text: "" },
         });
         this.fetchPostImage(data._id);
+
         this.handleClose();
       } else {
         console.log(this.state.POSTModel.text);

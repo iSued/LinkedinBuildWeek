@@ -103,8 +103,11 @@ i.fas.fa-plus:hover {
   padding: 2px;
   width: 10rem;
   height: auto;
-  margin-top: -20%;
+  margin-top: -10%;
+  width: 68px;
+  height: 68px;
   object-fit: cover;
+  border-radius: 50%;
 }
 .gold-box {
   color: gold;
