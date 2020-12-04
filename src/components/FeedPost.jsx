@@ -15,10 +15,8 @@ export default class FeedPost extends Component {
     return (
       <Container>
         <Row>
-
           <Col md={{ span: 2 }} style={{ paddingLeft: "0 " }}>
             <FeedSideLeft width="15%" meProfile={this.state.meProfile} />
-
           </Col>
           <Col md={{ span: 6 }}>
             <Container className="d-flex justify-content-center wrapper ">

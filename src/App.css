@@ -133,3 +133,8 @@ i.fas.fa-plus:hover {
   background-color: inherit;
   border: none;
 }
+.theChat {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}

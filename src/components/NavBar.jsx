@@ -22,6 +22,36 @@ import "../NavBar.css";
 import { Link, withRouter } from "react-router-dom";
 
 class NavBar extends Component {
+  state = {
+    users: [],
+    searchText: "",
+  };
+  componentDidMount = async () => {
+    try {
+      const response = await fetch(
+        "https://striveschool-api.herokuapp.com/api/profile",
+        {
+          headers: {
+            Authorization: process.env.REACT_APP_TOKEN,
+          },
+        }
+      );
+      let users = await response.json();
+    } catch (e) {
+      this.setState({ loadingExp: false, error: e });
+    }
+  };
+  onSearchChange = (e) => {
+    this.setState({
+      searchText: e.target.value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.onSearch(this.query.value);
+    e.currentTarget.reset();
+  };
   render() {
     return (
       <>

@@ -8,6 +8,7 @@ import { Container, Row } from "react-bootstrap";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import FeedPost from "./components/FeedPost";
 import Feed from "./components/Feed";
+import MyChat from "./components/MyChat";
 
 class App extends React.Component {
   state = {
@@ -39,6 +40,7 @@ class App extends React.Component {
           <Route path="/" exact render={(props) => <FeedPost {...props} />} />
 
           <Footer />
+          <MyChat className="theChat" />
         </Router>
       </div>
     );

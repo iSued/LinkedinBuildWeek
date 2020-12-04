@@ -8,7 +8,6 @@ class MyChat extends Component {
 
   handleNewUserMessage = (newMessage) => {
     console.log(`New message incomig! ${newMessage}`);
-    // Now send the message throught the backend API
   };
 
   render() {
@@ -16,8 +15,7 @@ class MyChat extends Component {
       <div className="App">
         <Chat
           handleNewUserMessage={this.handleNewUserMessage}
-          title="My new awesome title"
-          subtitle="And my cool subtitle"
+          title="LinedIn Chat"
         />
       </div>
     );
