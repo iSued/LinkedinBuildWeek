@@ -12,12 +12,12 @@ export default class FeedPost extends Component {
 
   render() {
     return (
-      <Container fluid>
-        <Row noGutters>
+      <Container className="feedContainer">
+        <Row>
           <Col>
-            <FeedSideLeft />
+            <FeedSideLeft width="15%" />
           </Col>
-          <Col>
+          <Col width="80%">
             <Container className="d-flex justify-content-center wrapper ">
               <Card className="cardPost">
                 <Card.Body>

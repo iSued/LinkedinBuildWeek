@@ -130,3 +130,6 @@ i.fas.fa-plus:hover {
   background-color: inherit;
   border: none;
 }
+.feedContainer {
+  width: 1088px;
+}
