@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   Navbar,
   Container,
@@ -8,7 +8,11 @@ import {
   Button,
   InputGroup,
   Alert,
+  Dropdown,
+  Row,
 } from "react-bootstrap";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
 
 import HomeIcon from "@material-ui/icons/Home";
 import { HiSearch } from "react-icons/hi";
@@ -20,9 +24,83 @@ import { CgMenuGridR } from "react-icons/cg";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import "../NavBar.css";
 import { Link, withRouter } from "react-router-dom";
+import "./search.css";
 
-class NavBar extends Component {
+class NavBar extends React.Component {
+  state = { myProfile: {}, users: [], rawUsers: [], searchText: "" };
+
+  fetchusers = async () => {
+    this.setState({ loading: true });
+
+    const url = "https://striveschool-api.herokuapp.com/api/profile";
+
+    try {
+      let response = await fetch(url, {
+        headers: {
+          Authorization: process.env.REACT_APP_TOKEN,
+        },
+      });
+
+      let users = await response.json();
+      console.log("navusers", users);
+
+      if (response.ok) {
+        this.setState({ rawUsers: users, loading: false });
+      } else {
+        this.setState({ loading: false });
+        <Alert variant="danger">Something went wrong</Alert>;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  fetchProfile = async () => {
+    this.setState({ loading: true });
+
+    const url = "https://striveschool-api.herokuapp.com/api/profile/me";
+
+    try {
+      let response = await fetch(url, {
+        headers: {
+          Authorization: process.env.REACT_APP_TOKEN,
+        },
+      });
+
+      let myProfile = await response.json();
+      console.log("navProfile", myProfile);
+
+      if (response.ok) {
+        this.setState({ myProfile, loading: false });
+      } else {
+        this.setState({ loading: false });
+        <Alert variant="danger">Something went wrong</Alert>;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  componentDidMount = () => {
+    this.fetchProfile();
+    this.fetchusers();
+  };
+
   render() {
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+      <p>
+        {children}
+        <RiArrowDownSFill
+          className="m-0 p-0"
+          style={{ fontSize: "17px" }}
+          onClick={(e) => {
+            e.preventDefault();
+            onClick(e);
+          }}
+        />
+        Me
+      </p>
+    ));
+    console.log("heelooooo");
+
     return (
       <>
         <Navbar
@@ -56,17 +134,44 @@ class NavBar extends Component {
             <Navbar.Collapse id="basic-navbar-nav">
               <Form inline>
                 <InputGroup style={{ width: "240px" }}>
-                  <InputGroup.Prepend>
-                    <InputGroup.Text
-                      style={{ backgroundColor: "#EEF3F8", border: "none" }}
-                    >
-                      <HiSearch />
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <Form.Control
-                    style={{ backgroundColor: "#EEF3F8", border: "none" }}
-                    type="text"
-                    placeholder="Search"
+                  <Typeahead
+                    labelKey={(option) => `${option.username}`}
+                    onChange={(selected) => {
+                      // here you can handle on item click
+                      alert(selected);
+                    }}
+                    renderMenuItemChildren={(option, props, index) => {
+                      // here design your user display
+
+                      return (
+                        <>
+                          <div className="search-item d-flex align-items-center justify-content-start py-3 px-3 mb-2">
+                            <div></div>
+                            <div className="ml-3">
+                              {/* <link to={`/profile/${option._id}`}> */}{" "}
+                              <p className="mb-0">{option.name}</p>{" "}
+                              {/* </link> */}
+                              <p className="mb-0"> {option.surname}</p>
+                              <p className="mb-0">{option.title}</p>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    }}
+                    open={this.state.users.length > 0}
+                    onInputChange={(text) => {
+                      if (text.length > 3) {
+                        const filtered = this.state.rawUsers.filter((user) =>
+                          user.username
+                            .toLowerCase()
+                            .includes(text.toLowerCase())
+                        );
+                        this.setState({ users: filtered });
+                      } else {
+                        this.setState({ users: [] });
+                      }
+                    }}
+                    options={this.state.users}
                   />
                 </InputGroup>
               </Form>
@@ -96,17 +201,83 @@ class NavBar extends Component {
                   <p>Notifications</p>
                 </Nav.Link>
                 <Link to="/profile/me" className="nav-link">
-                  <img
-                    src="https://pbs.twimg.com/media/Ea3jz_1WoAANHhD.png"
-                    className="profile-img"
-                  />
-                  <p>
-                    Me
-                    <RiArrowDownSFill
-                      className="m-0 p-0"
-                      style={{ fontSize: "17px" }}
+                  {this.state.myProfile.length !== 0 && (
+                    <img
+                      src={this.state.myProfile.image}
+                      className="profile-img"
                     />
-                  </p>
+                  )}
+
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      as={CustomToggle}
+                      id="dropdown-custom-components"
+                    ></Dropdown.Toggle>
+                    <Dropdown.Menu id="meMenu" style={{ minWidth: "300px" }}>
+                      {this.state.myProfile ? (
+                        <>
+                          <Dropdown.Item
+                            eventKey="1"
+                            style={{ padding: "4px 12px" }}
+                          >
+                            <div className="d-flex">
+                              <img
+                                src={this.state.myProfile.image}
+                                alt=""
+                                width="56px"
+                              />
+
+                              <div className="pl-1 d-flex flex-column justify-content-center">
+                                <h6>
+                                  {this.state.myProfile.name +
+                                    " " +
+                                    this.state.myProfile.surname}
+                                </h6>
+                                <h6>{this.state.myProfile.title}</h6>
+                              </div>
+                            </div>
+                          </Dropdown.Item>
+                        </>
+                      ) : (
+                        <>
+                          <Dropdown.Item eventKey="1">Image</Dropdown.Item>
+                          <Dropdown.Item eventKey="2">Full Name</Dropdown.Item>
+                          <Dropdown.Item eventKey="3">Job Title</Dropdown.Item>
+                        </>
+                      )}
+                      <Dropdown.Item
+                        eventKey="4"
+                        style={{ backgroundColor: "transparent" }}
+                      >
+                        <Button
+                          id="profileButton"
+                          onClick={() => this.props.history.push("/profile/me")}
+                        >
+                          View Profile
+                        </Button>
+                      </Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Header>Account</Dropdown.Header>
+                      <Dropdown.Item eventKey="5">
+                        Access My Premium
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey="6">
+                        Settings & Privacy
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey="7">Help</Dropdown.Item>
+                      <Dropdown.Item eventKey="8">Language</Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Header>Manage</Dropdown.Header>
+                      <Dropdown.Item eventKey="9">
+                        Posts & Activity
+                      </Dropdown.Item>
+                      <Dropdown.Item eventKey="10">
+                        Job Posting Account
+                      </Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item eventKey="11">Sign Out</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </Link>
               </Nav>
               <Nav className="second-nav">
