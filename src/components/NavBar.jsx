@@ -24,7 +24,6 @@ import { CgMenuGridR } from "react-icons/cg";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import "../NavBar.css";
 import { Link, withRouter } from "react-router-dom";
-import SearchItem from "./SearchItem";
 
 class NavBar extends React.Component {
   state = { myProfile: {}, users: [], rawUsers: [], searchText: "" };
@@ -142,13 +141,13 @@ class NavBar extends React.Component {
                     }}
                     renderMenuItemChildren={(option, props, index) => {
                       // here design your user display
+
                       return (
-                        <SearchItem
-                          name={option.name}
-                          username={option.username}
-                          image={option.image}
-                          title={option.title}
-                        />
+                        <>
+                          {" "}
+                          <p>{option.username}</p>
+                          <p>{option.name}</p>;
+                        </>
                       );
                     }}
                     open={this.state.users.length > 0}
