@@ -56,7 +56,7 @@ export default class FeedPost extends Component {
                       </span>
                     </Card.Link>
                   </Col>
-                  <Col xs={2}>
+                  <Col xs={3}>
                     <Card.Link href="#">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +112,7 @@ export default class FeedPost extends Component {
                         <path d="M21 3v2H3V3zm-6 6h6V7h-6zm0 4h6v-2h-6zm0 4h6v-2h-6zM3 21h18v-2H3zM13 7H3v10h10z"></path>
                       </svg>
                       <span className="ml-1" style={{ fontSize: "14px" }}>
-                        Write article
+                        Article
                       </span>
                     </Card.Link>
                   </Col>
