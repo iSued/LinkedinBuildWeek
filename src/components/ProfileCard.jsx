@@ -23,7 +23,8 @@ class ProfileCard extends React.Component {
             src="http://lorempixel.com/output/sports-q-c-1920-480-7.jpg"
             className="ProfileCardImg"
           />
-          {this.props.meProfile.length !== 0 && (
+
+          {Object.values(this.props.meProfile).length !== 0 && (
             <>
               <Row className="d-flex justify-content-center">
                 <img

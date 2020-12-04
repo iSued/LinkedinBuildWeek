@@ -8,17 +8,15 @@ import FeedSideRight from "./FeedSideRight";
 export default class FeedPost extends Component {
   state = {
     feedCounter: 0,
-    meProfile: "",
+    meProfile: {},
   };
 
   render() {
     return (
       <Container>
         <Row>
-
           <Col md={{ span: 2 }} style={{ paddingLeft: "0 " }}>
             <FeedSideLeft width="15%" meProfile={this.state.meProfile} />
-
           </Col>
           <Col md={{ span: 6 }}>
             <Container className="d-flex justify-content-center wrapper ">
@@ -129,6 +127,7 @@ export default class FeedPost extends Component {
                 fillMeProflie={(profileObj) => {
                   this.setState({ meProfile: profileObj });
                 }}
+                meProfile={this.state.meProfile}
               />
             </Container>
           </Col>
